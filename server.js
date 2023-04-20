@@ -8,11 +8,11 @@ const upload = multer();
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// app.get('/', async (req, res) => {
-//     res.status(200).send({
-//       message: 'Tamo en vivo!'
-//     })
-//   })
+app.get('/', async (req, res) => {
+    res.status(200).send({
+      message: 'Tamo en vivo!'
+    })
+  })
 
 app.post('/convert-to-xkt', upload.single('archivo'), (req, res) => {
   const texto = req.body.texto;

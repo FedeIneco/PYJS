@@ -104,7 +104,7 @@
       const formData = new FormData();
       formData.append("texto", texto);
       formData.append("archivo", archivo); 
-      fetch("http://localhost:8080/convert-to-xkt", {
+      fetch("https://serverxkt.onrender.com/convert-to-xkt", {
         method: "POST",       
         body: formData,
       })
