@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "mkdir -p ./lib/xeokit-bim-viewer; cp ./node_modules/@xeokit/xeokit-bim-viewer/dist/* ./lib/xeokit-bim-viewer/.",
+    "build": "mkdir -p ./lib/xeokit-bim-viewer && cp ./node_modules/@xeokit/xeokit-bim-viewer/dist/* ./lib/xeokit-bim-viewer/.",
     "create-demo-project": "node ./createProject.js -p demoProject -s ./demoModels/**/*",
     "delete-demo-project": "node deleteProject.js -p demoProject"
   },
@@ -36,9 +36,12 @@
     "@xeokit/xeokit-bim-viewer": "^2.4.5",
     "@xeokit/xeokit-convert": "^1.0.0",
     "commander": "^8.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "glob": "^7.1.7",
-    "http-server": "^0.12.3",
+    "http-server": "^14.1.1",
     "puppeteer": "^10.1.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "web-ifc": "^0.0.39"
   }
 }

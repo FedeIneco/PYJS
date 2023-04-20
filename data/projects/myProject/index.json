@@ -1,0 +1,185 @@
+{
+	"id": "myProject",
+	"name": "myProject",
+	"created": "Wed, 14 Jun 2017 07:00:00 GMT",
+	"models": [
+		{
+			"id": "Dormitory-SECU.v9",
+			"name": "Dormitory-SECU.v9",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 128,
+				"numMetaObjects": 91,
+				"numObjects": 85,
+				"numTriangles": 4022,
+				"numVertices": 7962,
+				"xktSizeKb": "26.01",
+				"aabb": [
+					31.163597363865193,
+					100,
+					67.96275236902176,
+					79.1635973638652,
+					107.60139489746093,
+					96.86275236902176
+				]
+			}
+		},
+		{
+			"id": "Duplex",
+			"name": "Duplex",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 1369,
+				"numMetaObjects": 233,
+				"numObjects": 224,
+				"numTriangles": 15924,
+				"numVertices": 36762,
+				"xktSizeKb": "131.36",
+				"aabb": [
+					-0.241499999999999,
+					-1.55,
+					-0.2414999999999985,
+					9.041499976158132,
+					6.634799999923259,
+					18.04150094604495
+				]
+			}
+		},
+		{
+			"id": "IfcOpenHouse2x3",
+			"name": "IfcOpenHouse2x3",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 0,
+				"numMetaObjects": 44,
+				"numObjects": 35,
+				"numTriangles": 870,
+				"numVertices": 2572,
+				"xktSizeKb": "8.96",
+				"aabb": [
+					-10,
+					-8.13,
+					-10,
+					10,
+					5.780001370540001,
+					10
+				]
+			}
+		},
+		{
+			"id": "IfcOpenHouse4",
+			"name": "IfcOpenHouse4",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 0,
+				"numMetaObjects": 44,
+				"numObjects": 35,
+				"numTriangles": 870,
+				"numVertices": 2572,
+				"xktSizeKb": "8.95",
+				"aabb": [
+					-10,
+					-8.13,
+					-10,
+					10,
+					5.780001370540001,
+					10
+				]
+			}
+		},
+		{
+			"id": "MAP",
+			"name": "MAP",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 15667,
+				"numMetaObjects": 2017,
+				"numObjects": 1986,
+				"numTriangles": 160372,
+				"numVertices": 388772,
+				"xktSizeKb": "1370.64",
+				"aabb": [
+					1842005.899569794,
+					-3.6,
+					-5173320.675941885,
+					1842038.6794567143,
+					24.589556839215817,
+					-5173283.019763544
+				]
+			}
+		},
+		{
+			"id": "rac_advanced_sample_project",
+			"name": "rac_advanced_sample_project",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 11420,
+				"numMetaObjects": 5570,
+				"numObjects": 5512,
+				"numTriangles": 275161,
+				"numVertices": 719755,
+				"xktSizeKb": "2028.06",
+				"aabb": [
+					-107.47427411797449,
+					-1.8288,
+					-98.3637489899251,
+					211.59106963202552,
+					12.485435006793573,
+					53.39886038507491
+				]
+			}
+		},
+		{
+			"id": "rme_advanced_sample_project",
+			"name": "rme_advanced_sample_project",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 16570,
+				"numMetaObjects": 6449,
+				"numObjects": 6401,
+				"numTriangles": 266545,
+				"numVertices": 585163,
+				"xktSizeKb": "1639.33",
+				"aabb": [
+					-7.0808100371906,
+					-4.700000054119923,
+					-54.12904597710801,
+					65.41678742342206,
+					15.15000000305178,
+					1.5050012845851999
+				]
+			}
+		}
+	],
+	"viewerConfigs": {},
+	"viewerContent": {},
+	"viewerState": {}
+}

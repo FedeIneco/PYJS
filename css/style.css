@@ -65,7 +65,7 @@ body {
     position: fixed;
     height: 100%;
     color: #fff;
-    background: #03103F;
+    background: linear-gradient(180deg, #133151,#133255, #14325a, #14335b, #143569, #15356d,#15377a, #183ea0, #1a43c6);    ;
     overflow: auto;
     border-right: 2px solid #212529;
     padding: 0px;
@@ -231,3 +231,9 @@ body {
     width: calc(100% - var(--left));
 }
 
+#archivos{
+    position: absolute;
+    z-index: 99999;
+    bottom: 5rem;
+    right: 5rem;
+}
