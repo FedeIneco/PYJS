@@ -231,7 +231,7 @@ body {
     width: calc(100% - var(--left));
 }
 
-#archivos{
+#myForm{
     position: absolute;
     z-index: 99999;
     bottom: 5rem;

@@ -1,0 +1,35 @@
+{
+	"id": "pruebaVerdadera",
+	"name": "pruebaVerdadera",
+	"created": "Wed, 14 Jun 2017 07:00:00 GMT",
+	"models": [
+		{
+			"id": "Testing",
+			"name": "Testing",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 171,
+				"numMetaObjects": 99,
+				"numObjects": 93,
+				"numTriangles": 5008,
+				"numVertices": 12408,
+				"xktSizeKb": "43.33",
+				"aabb": [
+					-4.183043103270767,
+					-0.30000001192092896,
+					-9.39498292787745,
+					3.285256894905374,
+					3.3,
+					7.51501707212258
+				]
+			}
+		}
+	],
+	"viewerConfigs": {},
+	"viewerContent": {},
+	"viewerState": {}
+}
