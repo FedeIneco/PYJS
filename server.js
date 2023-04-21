@@ -1,4 +1,5 @@
 const express = require('express');
+const path = requiere('path');
 const cors = require('cors');
 const multer = require('multer');
 const { exec } = require('child_process');
@@ -28,7 +29,7 @@ console.log('Archivo:', archivo);
 
 // Aquí se puede hacer lo que se necesite con el archivo y el string recibidos
 
-const command = `node createProject.js -p ${texto} -s ${archivo.originalname} -d C:/Users/federico.diaz/Desktop/IFC/xeokit-bim-viewer-app/data` ;
+const command = `node createProject.js -p ${texto} -s ${archivo.originalname}` ;
 
   exec(command, (error, stdout, stderr) => {
     if (error) {
