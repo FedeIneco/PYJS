@@ -74,7 +74,7 @@
         formData.append("archivo", archivos[i]);
       }
       formData.append("texto", texto);
-      fetch("http://localhost:8080/convert-to-xkt", {
+      fetch("https://serverxkt.onrender.com/convert-to-xkt", {
         method: "POST",
         body: formData,
       })
