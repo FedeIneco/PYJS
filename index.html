@@ -40,13 +40,12 @@
       <canvas id="myCanvas"></canvas>
       <canvas id="myNavCubeCanvas"></canvas>
     </div>
-    <input type="file" name="myfiles" multiple  />
     <form id="myForm" enctype="multipart/form-data">
       <label for="texto">Texto:</label>
-      <input type="text" id="texto" name="texto"><br><br>
+      <input type="text" id="texto" name="texto" /><br /><br />
       <label for="archivo">Archivo:</label>
-      <input type="file" id="archivo" name="archivo"><br><br>
-      <button type="button" id = "boton">Enviar</button>
+      <input type="file" id="archivo" name="archivo" multiple /><br /><br />
+      <button type="button" id="boton">Enviar</button>
     </form>
   </body>
 
@@ -65,61 +64,32 @@
 
     import { messages as localeMessages } from "./lib/xeokit-bim-viewer/messages.js";
     // const input = document.getElementById("archivos");
-    const datos = new FormData();   
-//     input.addEventListener("change", () => {     
-//       datos.append('texto', 'carpeta'); 
-//       for (let index = 0; index < input.files.length; index++) {
-//         const element = input.files[index];
-//         datos.append('archivo', element);
-//         console.log(datos)
-//       }
-//       //   fetch("http://localhost:8080/convert-to-xkt", {
-//       //     method: "POST",
-//       //     headers: {
-//       //       "Content-Type": "application/json",
-//       //     },
-//       //     body: JSON.stringify({
-//       //       datos: datos,
-//       //     //   nombre: "Probando",
-//       //     })
-//       //       .then((response) => response.json())
-//       //       .then((datos) => console.log(datos))
-//       //       .catch((error) => console.error(error)),
-//       //   });
-
-//       //console.log(elementos);
-//       console.log(datos);
-//       for(let [name, value] of datos) {
-//       console.log(`${name} = ${value}`); // key1 = value1, luego key2 = value2
-// }
-//       enviarPOST(datos);
-//     });
-    // Creamos un objeto FormData para enviar los datos
-     // Agregamos el archivo al objeto FormData
-    const boto = document.getElementById('boton');
-    boton.addEventListener('click', enviar);
-    function enviar() {        
+    const formData = new FormData();
+    const boton = document.getElementById("boton");
+    boton.addEventListener("click", enviar);
+    function enviar() {
       const texto = document.getElementById("texto").value;
-      const archivo = document.getElementById("archivo").files[0];   
-      const formData = new FormData();
+      const archivos = document.getElementById("archivo").files;
+      for (let i = 0; i < archivos.length; i++) {
+        formData.append("archivo", archivos[i]);
+      }
       formData.append("texto", texto);
-      formData.append("archivo", archivo); 
-      fetch("https://serverxkt.onrender.com/convert-to-xkt", {
-        method: "POST",       
+      fetch("http://localhost:8080/convert-to-xkt", {
+        method: "POST",
         body: formData,
       })
-      .then(response => {
-      if (!response.ok) {
-        throw new Error("Error en la petición");
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error en la petición");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
 
     window.onload = function () {
