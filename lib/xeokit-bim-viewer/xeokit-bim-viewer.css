@@ -162,7 +162,8 @@
 }
 
 .xeokit-tabs .xeokit-tab-content {
-    background: #03103F;
+    background-image: url('../../img/PanelJerarquia.png');
+    background-size: cover;
     display: none;
     padding-top: 2em;
     padding-left: 0;
@@ -230,8 +231,7 @@
 
 .xeokit-modelsTab .xeokit-form-check span {
     display: inline-block;
-    color: #ffff;
-    background-color: #03103F;
+    color: #ffff;    
     padding-left: 3px;
     width: calc(100% - 30px);
     vertical-align: middle;
@@ -239,7 +239,7 @@
 
 .xeokit-modelsTab .xeokit-form-check span.disabled {
     color: #99A4AD;
-    background-color: #03103F;
+    
 }
 
 .xeokit-modelsTab .xeokit-form-check span:hover {

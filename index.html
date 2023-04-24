@@ -33,6 +33,15 @@
       data-xeokit-i18ntip="toolbar.toggleProperties"
       data-tippy-content="Toggle properties"
     ></label>
+    <div class="header">
+      <div id="title">
+        <h1 class="title">ATUM</h1>
+        <span class="version"> versión x.x</span>
+      </div>
+      <div class="imagen">
+        <img src="./img/logo_ineco_blanco.png" alt="Logo Ineco" />
+      </div>
+    </div>
     <div id="myExplorer"></div>
     <div id="myToolbar"></div>
     <div id="myInspector"></div>
@@ -63,7 +72,6 @@
     } from "./lib/xeokit-bim-viewer/xeokit-bim-viewer.es.js";
 
     import { messages as localeMessages } from "./lib/xeokit-bim-viewer/messages.js";
-    // const input = document.getElementById("archivos");
     const formData = new FormData();
     const boton = document.getElementById("boton");
     boton.addEventListener("click", enviar);
@@ -74,10 +82,10 @@
         formData.append("archivo", archivos[i]);
       }
       formData.append("texto", texto);
-      fetch("https://serverxkt.onrender.com/convert-to-xkt", {
+      fetch("http://localhost:8080/convert-to-xkt/", {
         method: "POST",
         body: formData,
-      })
+      })      
         .then((response) => {
           if (!response.ok) {
             throw new Error("Error en la petición");

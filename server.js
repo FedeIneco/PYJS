@@ -50,6 +50,6 @@ app.post('/convert-to-xkt', upload, (req, res) => {
   });
 });
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log('Servidor iniciado en el http://localhost:8080/');
 });
