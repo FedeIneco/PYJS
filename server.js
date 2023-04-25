@@ -7,7 +7,7 @@ const { exec } = require('child_process');
 const fs = require('fs');
 
 const app = express();
-
+app.use(cors());
 app.use('/css', express.static(__dirname + '/css'));
 app.use('/lib/fontawesome-free-5.11.2-web/css', express.static(__dirname + '/lib/fontawesome-free-5.11.2-web/css'));
 app.use('/lib/xeokit-bim-viewer/', express.static(__dirname + '/lib/xeokit-bim-viewer/'));
@@ -15,8 +15,6 @@ app.use('/img', express.static(__dirname + '/img'));
 app.use('/lib/fontawesome-free-5.11.2-web/webfonts', express.static(__dirname + '/lib/fontawesome-free-5.11.2-web/webfonts'));
 app.use('/lib', express.static(__dirname + '/lib'));
 app.use('/data/projects', express.static(__dirname + '/data/projects'));
-
-
 
 
 
