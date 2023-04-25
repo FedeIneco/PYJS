@@ -31,11 +31,9 @@ app.get('/', async (req, res) => {
   res.status(200).send('<h2>Servidor iniciado</h2>');
 });
 
-app.get('/api/projects', async (req, res) => {
-  let html = '';
+app.get('/api/projects', async (req, res) => {  
   let filenames = [];
-  for (let i = 0; i < filteredProjects.length; i++) {
-    html += `<h3>${filteredProjects[i]}</h3>`;
+  for (let i = 0; i < filteredProjects.length; i++) {    
     filenames.push(filteredProjects[i]);
   }
 
@@ -44,14 +42,22 @@ app.get('/api/projects', async (req, res) => {
   });
 });
 
+let files = fs.readdirSync('./uploads');
+console.log(files);
+
+app.get('/api/files', async (req, res) => {    
+    res.status(200).send({    
+    files
+  });
+});
+
+
 app.get('/api/convert-to-xkt', async (req, res) => {
   res.status(200).send('<h2>Servidor iniciado aquí también</h2>');
 });
 
-app.post('/convert-to-xkt', upload, (req, res) => {
+app.post('/api/convert-to-xkt', upload, (req, res) => {
   const texto = req.body.texto;  
-
-  // Aquí se puede hacer lo que se necesite con el archivo y el string recibidos
 
   const command = `node createProject.js -p ${texto} -s ./uploads/*.ifc`;
 

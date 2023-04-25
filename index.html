@@ -90,7 +90,7 @@
         formData.append("archivo", archivos[i]);
       }
       formData.append("texto", texto);
-      fetch("https://serverxkt.onrender.com/convert-to-xkt/", {
+      fetch("https://serverxkt.onrender.com/api/convert-to-xkt/", {
         method: "POST",
         body: formData,
       })
