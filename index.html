@@ -111,7 +111,7 @@
 
     const listado = document.getElementById("menuListado");
     function archivosCreados() {
-      fetch("https://serverxkt.onrender.com/api/projects")
+      fetch("http://localhost:3000/api/projects")
         .then((response) => response.json())
         .then((data) => {
           const filenames = data.filenames;
@@ -121,7 +121,7 @@
             const li = document.createElement("li");
 
             // Configurar el texto del elemento li
-            li.innerHTML = `<a href="https://serverxkt.onrender.com?projectId=${filename}">${filename}</a>`;
+            li.innerHTML = `<a href="http://localhost:3000/?projectId=${filename}">${filename}</a>`;
 
             // Agregar el elemento li a la lista
             listado.appendChild(li);
@@ -146,7 +146,7 @@
       const enableEditModels = requestParams.enableEditModels === "true";
 
       const server = new Server({
-        dataDir: "/data",
+        dataDir: "./data",
       });
 
       const bimViewer = new BIMViewer(server, {

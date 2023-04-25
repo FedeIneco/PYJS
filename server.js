@@ -8,62 +8,15 @@ const fs = require('fs');
 
 const app = express();
 
-app.get('/css/style.css', function(req, res) {
-  res.set('Content-Type', 'text/css');
-  res.sendFile(path.join(__dirname, 'css/style.css'));
-});
-app.get('/lib/fontawesome-free-5.11.2-web/css/all.min.css', function(req, res) {
-  res.set('Content-Type', 'text/css');
-  res.sendFile(path.join(__dirname, 'lib/fontawesome-free-5.11.2-web/css/all.min.css'));
-});
-app.get('/lib/xeokit-bim-viewer/xeokit-bim-viewer.es.js', function(req, res) {
-  res.set('Content-Type', 'text/javascript');
-  res.sendFile(path.join(__dirname, 'lib/xeokit-bim-viewer/xeokit-bim-viewer.es.js'));
-});
-app.get('/lib/xeokit-bim-viewer/xeokit-bim-viewer.css', function(req, res) {
-  res.set('Content-Type', 'text/css');
-  res.sendFile(path.join(__dirname, 'lib/xeokit-bim-viewer/xeokit-bim-viewer.css'));
-});
-app.get('/img/icono-Ineco.ico', function(req, res) {
-  res.set('Content-Type', 'image/ico');
-  res.sendFile(path.join(__dirname, 'img/icono-Ineco.ico'));
-});
-app.get('/img/logo_ineco_blanco.png', function(req, res) {
-  res.set('Content-Type', 'image/png');
-  res.sendFile(path.join(__dirname, 'img/logo_ineco_blanco.png'));
-});
-app.get('/img/PanelLogo.png ', function(req, res) {
-  res.set('Content-Type', 'image/png');
-  res.sendFile(path.join(__dirname, 'img/PanelLogo.png'));
-});
-app.get('/img/fondo.png', function(req, res) {
-  res.set('Content-Type', 'image/png');
-  res.sendFile(path.join(__dirname, 'img/fondo.png'));
-});
-app.get('/img/PanelJerarquia.png', function(req, res) {
-  res.set('Content-Type', 'image/png');
-  res.sendFile(path.join(__dirname, 'img/PanelJerarquia.png'));
-});
-app.get('/img/PanelJerarquiaProp.png', function(req, res) {
-  res.set('Content-Type', 'image/png');
-  res.sendFile(path.join(__dirname, 'img/PanelJerarquiaProp.png'));
-});
-app.get('/lib/fontawesome-free-5.11.2-web/webfonts/fa-solid-900.woff2', function(req, res) {
-  res.set('Content-Type', 'font/woff2');
-  res.sendFile(path.join(__dirname, 'lib/fontawesome-free-5.11.2-web/webfonts/fa-solid-900.woff2'));
-});
-app.get('/lib/tippy.js', function(req, res) {
-  res.set('Content-Type', 'text/javascript');
-  res.sendFile(path.join(__dirname, 'lib/tippy.js'));
-});
-app.get('/lib/popper.js', function(req, res) {
-  res.set('Content-Type', 'text/javascript');
-  res.sendFile(path.join(__dirname, 'lib/popper.js'));
-});
-app.get('/lib/xeokit-bim-viewer/messages.js', function(req, res) {
-  res.set('Content-Type', 'text/javascript');
-  res.sendFile(path.join(__dirname, 'lib/xeokit-bim-viewer/messages.js'));
-});
+app.use('/css', express.static(__dirname + '/css'));
+app.use('/lib/fontawesome-free-5.11.2-web/css', express.static(__dirname + '/lib/fontawesome-free-5.11.2-web/css'));
+app.use('/lib/xeokit-bim-viewer/', express.static(__dirname + '/lib/xeokit-bim-viewer/'));
+app.use('/img', express.static(__dirname + '/img'));
+app.use('/lib/fontawesome-free-5.11.2-web/webfonts', express.static(__dirname + '/lib/fontawesome-free-5.11.2-web/webfonts'));
+app.use('/lib', express.static(__dirname + '/lib'));
+app.use('/data/projects', express.static(__dirname + '/data/projects'));
+
+
 
 
 
