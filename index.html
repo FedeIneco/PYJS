@@ -91,7 +91,7 @@
         formData.append("archivo", archivos[i]);
       }
       formData.append("texto", texto);
-      fetch("https://fedeineco.github.io/pruebaAPI/api/convert-to-xkt", {
+      fetch("https://serverxkt.onrender.com/api/convert-to-xkt", {
         method: "POST",
         body: formData,
       })
@@ -111,7 +111,7 @@
 
     const listado = document.getElementById("menuListado");
     function archivosCreados() {
-      fetch("https://fedeineco.github.io/pruebaAPI/api/projects")      
+      fetch("https://serverxkt.onrender.com/api/projects")      
         .then((response) => response.json())
         .then((data) => {
           const filenames = data.filenames;
@@ -121,7 +121,7 @@
             const li = document.createElement("li");
 
             // Configurar el texto del elemento li
-            li.innerHTML = `<a href="https://fedeineco.github.io/pruebaAPI/?projectId=${filename}">${filename}</a>`;
+            li.innerHTML = `<a href="https://serverxkt.onrender.com/?projectId=${filename}">${filename}</a>`;
 
             // Agregar el elemento li a la lista
             listado.appendChild(li);
