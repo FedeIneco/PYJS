@@ -31,6 +31,10 @@
 		{
 			"id": "PRUEBAFINALLOCAL",
 			"name": "PRUEBAFINALLOCAL"
+		},
+		{
+			"id": "PRUEBALOCA",
+			"name": "PRUEBALOCA"
 		}
 	]
 }

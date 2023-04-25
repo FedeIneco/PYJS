@@ -2,25 +2,26 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
     <link
       rel="shortcut icon"
-      href="./img/icono-Ineco.ico"
+      href="img/icono-Ineco.ico"
       type="image/x-icon"
     />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>xeokit BIM Viewer Demo</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />    
     <link
       rel="stylesheet"
       href="lib/fontawesome-free-5.11.2-web/css/all.min.css"
       type="text/css"
     />
     <link
-      rel="stylesheet"
-      href="./lib/xeokit-bim-viewer/xeokit-bim-viewer.css"
-      type="text/css"
-    />
+    rel="stylesheet"
+    href="lib/xeokit-bim-viewer/xeokit-bim-viewer.css"
+    type="text/css"
+  />
+
     <link rel="stylesheet" href="css/style.css" />
+    <title>xeokit BIM Viewer Demo</title>
   </head>
   <body>
     <input type="checkbox" id="explorer_toggle" />
@@ -44,7 +45,7 @@
         <span class="version"> versión x.x</span>
       </div>
       <div class="imagen">
-        <img src="./img/logo_ineco_blanco.png" alt="Logo Ineco" />
+        <img src="img/logo_ineco_blanco.png" alt="Logo Ineco" />
       </div>
     </div>
     <div id="listado">
@@ -67,8 +68,8 @@
   </body>
 
   <!-- Tooltips libraries -->
-  <script src="./lib/popper.js"></script>
-  <script src="./lib/tippy.js"></script>
+  <script src="/lib/popper.js"></script>
+  <script src="lib/tippy.js"></script>
 
   <script type="module">
     // Set up application
@@ -90,7 +91,7 @@
         formData.append("archivo", archivos[i]);
       }
       formData.append("texto", texto);
-      fetch("https://serverxkt.onrender.com/api/convert-to-xkt/", {
+      fetch("http://localhost:3000/api/convert-to-xkt/", {
         method: "POST",
         body: formData,
       })
@@ -120,7 +121,7 @@
             const li = document.createElement("li");
 
             // Configurar el texto del elemento li
-            li.innerHTML = `<a href="http://127.0.0.1:5501/index.html?projectId=${filename}">${filename}</a>`;
+            li.innerHTML = `<a href="http://localhost:3000/?projectId=${filename}">${filename}</a>`;
 
             // Agregar el elemento li a la lista
             listado.appendChild(li);
@@ -145,7 +146,7 @@
       const enableEditModels = requestParams.enableEditModels === "true";
 
       const server = new Server({
-        dataDir: "./data",
+        dataDir: "/data",
       });
 
       const bimViewer = new BIMViewer(server, {

@@ -21,8 +21,8 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
   background: url('../img/PanelLogo.png');
+  justify-content: space-around; 
   background-size: cover;
   padding: 0 1rem;
 }
@@ -114,7 +114,7 @@ body {
   position: fixed;
   height: 100%;
   color: #fff;
-  background-image:url('../img/PanelJerarquia.png');
+  background-image:url('../img/PanelJerarquiaProp.png');
   background-size: cover;
   overflow: auto;
   border-right: 2px solid red;
@@ -146,7 +146,7 @@ body {
   user-select: none;
   flex: 1 1 auto;
   color: white;
-  background-image: url('../img//PanelJerarquia.png');
+  background-image: url('../img/PanelJerarquia.png');
   background-size: cover;
   text-align: center;
   vertical-align: middle;  
