@@ -290,3 +290,23 @@ body {
   bottom: 5rem;
   right: 5rem;
 }
+
+#listado{
+  position: absolute;
+  z-index: 9999999;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 3rem;
+}
+
+#menuListado{
+  list-style: none;
+  display: flex;  
+  gap: 1rem;
+}
+#menuListado li a{
+  color: white;
+  text-decoration: none;
+}

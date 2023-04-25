@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./img/icono-Ineco.ico"
+      type="image/x-icon"
+    />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>xeokit BIM Viewer Demo</title>
     <link
@@ -41,6 +46,9 @@
       <div class="imagen">
         <img src="./img/logo_ineco_blanco.png" alt="Logo Ineco" />
       </div>
+    </div>
+    <div id="listado">
+      <ul id="menuListado"></ul>
     </div>
     <div id="myExplorer"></div>
     <div id="myToolbar"></div>
@@ -85,7 +93,7 @@
       fetch("https://serverxkt.onrender.com/convert-to-xkt/", {
         method: "POST",
         body: formData,
-      })      
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error("Error en la petición");
@@ -99,6 +107,28 @@
           console.error(error);
         });
     }
+
+    const listado = document.getElementById("menuListado");
+    function archivosCreados() {
+      fetch("http://localhost:3000/api/projects")
+        .then((response) => response.json())
+        .then((data) => {
+          const filenames = data.filenames;
+          console.log("Nombres de archivo:", filenames);
+          filenames.forEach((filename) => {
+            // Crear un elemento li
+            const li = document.createElement("li");
+
+            // Configurar el texto del elemento li
+            li.innerHTML = `<a href="http://127.0.0.1:5501/index.html?projectId=${filename}">${filename}</a>`;
+
+            // Agregar el elemento li a la lista
+            listado.appendChild(li);
+          });
+        })
+        .catch((error) => console.error(error));
+    }
+    archivosCreados();
 
     window.onload = function () {
       const requestParams = getRequestParams();

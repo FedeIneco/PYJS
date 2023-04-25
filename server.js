@@ -4,6 +4,7 @@ const cors = require('cors');
 const multer = require('multer');
 const mimeType = require('mime-types');
 const { exec } = require('child_process');
+const fs = require('fs');
 
 const app = express();
 
@@ -21,16 +22,30 @@ const upload = multer({
   storage: storage
 }).array('archivo', 10);
 
+
+let projects = fs.readdirSync('./data/projects');
+const filteredProjects = projects.filter((item) => item !== 'index.json')
+console.log(filteredProjects);
+
 app.get('/', async (req, res) => {
-  res.status(200).send({
-    message: 'Tamo en vivo!'
+  res.status(200).send('<h2>Servidor iniciado</h2>');
+});
+
+app.get('/api/projects', async (req, res) => {
+  let html = '';
+  let filenames = [];
+  for (let i = 0; i < filteredProjects.length; i++) {
+    html += `<h3>${filteredProjects[i]}</h3>`;
+    filenames.push(filteredProjects[i]);
+  }
+
+    res.status(200).send({    
+    filenames: filenames
   });
 });
 
-app.get('/convert-to-xkt', async (req, res) => {
-  res.status(200).send({
-    message: 'HOLA!'
-  });
+app.get('/api/convert-to-xkt', async (req, res) => {
+  res.status(200).send('<h2>Servidor iniciado aquí también</h2>');
 });
 
 app.post('/convert-to-xkt', upload, (req, res) => {
@@ -50,6 +65,6 @@ app.post('/convert-to-xkt', upload, (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || 8080, () => {
-  console.log('Servidor iniciado en el http://localhost:8080/');
+app.listen(process.env.PORT || 3000, () => {
+  console.log('Servidor iniciado en el http://localhost:3000/');
 });

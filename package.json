@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "mkdir -p ./lib/xeokit-bim-viewer && cp ./node_modules/@xeokit/xeokit-bim-viewer/dist/* ./lib/xeokit-bim-viewer/.",
     "create-demo-project": "node ./createProject.js -p demoProject -s ./demoModels/**/*",
-    "delete-demo-project": "node deleteProject.js -p demoProject"
+    "delete-demo-project": "node deleteProject.js -p demoProject",
+    "start": "node server.js",
+    "dev":"nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -44,5 +46,8 @@
     "puppeteer": "^10.1.0",
     "rimraf": "^3.0.2",
     "web-ifc": "^0.0.39"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
