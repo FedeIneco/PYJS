@@ -14,18 +14,20 @@
     display: inline-flex;
     vertical-align: middle;
     margin-bottom: 3px;
-    margin-right: 1.2rem !important;
+    margin-right: 2rem !important;
     pointer-events: none;
+    gap: 8px;
 }
 
 .xeokit-btn {
     position: relative;
     flex: 1 1 auto;
-    color: #03103F;
-    background-color: white;
+    color: white;
+    background-image:url('../../img/fondoIcono.png');
     text-align: center;
     vertical-align: middle;
-    border: 2px solid #1d2453;
+    border: 2px solid white;
+    background-size: cover;
     padding: .375rem .75rem;
     border-radius: .25rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
@@ -44,19 +46,18 @@
     pointer-events: none;
 }
 
-.xeokit-btn.active {
+/* .xeokit-btn.active {
     color: #fff;
     background-color: #03103F;
     border-color: #03103F !important;
-}
-
+} */
+/* 
 .xeokit-btn:hover {
     color: #477dca;
     border-color: #477dca !important;
-}
+} */
 
-.xeokit-btn.active:hover {
-    /*color: transparent;*/
+/* .xeokit-btn.active:hover {    
     color: white;
     background: #477dca;
     border-color: #477dca !important;
@@ -66,7 +67,7 @@
     opacity: .55;
     color: #99A4AD;
     border-color: #6c757d !important;
-}
+} */
 
 /*  Tabs    */
 
@@ -74,7 +75,8 @@
     line-height: 1.5;
     padding: 0;
     /*padding-left: 10px;*/
-    height: 100%;
+    height: auto;
+    margin-bottom: 4rem;
     overflow: hidden;
 }
 
@@ -120,7 +122,7 @@
 @media (min-width: 40em) {
     .xeokit-tabs .xeokit-tab.active .xeokit-tab-btn {
         background-color: transparent;
-        border-bottom: #CFCFCF solid 3px;
+        border-bottom:  rgb(203,23,32) solid 3px;
         margin-bottom: -1px;
     }
 }
@@ -162,8 +164,8 @@
 }
 
 .xeokit-tabs .xeokit-tab-content {
-    background-image: url('../../img/PanelJerarquia.png');
-    background-size: cover;
+    /* background-image: url('../../img/PanelJerarquia.png'); */
+    /* background-size: cover; */
     display: none;
     padding-top: 2em;
     padding-left: 0;
@@ -189,11 +191,11 @@
     font-weight: normal;
     position: relative;
     flex: 1 1 auto;
-    color: #CFCFCF;
+    color: white;
     background-color: transparent;
     text-align: center;
     vertical-align: middle;
-    border: 2px solid #CFCFCF;
+    border: 2px solid white;
     padding: .75rem .75rem;
     margin: 0 5px 10px 0;
     border-radius: .35rem;
@@ -689,7 +691,7 @@
 
 .xeokit-section-counter {
     opacity: 1.0;
-    color: black;
+    color: white;
     padding: 1px;
     margin: 0;
     margin-left: 10px;
@@ -798,11 +800,11 @@
     vertical-align: middle;
     border-style: solid;
     border-width: 8px 8px 0 8px;
-    border-color: black transparent transparent transparent !important;
+    border-color: white transparent transparent transparent !important;
 }
 
 .xeokit-arrow-down.disabled {
-    color: #99A4AD !important;
+    border-color: #99A4AD transparent transparent transparent !important;
 }
 
 .xeokit-arrow-down.active {

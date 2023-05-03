@@ -2,26 +2,22 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
-    <link
-      rel="shortcut icon"
-      href="img/icono-Ineco.ico"
-      type="image/x-icon"
-    />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="img/icono-Ineco.ico" type="image/x-icon" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link
       rel="stylesheet"
       href="lib/fontawesome-free-5.11.2-web/css/all.min.css"
       type="text/css"
     />
     <link
-    rel="stylesheet"
-    href="lib/xeokit-bim-viewer/xeokit-bim-viewer.css"
-    type="text/css"
-  />
+      rel="stylesheet"
+      href="lib/xeokit-bim-viewer/xeokit-bim-viewer.css"
+      type="text/css"
+    />
 
     <link rel="stylesheet" href="css/style.css" />
-    <title>xeokit BIM Viewer Demo</title>
+    <title>INECO viewer</title>
   </head>
   <body>
     <input type="checkbox" id="explorer_toggle" />
@@ -41,8 +37,8 @@
     ></label>
     <div class="header">
       <div id="title">
-        <h1 class="title">ATUM</h1>
-        <span class="version"> versión x.x</span>
+        <h1 class="title"><a href="http://localhost:3000/">ATÓN</a></h1>
+        <span class="version">versión x.x</span>
       </div>
       <div class="imagen">
         <img src="img/logo_ineco_blanco.png" alt="Logo Ineco" />
@@ -59,18 +55,24 @@
       <canvas id="myNavCubeCanvas"></canvas>
     </div>
     <form id="myForm" enctype="multipart/form-data">
-      <label for="texto">Texto:</label>
+      <label for="texto">Nombre proyecto:</label>
       <input type="text" id="texto" name="texto" /><br /><br />
-      <label for="archivo">Archivo:</label>
+      <label for="archivo">Archivos:</label>
       <input type="file" id="archivo" name="archivo" multiple /><br /><br />
       <button type="button" id="boton">Enviar</button>
     </form>
+    <div id="save-export">
+      <div id="save-export-container">
+        <button class="fa fa-file-download xeokit-btn" id="export-btn"></button>
+        <button class="fa fa-save xeokit-btn" id="save-btn"></button>
+      </div>
+    </div>
   </body>
 
   <!-- Tooltips libraries -->
   <script src="/lib/popper.js"></script>
   <script src="lib/tippy.js"></script>
-
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
   <script type="module">
     // Set up application
 
@@ -83,6 +85,13 @@
     import { messages as localeMessages } from "./lib/xeokit-bim-viewer/messages.js";
     const formData = new FormData();
     const boton = document.getElementById("boton");
+    const form = document.getElementById("myForm");
+    const lista = document.getElementById("listado");
+    form.style.display =
+      window.location.href === "http://localhost:3000/" ? "block" : "none";
+    lista.style.display =
+      window.location.href === "http://localhost:3000/" ? "flex" : "none";
+
     boton.addEventListener("click", enviar);
     function enviar() {
       const texto = document.getElementById("texto").value;
@@ -91,7 +100,7 @@
         formData.append("archivo", archivos[i]);
       }
       formData.append("texto", texto);
-      fetch("https://serverxkt.onrender.com/api/convert-to-xkt", {
+      fetch("http://localhost:3000/api/convert-to-xkt", {
         method: "POST",
         body: formData,
       })
@@ -111,17 +120,16 @@
 
     const listado = document.getElementById("menuListado");
     function archivosCreados() {
-      fetch("https://serverxkt.onrender.com/api/projects")      
+      fetch("http://localhost:3000/api/projects")
         .then((response) => response.json())
         .then((data) => {
           const filenames = data.filenames;
-          console.log("Nombres de archivo:", filenames);
           filenames.forEach((filename) => {
             // Crear un elemento li
             const li = document.createElement("li");
 
             // Configurar el texto del elemento li
-            li.innerHTML = `<a href="https://serverxkt.onrender.com/?projectId=${filename}">${filename}</a>`;
+            li.innerHTML = `<a href="http://localhost:3000/?projectId=${filename}">${filename}</a>`;
 
             // Agregar el elemento li a la lista
             listado.appendChild(li);
@@ -130,7 +138,22 @@
         .catch((error) => console.error(error));
     }
     archivosCreados();
+        
+    let todasTablaseditadas = document.createElement('table');    
+    const exportButton = document.getElementById("export-btn");
+    const saveButton = document.getElementById("save-btn");
 
+    saveButton.onclick = () =>{      
+      alert("Propiedad guardada con éxito")
+      const tables = document.querySelectorAll(".xeokit-table");            
+      for(let i = 0; i< tables.length; i++){
+        todasTablaseditadas.insertAdjacentHTML("beforeend",tables[i].children[0].innerHTML);
+      }      
+    }
+    exportButton.onclick =  () => {      
+      const book = XLSX.utils.table_to_book(todasTablaseditadas);
+      XLSX.writeFile(book, "Propiedades.xlsx");
+    };    
     window.onload = function () {
       const requestParams = getRequestParams();
       const locale = requestParams.locale || "en";

@@ -1,0 +1,110 @@
+{
+	"id": "FGCSA-PC-02.07",
+	"name": "FGCSA-PC-02.07",
+	"created": "Wed, 14 Jun 2017 07:00:00 GMT",
+	"models": [
+		{
+			"id": "FGCSA-PC-02.07-BIM-0300-EST",
+			"name": "FGCSA-PC-02.07-BIM-0300-EST",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 4276,
+				"numMetaObjects": 651,
+				"numObjects": 617,
+				"numTriangles": 23024,
+				"numVertices": 53256,
+				"xktSizeKb": "291.12",
+				"aabb": [
+					460767.73201329156,
+					23.169975324295574,
+					-3087343.7587576993,
+					460833.48218415625,
+					49.54000007029706,
+					-3087164.4940096587
+				]
+			}
+		},
+		{
+			"id": "FGCSA-PC-02.07-BIM-0500-ARQ",
+			"name": "FGCSA-PC-02.07-BIM-0500-ARQ",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 11203,
+				"numMetaObjects": 2071,
+				"numObjects": 2000,
+				"numTriangles": 338822,
+				"numVertices": 790842,
+				"xktSizeKb": "2549.34",
+				"aabb": [
+					460769.44892014883,
+					25.33099999999999,
+					-3087343.5646752855,
+					460832.243782217,
+					49.61975914781032,
+					-3087165.6288515725
+				]
+			}
+		},
+		{
+			"id": "FGCSA-PC-02.07-BIM-0600-INF",
+			"name": "FGCSA-PC-02.07-BIM-0600-INF",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 23576,
+				"numMetaObjects": 3577,
+				"numObjects": 3569,
+				"numTriangles": 138920,
+				"numVertices": 314338,
+				"xktSizeKb": "1612.18",
+				"aabb": [
+					460767.524252836,
+					24.18,
+					-3087340.3620566474,
+					460834.10825919773,
+					49.19546488983802,
+					-3087164.452166602
+				]
+			}
+		},
+		{
+			"id": "FGCSA-PC-02.07-BIM-1400-DUR",
+			"name": "FGCSA-PC-02.07-BIM-1400-DUR",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 18919,
+				"numMetaObjects": 2434,
+				"numObjects": 2429,
+				"numTriangles": 561538,
+				"numVertices": 1069034,
+				"xktSizeKb": "3380.29",
+				"aabb": [
+					460660.2040049401,
+					36.98012012054469,
+					-3087414.1854343973,
+					460904.5890567354,
+					54.51262649349562,
+					-3087135.747152382
+				]
+			}
+		}
+	],
+	"viewerConfigs": {},
+	"viewerContent": {},
+	"viewerState": {}
+}

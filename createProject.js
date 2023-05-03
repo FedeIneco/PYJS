@@ -11,7 +11,7 @@ const convert2xkt = require("@xeokit/xeokit-convert/dist/convert2xkt.cjs.js");
 const IfcAPI = require('web-ifc')
 
 
-const SERVER_PORT = 8080;
+const SERVER_PORT = 3000;
 const SCREENSHOT_SIZE = [200, 200];
 const HEADLESS = false;
 
