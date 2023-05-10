@@ -343,3 +343,30 @@ body {
   font-size: 2em;
 }
 
+#grupoSeleccion{
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999999999999;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px black;
+  width: 350px;
+  height: 100px;
+  background-color: #f2f2f2;
+}
+#grupoSeleccion div{
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#importXLS{
+  position: absolute;
+  z-index: 999999;
+  bottom: 20%;
+  right: 2%;
+}

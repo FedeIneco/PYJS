@@ -23,6 +23,7 @@ app.use(
   express.static(__dirname + "/lib/fontawesome-free-5.11.2-web/webfonts")
 );
 app.use("/lib", express.static(__dirname + "/lib"));
+app.use("/js", express.static(__dirname + "/js"));
 app.use("/data/projects", express.static(__dirname + "/data/projects"));
 
 const storage = multer.diskStorage({
@@ -60,10 +61,6 @@ app.get("/api/files", async (req, res) => {
   res.status(200).send({
     files,
   });
-});
-
-app.get("/api/convert-to-xkt", async (req, res) => {
-  res.status(200).send("<h2>Servidor iniciado aquí también</h2>");
 });
 
 app.post("/api/convert-to-xkt", upload, (req, res) => {

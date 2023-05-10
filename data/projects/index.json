@@ -19,6 +19,10 @@
 		{
 			"id": "FGCSA-PC-02.08",
 			"name": "FGCSA-PC-02.08"
+		},
+		{
+			"id": "puente",
+			"name": "puente"
 		}
 	]
 }

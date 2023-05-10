@@ -1,0 +1,35 @@
+{
+	"id": "puente",
+	"name": "puente",
+	"created": "Wed, 14 Jun 2017 07:00:00 GMT",
+	"models": [
+		{
+			"id": "SYNCHRO_BRIDGE",
+			"name": "SYNCHRO_BRIDGE",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 1760,
+				"numMetaObjects": 187,
+				"numObjects": 181,
+				"numTriangles": 9024,
+				"numVertices": 21652,
+				"xktSizeKb": "88.61",
+				"aabb": [
+					-97.0958501220703,
+					-2.6999999999999993,
+					-42.488635888671844,
+					83.7249506591797,
+					35.00000006103516,
+					47.393772253418
+				]
+			}
+		}
+	],
+	"viewerConfigs": {},
+	"viewerContent": {},
+	"viewerState": {}
+}

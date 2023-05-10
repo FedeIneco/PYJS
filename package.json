@@ -45,7 +45,8 @@
     "path": "^0.12.7",
     "puppeteer": "^10.1.0",
     "rimraf": "^3.0.2",
-    "web-ifc": "^0.0.39"
+    "web-ifc": "^0.0.39",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
