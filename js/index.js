@@ -14,7 +14,12 @@ const boton = document.getElementById("boton");
 const form = document.getElementById("myForm");
 const lista = document.getElementById("listado");
 const excelInput = document.getElementById("fileInput");
-
+const barButton = document.getElementById("bar-btn");
+const pieButton = document.getElementById("pie-btn");
+const linearButton = document.getElementById("line-btn");
+const barChart = document.getElementById("bar");
+const pieChart = document.getElementById("pie");
+const linearChart = document.getElementById("linear");
 form.style.display =
   window.location.href === "http://localhost:3000/" ? "block" : "none";
 lista.style.display =
@@ -66,7 +71,6 @@ function archivosCreados() {
     .catch((error) => console.error(error));
 }
 archivosCreados();
-
 
 let todasTablaseditadas = document.createElement("table");
 const exportButton = document.getElementById("export-btn");
@@ -331,7 +335,7 @@ window.onload = function () {
       bimViewer.setObjectsSelected(datos[i].ids, false);
       checks[i].addEventListener("change", (event) => {
         if (event.target.checked && checks[i].id == datos[i].nombre) {
-          bimViewer.setObjectsSelected(datos[i].ids, true);          
+          bimViewer.setObjectsSelected(datos[i].ids, true);
           bimViewer.viewFitObjects(datos[i].ids);
         } else {
           bimViewer.setObjectsSelected(datos[i].ids, false);
@@ -342,8 +346,32 @@ window.onload = function () {
 
   agregarObservador(mostrarChecks);
 
-
-
-
+  barButton.addEventListener("click", () => {
+    barChart.classList.toggle("ocultar");
+    if (!pieChart.classList.contains("ocultar")) {
+      pieChart.classList.toggle("ocultar");
+    }
+    if (!linearChart.classList.contains("ocultar")) {
+      linearChart.classList.toggle("ocultar");
+    }
+  });
+  pieButton.addEventListener("click", () => {
+    pieChart.classList.toggle("ocultar");
+    if (!linearChart.classList.contains("ocultar")) {
+      linearChart.classList.toggle("ocultar");
+    }
+    if (!barChart.classList.contains("ocultar")) {
+      barChart.classList.toggle("ocultar");
+    }
+  });
+  linearButton.addEventListener("click", () => {
+    linearChart.classList.toggle("ocultar");
+    if (!barChart.classList.contains("ocultar")) {
+      barChart.classList.toggle("ocultar");
+    }
+    if (!pieChart.classList.contains("ocultar")) {
+      pieChart.classList.toggle("ocultar");
+    }
+  });
   window.bimViewer = bimViewer; // For debugging
 };

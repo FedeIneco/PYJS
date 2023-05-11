@@ -63,8 +63,34 @@
     </form>
     <div id="save-export">
       <div id="save-export-container">
-        <button class="fa fa-file-download xeokit-btn" id="export-btn"></button>
-        <button class="fa fa-save xeokit-btn" id="save-btn"></button>
+        <button class="fa fa-file-download xeokit-btn disabled" id="export-btn"></button>
+        <button class="fa fa-save xeokit-btn disabled" id="save-btn"></button>        
+      </div>
+      <div id="charts-container">
+        <button class="fas fa-chart-pie xeokit-btn disabled graficos"  id="pie-btn"></button>
+        <button class="fas fa-chart-bar xeokit-btn disabled graficos"  id="bar-btn"></button>
+        <button class="fas fa-chart-line xeokit-btn disabled graficos"  id="line-btn"></button>
+      </div>
+    </div>
+
+    <div class="grafica-container ocultar" id="pie">
+      <div id="pie">
+      <h1>Coste en € por IFCType</h1>
+      <div>
+        <canvas id="pie-chart"></canvas>
+      </div>
+    </div>
+    </div>
+    <div class="grafica-container ocultar" id="bar">
+      <h1>Cantidad estados por tipo de elemento</h1>
+      <div>
+        <canvas id="bar-chart"></canvas>
+      </div>
+    </div>
+    <div class="grafica-container ocultar" id="linear">
+      <h1>Costes por fecha de ejecución</h1>
+      <div>
+        <canvas id="linear-chart"></canvas>
       </div>
     </div>
 
@@ -86,10 +112,12 @@
   </body>
 
   <!-- Tooltips libraries -->
-  <script src="/lib/popper.js"></script>
-  <script src="lib/tippy.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js" integrity="sha512-mlz/Fs1VtBou2TrUkGzX4VoGvybkD9nkeXWJm3rle0DPHssYYx4j+8kIS15T78ttGfmOjH0lLaBXGcShaVkdkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
   <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>  
-  <script src="js/excel.js"></script>
+  <script src="/lib/popper.js"></script>
+  <script src="lib/tippy.js"></script>
+  <script type= "module" src="js/excel.js"></script>
   <script type="module" src="js/index.js"></script>
 </html>

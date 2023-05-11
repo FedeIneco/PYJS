@@ -1,12 +1,12 @@
 html,
 body {
   height: 100%;
-  background: url('../img/fondo.png');
+  background: url("../img/fondo.png");
   background-size: cover;
   touch-action: none;
 }
 
-a{
+a {
   text-decoration: none;
   text-decoration: none;
   color: white;
@@ -20,6 +20,8 @@ body {
   overflow: hidden;
 }
 
+
+
 .header {
   height: 5rem;
   border-bottom: 2px solid white;
@@ -27,7 +29,7 @@ body {
   flex-direction: row;
   align-items: center;
   /* background: url('../img/PanelLogo.png'); */
-  justify-content: space-around; 
+  justify-content: space-around;
   background-size: cover;
   padding: 0 1rem;
 }
@@ -112,20 +114,20 @@ body {
   height: 150px;
   right: 120px;
   top: 10px;
-  z-index: 200000;  
+  z-index: 200000;
 }
 
 #myExplorer {
   margin-top: 2px;
   position: fixed;
   height: 100%;
-  color: #fff;  
+  color: #fff;
   /* background: url('../img/PanelJerarquiaProp.png'); */
   background-size: contain;
   overflow: auto;
-  border-right: 10px solid rgb(203,23,32);    
+  border-right: 10px solid rgb(203, 23, 32);
   border-left: 2px solid white;
-  padding-bottom: 100px;  
+  padding-bottom: 100px;
   user-select: none;
   padding-left: 10px;
   top: 5rem;
@@ -156,10 +158,10 @@ body {
   /* background-image: url('../img/PanelJerarquia.png'); */
   background-size: cover;
   text-align: center;
-  vertical-align: middle;  
-  padding: 0.375rem 0.75rem;  
+  vertical-align: middle;
+  padding: 0.375rem 0.75rem;
   -webkit-appearance: button;
-  overflow: visible;  
+  overflow: visible;
   box-sizing: border-box;
   align-items: flex-start;
   pointer-events: all;
@@ -220,7 +222,7 @@ body {
   /* background-image: url('../img/PanelJerarquia.png'); */
   background-size: cover;
   overflow: auto;
-  border-left: 10px solid rgb(203,23,32);  
+  border-left: 10px solid rgb(203, 23, 32);
   border-right: 2px solid white;
   padding: 0;
   top: 0;
@@ -239,8 +241,8 @@ body {
   height: 100%;
   right: 0;
   top: 5rem;
-  margin: 2px 0 0 0  !important;
-  border: none !important;  
+  margin: 2px 0 0 0 !important;
+  border: none !important;
   border-radius: 0 !important;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -250,10 +252,10 @@ body {
   background: none !important;
   background-size: cover;
   text-align: center;
-  vertical-align: middle;  
+  vertical-align: middle;
   border-radius: 0.25rem;
   -webkit-appearance: button;
-  overflow: visible;  
+  overflow: visible;
   box-sizing: border-box;
   align-items: flex-start;
   pointer-events: all;
@@ -284,7 +286,7 @@ body {
 
 #inspector_toggle:not(:checked) ~ #myInspector {
   right: -306px;
-  --right: -306px;  
+  --right: -306px;
 }
 
 #inspector_toggle:not(:checked) ~ #myViewer {
@@ -300,7 +302,7 @@ body {
   right: 5rem;
 }
 
-#listado{
+#listado {
   position: absolute;
   z-index: 9999999;
   width: 100%;
@@ -310,40 +312,36 @@ body {
   top: 3rem;
 }
 
-#menuListado{
+#menuListado {
   list-style: none;
-  display: flex;  
+  display: flex;
   gap: 1rem;
 }
-#menuListado li a{
+#menuListado li a {
   color: white;
   text-decoration: none;
 }
 
-#save-export{  
+#save-export {
   z-index: 100000;
   pointer-events: none;
   position: fixed;
   bottom: 0;
   right: 8%;
-  
-}
-
-#save-export-container{
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   background: transparent;
   pointer-events: none;
-  padding: 10px;    
-  gap: .5rem;
+  padding: 10px;
+  gap: 1rem;
 }
 
-#save-export-container button{
+#save-export button {
   font-size: 2em;
 }
 
-#grupoSeleccion{
+#grupoSeleccion {
   display: none;
   position: absolute;
   top: 50%;
@@ -356,7 +354,7 @@ body {
   height: 100px;
   background-color: #f2f2f2;
 }
-#grupoSeleccion div{
+#grupoSeleccion div {
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -364,9 +362,43 @@ body {
   justify-content: center;
 }
 
-#importXLS{
+#importXLS {
   position: absolute;
   z-index: 999999;
   bottom: 20%;
   right: 2%;
+}
+
+.grafica-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 740px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999999999999999999999;
+}
+
+.grafica-container h1 {
+  text-align: center;
+  margin: 20px 0;
+  color: #565656;
+}
+
+@media all and (max-width: 780px) {
+  .grafica-container {
+    width: auto;
+  }
+}
+
+@media all and (max-width: 400px) {
+  .grafica-container {
+    padding: 0px 20px;
+  }
+}
+
+.ocultar{
+  display: none;
 }
