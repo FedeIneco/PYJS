@@ -1,4 +1,4 @@
-import { graficarBar, graficarLinear, graficarPie } from "./graficas.js"; 
+import { graficarBar, graficarLinear, graficarPie } from "./graficas.js";
 
 const excelInput = document.getElementById("fileInput");
 const barButton = document.getElementById("bar-btn");
@@ -7,7 +7,7 @@ const linearButton = document.getElementById("line-btn");
 
 let datosPrecios = [];
 let ifcTypes = [];
-const statesGrafica = [];
+let statesGrafica = [];
 const sumatorioGrafica = [];
 const costesFecha = [];
 const labelFecha = [];
@@ -18,9 +18,9 @@ const contadorTipo3 = [];
 const contadorTipo4 = [];
 
 excelInput.addEventListener("change", async () => {
-    barButton.classList.remove('disabled');
-    pieButton.classList.remove('disabled');
-    linearButton.classList.remove('disabled');
+  barButton.classList.remove("disabled");
+  pieButton.classList.remove("disabled");
+  linearButton.classList.remove("disabled");
   const content = await readXlsxFile(excelInput.files[0]);
   for (let index = 1; index < content.length; index++) {
     const elemento = new Object();
@@ -36,7 +36,6 @@ excelInput.addEventListener("change", async () => {
   }
   obtenerTypes();
   obtenerStates();
-  obtenerFechas();
   fechaslabel();
   sumatorioCostesPortype();
   obtenerStatePorType();
@@ -54,72 +53,31 @@ excelInput.addEventListener("change", async () => {
   filtrarIdsPorIfcType(datosPrecios, ifcTypes);
 });
 
+function obtenerTypes() {
+  ifcTypes = eliminarDuplicadosPorPropiedad(datosPrecios, "type");
+}
+
 function obtenerStates() {
-  let states = [];
-  for (let index = 0; index < datosPrecios.length; index++) {
-    const element = datosPrecios[index];
-    states.push(element.state);
-  }
-  eliminarStatesDuplicados(states);
+  statesGrafica = eliminarDuplicadosPorPropiedad(datosPrecios, "state");
 }
 
-function obtenerFechas() {
-  let fechas = [];
-  for (let index = 0; index < datosPrecios.length; index++) {
-    const element = datosPrecios[index];
-    const fecha = element.dia +" " + element.mes + " " + element.annio;
-    fechas.push(fecha);
-  }
-  eliminarFechasDuplicadas(fechas);
+function eliminarDuplicadosPorPropiedad(arr, propiedad) {
+  return [...new Set(arr.map((element) => element[propiedad]))];
 }
 
-function fechaslabel(){
-  let fechas = [];
-  for (let index = 0; index < datosPrecios.length; index++) {
-    const element = datosPrecios[index];
-    const fecha = element.mes + " " + element.annio;
-    fechas.push(fecha);
-  }
+function fechaslabel() {
+  const fechas = [
+    ...new Set(
+      datosPrecios.map((element) => element.mes + " " + element.annio)
+    ),
+  ].sort();
   eliminarLabelDuplicadas(fechas);
 }
 
-function obtenerTypes() {
-  let types = [];
-  for (let index = 0; index < datosPrecios.length; index++) {
-    const element = datosPrecios[index];
-    types.push(element.type);
-  }
-  eliminarDuplicados(types);
-}
-
-function eliminarDuplicados(types) {
-  types.forEach((element) => {
-    if (!ifcTypes.includes(element)) {
-      ifcTypes.push(element);
-    }
-  });
-}
-
-function eliminarLabelDuplicadas(fechasLabel){
+function eliminarLabelDuplicadas(fechasLabel) {
   fechasLabel.forEach((element) => {
     if (!labelFecha.includes(element)) {
       labelFecha.push(element);
-    }    
-  });
-}
-
-function eliminarFechasDuplicadas(fechas) {
-    fechas.forEach((element) => {
-    if (!fechasGrafica.includes(element)) {
-      fechasGrafica.push(element);
-    }
-  });
-}
-
-function eliminarStatesDuplicados(states) {
-  states.forEach((element) => {
-    if (!statesGrafica.includes(element)) {
-      statesGrafica.push(element);
     }
   });
 }
@@ -167,22 +125,25 @@ function obtenerStatePorType() {
   }
 }
 
-
-function sumatioCostePorFecha (){
-    for (let index = 0; index < fechasGrafica.length; index++) {
-        const element = fechasGrafica[index];
-        let suma = 0;
-        for (let index2 = 0; index2 < datosPrecios.length; index2++) {
-            const fecha = datosPrecios[index2].dia +" "+ datosPrecios[index2].mes + " " + datosPrecios[index2].annio;
-            const element2 = datosPrecios[index2];
-            if (fecha == element) {
-                suma += element2.cost;
-            }
-        }
-        costesFecha.push(suma);
+function sumatioCostePorFecha() {
+  for (let index = 0; index < fechasGrafica.length; index++) {
+    const element = fechasGrafica[index];
+    let suma = 0;
+    for (let index2 = 0; index2 < datosPrecios.length; index2++) {
+      const fecha =
+        datosPrecios[index2].dia +
+        " " +
+        datosPrecios[index2].mes +
+        " " +
+        datosPrecios[index2].annio;
+      const element2 = datosPrecios[index2];
+      if (fecha == element) {
+        suma += element2.cost;
+      }
     }
+    costesFecha.push(suma);
+  }
 }
-
 
 function filtrarIdsPorIfcType(datosPrecios, ifcTypes) {
   let result = [];
@@ -197,8 +158,26 @@ function filtrarIdsPorIfcType(datosPrecios, ifcTypes) {
       }
     }
     result.push({ type: type, ids: idsTypes });
-  }  
+  }
   return result;
 }
 
-export {datosPrecios, ifcTypes, filtrarIdsPorIfcType}
+// function obtenerFechas() {
+//   let fechas = [];
+//   for (let index = 0; index < datosPrecios.length; index++) {
+//     const element = datosPrecios[index];
+//     const fecha = element.dia +" " + element.mes + " " + element.annio;
+//     fechas.push(fecha);
+//   }
+//   eliminarFechasDuplicadas(fechas);
+// }
+
+// function eliminarFechasDuplicadas(fechas) {
+//     fechas.forEach((element) => {
+//     if (!fechasGrafica.includes(element)) {
+//       fechasGrafica.push(element);
+//     }
+//   });
+// }
+
+export { datosPrecios, ifcTypes, filtrarIdsPorIfcType, statesGrafica };

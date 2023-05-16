@@ -8,7 +8,7 @@ import {
 } from "../lib/xeokit-bim-viewer/xeokit-bim-viewer.es.js";
 
 import { datos, colorGrafica } from "./graficas.js";
-import { datosPrecios, ifcTypes, filtrarIdsPorIfcType } from "./excel.js";
+import { datosPrecios, ifcTypes, filtrarIdsPorIfcType,statesGrafica } from "./excel.js";
 import { messages as localeMessages } from "../lib/xeokit-bim-viewer/messages.js";
 
 let types = [];
@@ -384,30 +384,40 @@ window.onload = function () {
     const ids2 = [];
     const ids3 = [];
     const ids4 = [];
+    let color = 0;
     switch (statesSelect.value) {
       case "default":
         bimViewer.setAllObjectsSelected(false);
         break;
-      case "state1":
+      case "1":
         const result = datosPrecios.filter((element) => element.state == 1);
         result.forEach((element) => {
           ids.push(element.id);
         });
+        color = convertHexToEdgeColor("#FF0000");
+        bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
+        bimViewer.viewer.scene.selectedMaterial.fillColor = color;
         bimViewer.setAllObjectsSelected(false);
         bimViewer.setObjectsSelected(ids, true);
         bimViewer.viewFitObjects(ids);
 
         break;
-      case "state2":
+      case "2":
         const result2 = datosPrecios.filter((element) => element.state == 2);
         result2.forEach((element) => {
           ids2.push(element.id);
         });
+        color = convertHexToEdgeColor("#00FF00");
+        bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
+        bimViewer.viewer.scene.selectedMaterial.fillColor = color;
         bimViewer.setAllObjectsSelected(false);
         bimViewer.setObjectsSelected(ids2, true);
         bimViewer.viewFitObjects(ids2);
         break;
-      case "state3":
+      case "3":
+        color = convertHexToEdgeColor("#E4FF00");
+        bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
+        bimViewer.viewer.scene.selectedMaterial.fillColor = color;
         bimViewer.setAllObjectsSelected(false);
         const result3 = datosPrecios.filter((element) => element.state == 3);
         result3.forEach((element) => {
@@ -416,7 +426,10 @@ window.onload = function () {
         bimViewer.setObjectsSelected(ids3, true);
         bimViewer.viewFitObjects(ids3);
         break;
-      case "state4":
+      case "4":
+        color = convertHexToEdgeColor("#00FFDC");
+        bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
+        bimViewer.viewer.scene.selectedMaterial.fillColor = color;
         bimViewer.setAllObjectsSelected(false);
         const result4 = datosPrecios.filter((element) => element.state == 4);
         result4.forEach((element) => {
@@ -439,7 +452,8 @@ window.onload = function () {
             (element) => element.type == "IfcWall" && element.state == 1
           )
         );
-        crearDesplegableIfcTypes(ifcTypes);
+        crearDesplegable(ifcTypes, ifcTypesSelect);
+        crearDesplegable(statesGrafica, statesSelect);
         types = filtrarIdsPorIfcType(datosPrecios, ifcTypes);
         console.log(types);
       } else {
@@ -448,12 +462,12 @@ window.onload = function () {
     }, 1000);
   });
 
-  function crearDesplegableIfcTypes(ifcTypes) {
-    ifcTypes.forEach((ifcType) => {
+  function crearDesplegable(datosDesplegable, select) {
+    datosDesplegable.forEach((elementoDesplegable) => {
       const option = document.createElement("option");
-      option.value = ifcType;
-      option.innerText = ifcType;
-      ifcTypesSelect.appendChild(option);
+      option.value = elementoDesplegable;
+      option.innerText = elementoDesplegable;
+      select.appendChild(option);
     });
   }
 
@@ -490,23 +504,35 @@ window.onload = function () {
   barChart.addEventListener("click", handleChartClick);
   pieChart.addEventListener("click", handleChartClick);
 
-  function convertRgbToEdgeColor(rgbColor) {
-    // Extrae los componentes R, G y B del string de color RGB
+  function convertRgbToEdgeColor(rgbColor) {    
     const components = rgbColor.match(/\d+/g);
     
-    if (components && components.length === 3) {
-      // Convierte los valores de 0 a 255 a valores de 0 a 1
+    if (components && components.length === 3) {    
       const red = parseInt(components[0], 10) / 255;
       const green = parseInt(components[1], 10) / 255;
       const blue = parseInt(components[2], 10) / 255;
-    
-      // Retorna el edgeColor en el formato adecuado
+          
       return [red, green, blue];
-    } else {
-      // Retorna null si no se puede extraer los componentes correctamente
+    } else {      
       return null;
     }
   }
 
+  function convertHexToEdgeColor(hexColor) {
+    // Convierte el valor hexadecimal a decimales
+    const red = parseInt(hexColor.slice(1, 3), 16) / 255;
+    const green = parseInt(hexColor.slice(3, 5), 16) / 255;
+    const blue = parseInt(hexColor.slice(5, 7), 16) / 255;
+  
+    // Retorna el edgeColor en el formato adecuado
+    return [red, green, blue];
+  }
+  
+  // Ejemplo de uso
+  const hexColor = "#FF0000"; // Color rojo en formato hexadecimal
+  const edgeColor = convertHexToEdgeColor(hexColor);
+  
+  bimViewer.viewer.scene.selectedMaterial.edgeColor = edgeColor;
+  
   window.bimViewer = bimViewer; // For debugging
 };

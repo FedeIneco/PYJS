@@ -58,8 +58,8 @@ async function graficarBar(
       {
         label: array[0],
         data: contadorTipo1,
-        borderColor: "#00FFFF",
-        backgroundColor: "#00FFFF",
+        borderColor: "#FF0000",
+        backgroundColor: "#FF0000",
         borderWidth: 1,
       },
       {
@@ -72,15 +72,15 @@ async function graficarBar(
       {
         label: array[2],
         data: contadorTipo3,
-        borderColor: "#FF00FF",
-        backgroundColor: "#FF00FF",
+        borderColor: "#E4FF00",
+        backgroundColor: "#E4FF00",
         borderWidth: 1,
       },
       {
         label: array[3],
         data: contadorTipo4,
-        borderColor: "#FFA500",
-        backgroundColor: "#FFA500",
+        borderColor: "#00FFDC",
+        backgroundColor: "#00FFDC",
         borderWidth: 1,
       },
     ],
