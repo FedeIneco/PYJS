@@ -4,6 +4,7 @@ const piechart = document.getElementById("pie-chart");
 const linear = document.getElementById("linear-chart");
 const barChart = document.getElementById("bar-chart");
 let datos;
+let colorGrafica;
 
 async function graficarPie(elementosGrafica, sumatorioGrafica) {
  let pie =  new Chart(piechart, {
@@ -36,8 +37,9 @@ async function graficarPie(elementosGrafica, sumatorioGrafica) {
     },
   });
   piechart.addEventListener("click", async function (event) {
-    var element = await pie.getElementAtEvent(event)[0];        
+    var element = await pie.getElementAtEvent(event)[0];      
     datos = idsElementosClickados(element._view.label);
+    colorGrafica = element._view.backgroundColor;
   });
 }
 
@@ -98,6 +100,7 @@ async function graficarBar(
   barChart.addEventListener("click", async function (event) {
     var element = await bar.getElementAtEvent(event)[0];        
     datos = idsElementosClickados(element._view.label, element._view.datasetLabel);        
+    colorGrafica = element._view.backgroundColor;
   });
  
 }
@@ -139,4 +142,5 @@ function idsElementosClickados (label, datasetLabel){
     return datosPrecios.filter((element) => (element.type === label));
   }
 }
-export { graficarPie, graficarBar, graficarLinear, datos };
+
+export { graficarPie, graficarBar, graficarLinear, datos, colorGrafica };

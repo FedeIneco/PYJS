@@ -7,7 +7,7 @@ import {
   array,
 } from "../lib/xeokit-bim-viewer/xeokit-bim-viewer.es.js";
 
-import{ datos } from './graficas.js'
+import { datos, colorGrafica } from "./graficas.js";
 import { datosPrecios, ifcTypes, filtrarIdsPorIfcType } from "./excel.js";
 import { messages as localeMessages } from "../lib/xeokit-bim-viewer/messages.js";
 
@@ -379,7 +379,7 @@ window.onload = function () {
       pieChart.classList.toggle("ocultar");
     }
   });
-  statesSelect.addEventListener("change", () => {    
+  statesSelect.addEventListener("change", () => {
     const ids = [];
     const ids2 = [];
     const ids3 = [];
@@ -430,22 +430,26 @@ window.onload = function () {
     }
   });
 
-  datosInput.addEventListener("change", async  () => {     
-  const checkIfcTypes = setInterval(() => {    
-    if (datosPrecios.length > 0) {      
-      clearInterval(checkIfcTypes);
-      console.log(datosPrecios.filter((element) => (element.type == 'IfcWall' && element.state == 1)));
-      crearDesplegableIfcTypes(ifcTypes);
-      types = filtrarIdsPorIfcType(datosPrecios, ifcTypes);
-      console.log(types);
-    } else {
-      console.log("Cargando...");
-    }
-  }, 1000);
- });
+  datosInput.addEventListener("change", async () => {
+    const checkIfcTypes = setInterval(() => {
+      if (datosPrecios.length > 0) {
+        clearInterval(checkIfcTypes);
+        console.log(
+          datosPrecios.filter(
+            (element) => element.type == "IfcWall" && element.state == 1
+          )
+        );
+        crearDesplegableIfcTypes(ifcTypes);
+        types = filtrarIdsPorIfcType(datosPrecios, ifcTypes);
+        console.log(types);
+      } else {
+        console.log("Cargando...");
+      }
+    }, 1000);
+  });
 
-   function crearDesplegableIfcTypes(ifcTypes) {
-    ifcTypes.forEach((ifcType) => {      
+  function crearDesplegableIfcTypes(ifcTypes) {
+    ifcTypes.forEach((ifcType) => {
       const option = document.createElement("option");
       option.value = ifcType;
       option.innerText = ifcType;
@@ -453,38 +457,56 @@ window.onload = function () {
     });
   }
 
-  ifcTypesSelect.addEventListener('change', () =>{
-    const elementoSeleccionado = ifcTypesSelect.value;      
-    for(let i = 0; i < types.length; i++){
-      if(types[i].type == elementoSeleccionado){        
+  ifcTypesSelect.addEventListener("change", () => {
+    const elementoSeleccionado = ifcTypesSelect.value;
+    for (let i = 0; i < types.length; i++) {
+      if (types[i].type == elementoSeleccionado) {
         let ids = [];
         types[i].ids.forEach((id) => {
           ids.push(id.id);
-        });        
+        });
         console.log(elementoSeleccionado);
         bimViewer.setAllObjectsSelected(false);
         bimViewer.setObjectsSelected(Object.values(ids), true);
         bimViewer.viewFitObjects(Object.values(ids));
-        break; 
-      } else{
+        break;
+      } else {
         bimViewer.setAllObjectsSelected(false);
         bimViewer.viewFitAll();
-      }             
-    } 
-  });  
+      }
+    }
+  });
 
   function handleChartClick() {
-    const idsClick = datos.map(dato => dato.id);
+    const idsClick = datos.map((dato) => dato.id);
+    const color = convertRgbToEdgeColor(colorGrafica);    
+    bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
+    bimViewer.viewer.scene.selectedMaterial.fillColor = color;
     bimViewer.setAllObjectsSelected(false);
     bimViewer.setObjectsSelected(idsClick, true);
     bimViewer.viewFitObjects(idsClick);
   }
-  
+
   barChart.addEventListener("click", handleChartClick);
   pieChart.addEventListener("click", handleChartClick);
-  
+
+  function convertRgbToEdgeColor(rgbColor) {
+    // Extrae los componentes R, G y B del string de color RGB
+    const components = rgbColor.match(/\d+/g);
+    
+    if (components && components.length === 3) {
+      // Convierte los valores de 0 a 255 a valores de 0 a 1
+      const red = parseInt(components[0], 10) / 255;
+      const green = parseInt(components[1], 10) / 255;
+      const blue = parseInt(components[2], 10) / 255;
+    
+      // Retorna el edgeColor en el formato adecuado
+      return [red, green, blue];
+    } else {
+      // Retorna null si no se puede extraer los componentes correctamente
+      return null;
+    }
+  }
 
   window.bimViewer = bimViewer; // For debugging
-
-
 };
