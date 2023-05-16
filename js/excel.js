@@ -5,8 +5,8 @@ const barButton = document.getElementById("bar-btn");
 const pieButton = document.getElementById("pie-btn");
 const linearButton = document.getElementById("line-btn");
 
-const datosPrecios = [];
-const elementosGrafica = [];
+let datosPrecios = [];
+let ifcTypes = [];
 const statesGrafica = [];
 const sumatorioGrafica = [];
 const costesFecha = [];
@@ -41,9 +41,9 @@ excelInput.addEventListener("change", async () => {
   sumatorioCostesPortype();
   obtenerStatePorType();
   sumatioCostePorFecha();
-  await graficarPie(elementosGrafica, sumatorioGrafica);
+  await graficarPie(ifcTypes, sumatorioGrafica);
   await graficarBar(
-    elementosGrafica,
+    ifcTypes,
     statesGrafica,
     contadorTipo1,
     contadorTipo2,
@@ -51,6 +51,7 @@ excelInput.addEventListener("change", async () => {
     contadorTipo4
   );
   await graficarLinear(costesFecha, labelFecha, fechasGrafica);
+  filtrarIdsPorIfcType(datosPrecios, ifcTypes);
 });
 
 function obtenerStates() {
@@ -93,8 +94,8 @@ function obtenerTypes() {
 
 function eliminarDuplicados(types) {
   types.forEach((element) => {
-    if (!elementosGrafica.includes(element)) {
-      elementosGrafica.push(element);
+    if (!ifcTypes.includes(element)) {
+      ifcTypes.push(element);
     }
   });
 }
@@ -124,8 +125,8 @@ function eliminarStatesDuplicados(states) {
 }
 
 function sumatorioCostesPortype() {
-  for (let index = 0; index < elementosGrafica.length; index++) {
-    const element = elementosGrafica[index];
+  for (let index = 0; index < ifcTypes.length; index++) {
+    const element = ifcTypes[index];
     let suma = 0;
     for (let index2 = 0; index2 < datosPrecios.length; index2++) {
       const element2 = datosPrecios[index2];
@@ -138,8 +139,8 @@ function sumatorioCostesPortype() {
 }
 
 function obtenerStatePorType() {
-  for (let index = 0; index < elementosGrafica.length; index++) {
-    const element = elementosGrafica[index];
+  for (let index = 0; index < ifcTypes.length; index++) {
+    const element = ifcTypes[index];
     let contador1 = 0;
     let contador2 = 0;
     let contador3 = 0;
@@ -166,6 +167,7 @@ function obtenerStatePorType() {
   }
 }
 
+
 function sumatioCostePorFecha (){
     for (let index = 0; index < fechasGrafica.length; index++) {
         const element = fechasGrafica[index];
@@ -180,3 +182,23 @@ function sumatioCostePorFecha (){
         costesFecha.push(suma);
     }
 }
+
+
+function filtrarIdsPorIfcType(datosPrecios, ifcTypes) {
+  let result = [];
+  for (let i = 0; i < ifcTypes.length; i++) {
+    const type = ifcTypes[i];
+    let idsTypes = [];
+    for (let j = 0; j < datosPrecios.length; j++) {
+      const element = datosPrecios[j];
+      if (element.type === type) {
+        let id = { id: element.id };
+        idsTypes.push(id);
+      }
+    }
+    result.push({ type: type, ids: idsTypes });
+  }  
+  return result;
+}
+
+export {datosPrecios, ifcTypes, filtrarIdsPorIfcType}

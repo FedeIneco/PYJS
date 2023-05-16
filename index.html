@@ -45,8 +45,21 @@
       </div>
     </div>
     <div id="listado">
-      <ul id="menuListado"></ul>
+      <ul id="menuListado"></ul>      
     </div>
+    <div class="filtros">
+    <select name="states" id="states">
+      <option value="default">Elige una estado</option>
+      <option value="state1">1</option>
+      <option value="state2">2</option>
+      <option value="state3">3</option>
+      <option value="state4">4</option>
+    </select>
+
+    <select name="ifcTypes" id="ifcTypes">
+      <option value="default">Elige un IFCType</option>
+    </select>
+  </div>
     <div id="myExplorer"></div>
     <div id="myToolbar"></div>
     <div id="myInspector"></div>
@@ -112,11 +125,10 @@
   </body>
 
   <!-- Tooltips libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js" integrity="sha512-mlz/Fs1VtBou2TrUkGzX4VoGvybkD9nkeXWJm3rle0DPHssYYx4j+8kIS15T78ttGfmOjH0lLaBXGcShaVkdkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>  
   <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
   <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>  
-  <script src="/lib/popper.js"></script>
+  <script src="lib/popper.js"></script>
   <script src="lib/tippy.js"></script>
   <script type= "module" src="js/excel.js"></script>
   <script type="module" src="js/index.js"></script>

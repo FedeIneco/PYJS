@@ -7,19 +7,24 @@ import {
   array,
 } from "../lib/xeokit-bim-viewer/xeokit-bim-viewer.es.js";
 
+import{ datos } from './graficas.js'
+import { datosPrecios, ifcTypes, filtrarIdsPorIfcType } from "./excel.js";
 import { messages as localeMessages } from "../lib/xeokit-bim-viewer/messages.js";
 
+let types = [];
 const formData = new FormData();
 const boton = document.getElementById("boton");
 const form = document.getElementById("myForm");
 const lista = document.getElementById("listado");
-const excelInput = document.getElementById("fileInput");
+const datosInput = document.getElementById("fileInput");
 const barButton = document.getElementById("bar-btn");
 const pieButton = document.getElementById("pie-btn");
 const linearButton = document.getElementById("line-btn");
 const barChart = document.getElementById("bar");
 const pieChart = document.getElementById("pie");
 const linearChart = document.getElementById("linear");
+const statesSelect = document.getElementById("states");
+const ifcTypesSelect = document.getElementById("ifcTypes");
 form.style.display =
   window.location.href === "http://localhost:3000/" ? "block" : "none";
 lista.style.display =
@@ -88,7 +93,7 @@ saveButton.onclick = () => {
 };
 exportButton.onclick = () => {
   const book = XLSX.utils.table_to_book(todasTablaseditadas);
-  XLSX.writeFile(book, "Propiedades.xlsx");
+  XLSX.writeFile(book, "PropiedadesEditadas.xlsx");
 };
 window.onload = function () {
   const requestParams = getRequestParams();
@@ -332,9 +337,10 @@ window.onload = function () {
   function mostrarChecks(checks) {
     const datos = mostrarSeleccion(array);
     for (let i = 0; i < checks.length; i++) {
-      bimViewer.setObjectsSelected(datos[i].ids, false);
+      bimViewer.setAllObjectsSelected(false);
       checks[i].addEventListener("change", (event) => {
         if (event.target.checked && checks[i].id == datos[i].nombre) {
+          //bimViewer.setAllObjectsSelected(false);
           bimViewer.setObjectsSelected(datos[i].ids, true);
           bimViewer.viewFitObjects(datos[i].ids);
         } else {
@@ -373,5 +379,112 @@ window.onload = function () {
       pieChart.classList.toggle("ocultar");
     }
   });
+  statesSelect.addEventListener("change", () => {    
+    const ids = [];
+    const ids2 = [];
+    const ids3 = [];
+    const ids4 = [];
+    switch (statesSelect.value) {
+      case "default":
+        bimViewer.setAllObjectsSelected(false);
+        break;
+      case "state1":
+        const result = datosPrecios.filter((element) => element.state == 1);
+        result.forEach((element) => {
+          ids.push(element.id);
+        });
+        bimViewer.setAllObjectsSelected(false);
+        bimViewer.setObjectsSelected(ids, true);
+        bimViewer.viewFitObjects(ids);
+
+        break;
+      case "state2":
+        const result2 = datosPrecios.filter((element) => element.state == 2);
+        result2.forEach((element) => {
+          ids2.push(element.id);
+        });
+        bimViewer.setAllObjectsSelected(false);
+        bimViewer.setObjectsSelected(ids2, true);
+        bimViewer.viewFitObjects(ids2);
+        break;
+      case "state3":
+        bimViewer.setAllObjectsSelected(false);
+        const result3 = datosPrecios.filter((element) => element.state == 3);
+        result3.forEach((element) => {
+          ids3.push(element.id);
+        });
+        bimViewer.setObjectsSelected(ids3, true);
+        bimViewer.viewFitObjects(ids3);
+        break;
+      case "state4":
+        bimViewer.setAllObjectsSelected(false);
+        const result4 = datosPrecios.filter((element) => element.state == 4);
+        result4.forEach((element) => {
+          ids4.push(element.id);
+        });
+        bimViewer.setObjectsSelected(ids4, true);
+        bimViewer.viewFitObjects(ids4);
+        break;
+      default:
+        break;
+    }
+  });
+
+  datosInput.addEventListener("change", async  () => {     
+  const checkIfcTypes = setInterval(() => {    
+    if (datosPrecios.length > 0) {      
+      clearInterval(checkIfcTypes);
+      console.log(datosPrecios.filter((element) => (element.type == 'IfcWall' && element.state == 1)));
+      crearDesplegableIfcTypes(ifcTypes);
+      types = filtrarIdsPorIfcType(datosPrecios, ifcTypes);
+      console.log(types);
+    } else {
+      console.log("Cargando...");
+    }
+  }, 1000);
+ });
+
+   function crearDesplegableIfcTypes(ifcTypes) {
+    ifcTypes.forEach((ifcType) => {      
+      const option = document.createElement("option");
+      option.value = ifcType;
+      option.innerText = ifcType;
+      ifcTypesSelect.appendChild(option);
+    });
+  }
+
+  ifcTypesSelect.addEventListener('change', () =>{
+    const elementoSeleccionado = ifcTypesSelect.value;      
+    for(let i = 0; i < types.length; i++){
+      if(types[i].type == elementoSeleccionado){        
+        let ids = [];
+        types[i].ids.forEach((id) => {
+          ids.push(id.id);
+        });        
+        console.log(elementoSeleccionado);
+        bimViewer.setAllObjectsSelected(false);
+        bimViewer.setObjectsSelected(Object.values(ids), true);
+        bimViewer.viewFitObjects(Object.values(ids));
+        break; 
+      } else{
+        bimViewer.setAllObjectsSelected(false);
+        bimViewer.viewFitAll();
+      }             
+    } 
+  });  
+
+  function handleChartClick() {
+    const idsClick = datos.map(dato => dato.id);
+    bimViewer.setAllObjectsSelected(false);
+    bimViewer.setObjectsSelected(idsClick, true);
+    bimViewer.viewFitObjects(idsClick);
+  }
+  
+  barChart.addEventListener("click", handleChartClick);
+  pieChart.addEventListener("click", handleChartClick);
+  
+
   window.bimViewer = bimViewer; // For debugging
+
+
 };

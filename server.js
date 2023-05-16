@@ -24,7 +24,9 @@ app.use(
 );
 app.use("/lib", express.static(__dirname + "/lib"));
 app.use("/js", express.static(__dirname + "/js"));
+// app.use("/../../js/excel", express.static(__dirname + "/js"));
 app.use("/data/projects", express.static(__dirname + "/data/projects"));
+
 
 const storage = multer.diskStorage({
   destination: "uploads/",

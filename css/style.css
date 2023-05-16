@@ -387,6 +387,18 @@ body {
   color: #565656;
 }
 
+.filtros{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 999999999999;
+
+}
+
+.ocultar{
+  display: none;
+}
+
 @media all and (max-width: 780px) {
   .grafica-container {
     width: auto;
@@ -397,8 +409,4 @@ body {
   .grafica-container {
     padding: 0px 20px;
   }
-}
-
-.ocultar{
-  display: none;
 }
