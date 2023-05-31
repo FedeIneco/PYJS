@@ -1,13 +1,14 @@
-import { datosPrecios } from "./excel.js";
+import { objetosP2, estadosUnicos, objetos } from "./excelJB.js";
 
 const piechart = document.getElementById("pie-chart");
 const linear = document.getElementById("linear-chart");
 const barChart = document.getElementById("bar-chart");
+const barChartEspacio = document.getElementById("bar-chart-espacios");
 let datos;
 let colorGrafica;
 
-async function graficarPie(elementosGrafica, sumatorioGrafica) {
- let pie =  new Chart(piechart, {
+async function graficarPie(elementosGrafica, datosGraica) {
+  let pie = new Chart(piechart, {
     type: "pie",
     data: {
       labels: elementosGrafica,
@@ -15,104 +16,141 @@ async function graficarPie(elementosGrafica, sumatorioGrafica) {
         {
           // label: 'Cost by type',
           backgroundColor: [
-            "#FF0000", // rojo
-            "#00FF00", // verde
-            "#0000FF", // azul
-            "#FFFF00", // amarillo
-            "#FF00FF", // magenta
-            "#00FFFF", // cian
-            "#800080", // morado
-            "#FFA500",
+            "#ff4d4d", // rojo
+            "#ffff4d", // amarillo
+            "#70db70", // verde
           ],
-          data: sumatorioGrafica,
+          data: datosGraica,
         },
       ],
       options: {
         title: {
           display: true,
-          text: "Costes por IFCType",
+          text: "Ocuapción",
         },
         responsive: true,
       },
     },
   });
+
   piechart.addEventListener("click", async function (event) {
-    var element = await pie.getElementAtEvent(event)[0];      
-    datos = idsElementosClickados(element._view.label);
-    colorGrafica = element._view.backgroundColor;
+    const elements = pie.getElementsAtEventForMode(
+      event,
+      "nearest",
+      { intersect: true },
+      false
+    );
+
+    // Verificar si se han encontrado elementos
+    if (elements.length > 0) {
+      // Obtener el primer elemento clicado
+      const element = elements[0];
+
+      const index = element.index;
+
+      const label = pie.data.labels[index];
+
+      colorGrafica = pie.data.datasets[0].backgroundColor[index];
+      datos = idsElementosClickadosP1(label);
+    }
   });
 }
 
 async function graficarBar(
-  elementosGrafica,
+  elementos,
   statesGrafica,
   contadorTipo1,
   contadorTipo2,
-  contadorTipo3,
-  contadorTipo4
+  contadorTipo3
 ) {
-  const array = statesGrafica.sort();
   const data = {
-    labels: elementosGrafica,
+    labels: elementos,
     datasets: [
       {
-        label: array[0],
+        label: statesGrafica[0],
         data: contadorTipo1,
-        borderColor: "#FF0000",
-        backgroundColor: "#FF0000",
+        borderColor: "#ff4d4d",
+        backgroundColor: "#ff4d4d",
         borderWidth: 1,
       },
       {
-        label: array[1],
+        label: statesGrafica[1],
         data: contadorTipo2,
-        borderColor: "#00FF00",
-        backgroundColor: "#00FF00",
+        borderColor: "#ffff4d",
+        backgroundColor: "#ffff4d",
         borderWidth: 1,
       },
       {
-        label: array[2],
+        label: statesGrafica[2],
         data: contadorTipo3,
-        borderColor: "#E4FF00",
-        backgroundColor: "#E4FF00",
-        borderWidth: 1,
-      },
-      {
-        label: array[3],
-        data: contadorTipo4,
-        borderColor: "#00FFDC",
-        backgroundColor: "#00FFDC",
+        borderColor: "#70db70",
+        backgroundColor: "#70db70",
         borderWidth: 1,
       },
     ],
   };
-   let bar = await new Chart(barChart, {
+  let bar = await new Chart(barChart, {
     type: "bar",
     data: data,
     options: {
       title: {
         display: true,
-        text: "Estados por IFCType",
+        text: "Estados por fecha",
       },
       responsive: true,
     },
   });
-  console.log(bar);
   barChart.addEventListener("click", async function (event) {
-    var element = await bar.getElementAtEvent(event)[0];        
-    datos = idsElementosClickados(element._view.label, element._view.datasetLabel);        
-    colorGrafica = element._view.backgroundColor;
+    const elements = bar.getElementsAtEventForMode(
+      event,
+      "nearest",
+      { intersect: true },
+      false
+    );
+    if (elements.length > 0) {
+      // Recorrer los elementos obtenidos
+      elements.forEach((element) => {
+        // Obtener el índice del elemento dentro del conjunto de datos
+        const datasetIndex = element.datasetIndex;
+        const index = element.index;
+
+        // Obtener el valor y la etiqueta del elemento
+        const fecha = bar.data.labels[index];
+        const estado = bar.data.datasets[datasetIndex].label;
+        datos = idsElementosClickadosP2(fecha, estado);
+        colorGrafica = bar.data.datasets[datasetIndex].backgroundColor;
+      });
+    }
   });
- 
 }
 
-
-async function graficarLinear(costesFecha, labelFecha, fechasGrafica) {
+async function graficarLinear(
+  fechas,
+  estados,
+  contador1,
+  contador2,
+  contador3
+) {
   const data = {
-    labels: labelFecha,
+    labels: fechas,
     datasets: [
       {
-        label: "Costes",
-        data: costesFecha,
+        label: estados[0],
+        data: contador1,
+        borderColor: "#ff4d4d",
+        backgroundColor: "#ff4d4d",
+      },
+      {
+        label: estados[1],
+        data: contador2,
+        borderColor: "#ffff4d",
+        backgroundColor: "#ffff4d",
+      },
+      {
+        label: estados[2],
+        data: contador3,
+        borderColor: "#70db70",
+        backgroundColor: "#70db70",
       },
     ],
   };
@@ -135,12 +173,89 @@ async function graficarLinear(costesFecha, labelFecha, fechasGrafica) {
 }
 
 
-function idsElementosClickados (label, datasetLabel){  
-  if (datasetLabel) {
-    return datosPrecios.filter((element) => (element.type === label && element.state === datasetLabel));
+
+async function graficarBarEspacios(
+  elementos,
+  espaciosContador1,
+  espaciosContador2,
+  espaciosContador3
+) {
+
+console.log(espaciosContador1, espaciosContador2, espaciosContador3);
+  const data = {
+    labels: elementos,
+    datasets: [
+      {
+        label: elementos[0],
+        data:espaciosContador1,
+        borderColor: "#ff4d4d",
+        backgroundColor: "#ff4d4d",
+        borderWidth: 1,
+      },
+      {
+        label: elementos[1],
+        data: espaciosContador2,
+        borderColor: "#ffff4d",
+        backgroundColor: "#ffff4d",
+        borderWidth: 1,
+      },
+      {
+        label: elementos[2],
+        data: espaciosContador3,
+        borderColor: "#70db70",
+        backgroundColor: "#70db70",
+        borderWidth: 1,
+      },
+    ],
+  };
+  let barEs = await new Chart(barChartEspacio, {
+    type: "bar",
+    data: data,
+    options: {
+      title: {
+        display: true,
+        text: "Tipos Espacios",
+      },
+      responsive: true,
+    },
+  });
+  barChartEspacio.addEventListener("click", async function (event) {
+    const elements = barEs.getElementsAtEventForMode(
+      event,
+      "nearest",
+      { intersect: true },
+      false
+    );
+    if (elements.length > 0) {
+      // Recorrer los elementos obtenidos
+      elements.forEach((element) => {
+        // Obtener el índice del elemento dentro del conjunto de datos
+        const datasetIndex = element.datasetIndex;
+        const index = element.index;
+
+        // Obtener el valor y la etiqueta del elemento
+        const fecha = bar.data.labels[index];
+        const estado = bar.data.datasets[datasetIndex].label;
+        datos = idsElementosClickadosP2(fecha, estado);
+        colorGrafica = bar.data.datasets[datasetIndex].backgroundColor;
+      });
+    }
+  });
+}
+
+function idsElementosClickadosP1(datasetLabel) {
+  return objetos.filter((element) => element.estado === datasetLabel);
+}
+function idsElementosClickadosP2(fecha, datasetLabel) {
+  if (fecha) {
+    return objetosP2.filter(
+      (element) =>
+        element.date.getDate() + "/" + (element.date.getMonth() + 1) ===
+          fecha && element.estado === datasetLabel
+    );
   } else {
-    return datosPrecios.filter((element) => (element.type === label));
+    return objetosP2.filter((element) => element.estado === datasetLabel);
   }
 }
 
-export { graficarPie, graficarBar, graficarLinear, datos, colorGrafica };
+export { graficarPie, graficarBar, graficarLinear,graficarBarEspacios, datos, colorGrafica };

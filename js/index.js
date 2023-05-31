@@ -8,9 +8,23 @@ import {
 } from "../lib/xeokit-bim-viewer/xeokit-bim-viewer.es.js";
 
 import { datos, colorGrafica } from "./graficas.js";
-import { datosPrecios, ifcTypes, filtrarIdsPorIfcType,statesGrafica } from "./excel.js";
+import {
+  datosPrecios,
+  ifcTypes,
+  filtrarIdsPorIfcType,
+  statesGrafica,
+} from "./excel.js";
 import { messages as localeMessages } from "../lib/xeokit-bim-viewer/messages.js";
-
+import {
+  objetos,
+  plantasUnicas,
+  plantasFiltradas,
+  obtenerSpaces,
+  noObtenerSpaces,
+  ceilings,
+  falsosTechosP1,
+  usoEspacios,
+} from "./excelJB.js";
 let types = [];
 const formData = new FormData();
 const boton = document.getElementById("boton");
@@ -23,8 +37,12 @@ const linearButton = document.getElementById("line-btn");
 const barChart = document.getElementById("bar");
 const pieChart = document.getElementById("pie");
 const linearChart = document.getElementById("linear");
-const statesSelect = document.getElementById("states");
-const ifcTypesSelect = document.getElementById("ifcTypes");
+const floorsSelect = document.getElementById("floors");
+const espaciosButton = document.getElementById("espacios");
+const plantasButton = document.getElementById("plantas");
+const justiciaContainer = document.getElementById("pset")
+const barEspacios = document.getElementById("bar-espacios");
+
 form.style.display =
   window.location.href === "http://localhost:3000/" ? "block" : "none";
 lista.style.display =
@@ -71,6 +89,7 @@ function archivosCreados() {
 
         // Agregar el elemento li a la lista
         listado.appendChild(li);
+        
       });
     })
     .catch((error) => console.error(error));
@@ -251,12 +270,7 @@ window.onload = function () {
           }
           bimViewer.setAllObjectsSelected(false);
           bimViewer.setObjectsSelected([objectId], true);
-          bimViewer.flyToObject(objectId, () => {
-            // FIXME: Showing objects in tabs involves scrolling the HTML within the tabs - disable until we know how to scroll the correct DOM element. Otherwise, that function works OK
-            // bimViewer.showObjectInObjectsTab(objectId);
-            // bimViewer.showObjectInClassesTab(objectId);
-            // bimViewer.showObjectInStoreysTab(objectId);
-          });
+          bimViewer.flyToObject(objectId, () => {});
           break;
         case "focusObjects":
           const objectIds = params.objectIds;
@@ -274,7 +288,6 @@ window.onload = function () {
         case "clearFocusObjects":
           bimViewer.setAllObjectsSelected(false);
           bimViewer.viewFitAll();
-          // TODO: view fit nothing?
           break;
         case "openTab":
           const tabId = params.tabId;
@@ -340,7 +353,6 @@ window.onload = function () {
       bimViewer.setAllObjectsSelected(false);
       checks[i].addEventListener("change", (event) => {
         if (event.target.checked && checks[i].id == datos[i].nombre) {
-          //bimViewer.setAllObjectsSelected(false);
           bimViewer.setObjectsSelected(datos[i].ids, true);
           bimViewer.viewFitObjects(datos[i].ids);
         } else {
@@ -360,6 +372,9 @@ window.onload = function () {
     if (!linearChart.classList.contains("ocultar")) {
       linearChart.classList.toggle("ocultar");
     }
+    if(!justiciaContainer.classList.contains("ocultar")){
+      justiciaContainer.classList.toggle("ocultar");
+    }
   });
   pieButton.addEventListener("click", () => {
     pieChart.classList.toggle("ocultar");
@@ -368,6 +383,9 @@ window.onload = function () {
     }
     if (!barChart.classList.contains("ocultar")) {
       barChart.classList.toggle("ocultar");
+    }
+    if(!justiciaContainer.classList.contains("ocultar")){
+      justiciaContainer.classList.toggle("ocultar");
     }
   });
   linearButton.addEventListener("click", () => {
@@ -378,84 +396,73 @@ window.onload = function () {
     if (!pieChart.classList.contains("ocultar")) {
       pieChart.classList.toggle("ocultar");
     }
-  });
-  statesSelect.addEventListener("change", () => {
-    const ids = [];
-    const ids2 = [];
-    const ids3 = [];
-    const ids4 = [];
-    let color = 0;
-    switch (statesSelect.value) {
-      case "default":
-        bimViewer.setAllObjectsSelected(false);
-        break;
-      case "1":
-        const result = datosPrecios.filter((element) => element.state == 1);
-        result.forEach((element) => {
-          ids.push(element.id);
-        });
-        color = convertHexToEdgeColor("#FF0000");
-        bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
-        bimViewer.viewer.scene.selectedMaterial.fillColor = color;
-        bimViewer.setAllObjectsSelected(false);
-        bimViewer.setObjectsSelected(ids, true);
-        bimViewer.viewFitObjects(ids);
-
-        break;
-      case "2":
-        const result2 = datosPrecios.filter((element) => element.state == 2);
-        result2.forEach((element) => {
-          ids2.push(element.id);
-        });
-        color = convertHexToEdgeColor("#00FF00");
-        bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
-        bimViewer.viewer.scene.selectedMaterial.fillColor = color;
-        bimViewer.setAllObjectsSelected(false);
-        bimViewer.setObjectsSelected(ids2, true);
-        bimViewer.viewFitObjects(ids2);
-        break;
-      case "3":
-        color = convertHexToEdgeColor("#E4FF00");
-        bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
-        bimViewer.viewer.scene.selectedMaterial.fillColor = color;
-        bimViewer.setAllObjectsSelected(false);
-        const result3 = datosPrecios.filter((element) => element.state == 3);
-        result3.forEach((element) => {
-          ids3.push(element.id);
-        });
-        bimViewer.setObjectsSelected(ids3, true);
-        bimViewer.viewFitObjects(ids3);
-        break;
-      case "4":
-        color = convertHexToEdgeColor("#00FFDC");
-        bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
-        bimViewer.viewer.scene.selectedMaterial.fillColor = color;
-        bimViewer.setAllObjectsSelected(false);
-        const result4 = datosPrecios.filter((element) => element.state == 4);
-        result4.forEach((element) => {
-          ids4.push(element.id);
-        });
-        bimViewer.setObjectsSelected(ids4, true);
-        bimViewer.viewFitObjects(ids4);
-        break;
-      default:
-        break;
+    if(!justiciaContainer.classList.contains("ocultar")){
+      justiciaContainer.classList.toggle("ocultar");
     }
+  });  
+  floorsSelect.addEventListener("change", () => {
+    const elementoSeleccionado = floorsSelect.value;
+    let planta = "";
+    for (let i = 0; i < plantasUnicas.length; i++) {
+      if (plantasUnicas[i] == elementoSeleccionado) {
+        planta = plantasFiltradas[i];
+        let ids = [];
+        plantasFiltradas[i].forEach((elemento) => {
+          ids.push(elemento.globalID);
+        });
+        bimViewer.setAllObjectsSelected(false);
+        bimViewer.setAllObjectsVisible(false);
+        bimViewer.setObjectsVisible(ids, true);
+        bimViewer.viewFitObjects(ids);
+        let spaces = [];
+        let noSpaces = [];
+        espaciosButton.addEventListener("click", function () {
+          // barEspacios.classList.remove("ocultar");
+          let spacesids = [];
+          let noSpacesids = [];
+          spaces = obtenerSpaces(planta, elementoSeleccionado);
+          noSpaces = noObtenerSpaces(planta, elementoSeleccionado);
+          noSpaces.forEach((elemento) => {
+            noSpacesids.push(elemento.globalID);
+          });
+          spaces.forEach((elemento) => {
+            spacesids.push(elemento.globalID);
+          });          
+          bimViewer.setSpacesShown(true);
+          bimViewer.setAllObjectsSelected(false);
+          bimViewer.setAllObjectsVisible(false);
+          bimViewer.setObjectsVisible(spacesids, true);
+          bimViewer.setObjectsVisible(noSpacesids, false);
+        });
+        break;
+      } else {
+        bimViewer.setAllObjectsSelected(false);
+        bimViewer.setAllObjectsVisible(true);
+        bimViewer.viewFitAll();
+      }
+    }
+  });
+
+  plantasButton.addEventListener("click", function () {
+    let ids = [];
+    let techosIds = [];
+    falsosTechosP1.forEach((elemento) => {
+      techosIds.push(elemento.globalID);
+    });
+    ceilings.forEach((elemento) => {
+      ids.push(elemento.globalID);
+    });
+    bimViewer.setObjectsVisible(ids, false);
+    bimViewer.setObjectsVisible(techosIds, false);
+    bimViewer.set3DEnabled(false);
   });
 
   datosInput.addEventListener("change", async () => {
     const checkIfcTypes = setInterval(() => {
       if (datosPrecios.length > 0) {
         clearInterval(checkIfcTypes);
-        console.log(
-          datosPrecios.filter(
-            (element) => element.type == "IfcWall" && element.state == 1
-          )
-        );
-        crearDesplegable(ifcTypes, ifcTypesSelect);
-        crearDesplegable(statesGrafica, statesSelect);
+        crearDesplegable(plantasUnicas, floorsSelect);
         types = filtrarIdsPorIfcType(datosPrecios, ifcTypes);
-        console.log(types);
       } else {
         console.log("Cargando...");
       }
@@ -471,29 +478,9 @@ window.onload = function () {
     });
   }
 
-  ifcTypesSelect.addEventListener("change", () => {
-    const elementoSeleccionado = ifcTypesSelect.value;
-    for (let i = 0; i < types.length; i++) {
-      if (types[i].type == elementoSeleccionado) {
-        let ids = [];
-        types[i].ids.forEach((id) => {
-          ids.push(id.id);
-        });
-        console.log(elementoSeleccionado);
-        bimViewer.setAllObjectsSelected(false);
-        bimViewer.setObjectsSelected(Object.values(ids), true);
-        bimViewer.viewFitObjects(Object.values(ids));
-        break;
-      } else {
-        bimViewer.setAllObjectsSelected(false);
-        bimViewer.viewFitAll();
-      }
-    }
-  });
-
   function handleChartClick() {
-    const idsClick = datos.map((dato) => dato.id);
-    const color = convertRgbToEdgeColor(colorGrafica);    
+    const idsClick = datos.map((dato) => dato.globalID);
+    const color = convertHexToEdgeColor(colorGrafica);
     bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
     bimViewer.viewer.scene.selectedMaterial.fillColor = color;
     bimViewer.setAllObjectsSelected(false);
@@ -504,16 +491,16 @@ window.onload = function () {
   barChart.addEventListener("click", handleChartClick);
   pieChart.addEventListener("click", handleChartClick);
 
-  function convertRgbToEdgeColor(rgbColor) {    
+  function convertRgbToEdgeColor(rgbColor) {
     const components = rgbColor.match(/\d+/g);
-    
-    if (components && components.length === 3) {    
+
+    if (components && components.length === 3) {
       const red = parseInt(components[0], 10) / 255;
       const green = parseInt(components[1], 10) / 255;
       const blue = parseInt(components[2], 10) / 255;
-          
+
       return [red, green, blue];
-    } else {      
+    } else {
       return null;
     }
   }
@@ -523,16 +510,15 @@ window.onload = function () {
     const red = parseInt(hexColor.slice(1, 3), 16) / 255;
     const green = parseInt(hexColor.slice(3, 5), 16) / 255;
     const blue = parseInt(hexColor.slice(5, 7), 16) / 255;
-  
+
     // Retorna el edgeColor en el formato adecuado
     return [red, green, blue];
   }
-  
-  // Ejemplo de uso
+
   const hexColor = "#FF0000"; // Color rojo en formato hexadecimal
   const edgeColor = convertHexToEdgeColor(hexColor);
-  
+
   bimViewer.viewer.scene.selectedMaterial.edgeColor = edgeColor;
-  
+
   window.bimViewer = bimViewer; // For debugging
 };

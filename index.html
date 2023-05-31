@@ -38,24 +38,28 @@
     <div class="header">
       <div id="title">
         <h1 class="title"><a href="http://localhost:3000/">ATÓN</a></h1>
-        <span class="version">versión x.x</span>
+        <span class="version">versión POC.01</span>
       </div>
       <div class="imagen">
+        <img src="img/justicia-removebg-preview.png" alt="Ministerio Justicia">
         <img src="img/logo_ineco_blanco.png" alt="Logo Ineco" />
       </div>
+
     </div>
     <div id="listado">
-      <ul id="menuListado"></ul>      
+      <ul id="menuListado"></ul>
     </div>
     <div class="filtros">
-    <select name="states" id="states">
-      <option value="default">Elige un estado</option>
-    </select>
-
-    <select name="ifcTypes" id="ifcTypes">
+      <select name="floors" id="floors">
+        <option value="default">Elige una planta</option>
+      </select>
+      <!-- <select name="ifcTypes" id="ifcTypes">
       <option value="default">Elige un IFCType</option>
-    </select>
-  </div>
+      </select> -->
+      <button id="espacios">Mostrar espacios</button>
+      <button id="plantas">Mostrar planta</button>
+      <input type="file" id="fileInput" />
+    </div>
     <div id="myExplorer"></div>
     <div id="myToolbar"></div>
     <div id="myInspector"></div>
@@ -72,39 +76,56 @@
     </form>
     <div id="save-export">
       <div id="save-export-container">
-        <button class="fa fa-file-download xeokit-btn disabled" id="export-btn"></button>
-        <button class="fa fa-save xeokit-btn disabled" id="save-btn"></button>        
+        <button
+          class="fa fa-file-download xeokit-btn disabled"
+          id="export-btn"
+        ></button>
+        <button class="fa fa-save xeokit-btn disabled" id="save-btn"></button>
       </div>
       <div id="charts-container">
-        <button class="fas fa-chart-pie xeokit-btn disabled graficos"  id="pie-btn"></button>
-        <button class="fas fa-chart-bar xeokit-btn disabled graficos"  id="bar-btn"></button>
-        <button class="fas fa-chart-line xeokit-btn disabled graficos"  id="line-btn"></button>
+        <button
+          class="fas fa-chart-pie xeokit-btn disabled graficos"
+          id="pie-btn"
+        ></button>
+        <button
+          class="fas fa-chart-bar xeokit-btn disabled graficos"
+          id="bar-btn"
+        ></button>
+        <button
+          class="fas fa-chart-line xeokit-btn disabled graficos"
+          id="line-btn"
+        ></button>
       </div>
     </div>
-
+    <div class="grafica-container ocultar" id="pset">      
+    </div>
+    <div class="grafica-container ocultar" id="bar-espacios">
+      <div id="barChartEspacios">
+        <h2>Ocupaciones general</h2>
+        <div>
+          <canvas id="bar-chart-espacios"></canvas>
+        </div>
+      </div>
+    </div>
     <div class="grafica-container ocultar" id="pie">
       <div id="pie">
-      <h1>Coste en € por IFCType</h1>
-      <div>
-        <canvas id="pie-chart"></canvas>
+        <h2>Ocupaciones general</h2>
+        <div>
+          <canvas id="pie-chart"></canvas>
+        </div>
       </div>
     </div>
-    </div>
     <div class="grafica-container ocultar" id="bar">
-      <h1>Cantidad estados por tipo de elemento</h1>
+      <h2>Estados por fecha de planta primera</h2>
       <div>
         <canvas id="bar-chart"></canvas>
       </div>
     </div>
     <div class="grafica-container ocultar" id="linear">
-      <h1>Costes por fecha de ejecución</h1>
+      <h2>Estados por fecha de planta primera</h2>
       <div>
         <canvas id="linear-chart"></canvas>
       </div>
-    </div>
-
-    <div id="importXLS">
-      <input type="file" id="fileInput">      
     </div>
     <div id="grupoSeleccion">
       <div>
@@ -121,11 +142,17 @@
   </body>
 
   <!-- Tooltips libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>  
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+    integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
   <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
-  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>  
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
   <script src="lib/popper.js"></script>
   <script src="lib/tippy.js"></script>
-  <script type= "module" src="js/excel.js"></script>
+  <script type="module" src="js/excel.js"></script>
+  <script type="module" src="js/excelJB.js"></script>
   <script type="module" src="js/index.js"></script>
 </html>

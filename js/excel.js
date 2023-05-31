@@ -40,16 +40,16 @@ excelInput.addEventListener("change", async () => {
   sumatorioCostesPortype();
   obtenerStatePorType();
   sumatioCostePorFecha();
-  await graficarPie(ifcTypes, sumatorioGrafica);
-  await graficarBar(
-    ifcTypes,
-    statesGrafica,
-    contadorTipo1,
-    contadorTipo2,
-    contadorTipo3,
-    contadorTipo4
-  );
-  await graficarLinear(costesFecha, labelFecha, fechasGrafica);
+  // await graficarPie(ifcTypes, sumatorioGrafica);
+  // await graficarBar(
+  //   ifcTypes,
+  //   statesGrafica,
+  //   contadorTipo1,
+  //   contadorTipo2,
+  //   contadorTipo3,
+  //   contadorTipo4
+  // );
+  // await graficarLinear(costesFecha, labelFecha, fechasGrafica);
   filtrarIdsPorIfcType(datosPrecios, ifcTypes);
 });
 

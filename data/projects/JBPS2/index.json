@@ -1,0 +1,35 @@
+{
+	"id": "JBPS2",
+	"name": "JBPS2",
+	"created": "Wed, 14 Jun 2017 07:00:00 GMT",
+	"models": [
+		{
+			"id": "JUSTICIA_V_1_2_RSM_2021_2_3_PROPERTIES_V02",
+			"name": "JUSTICIA_V_1_2_RSM_2021_2_3_PROPERTIES_V02",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 144223,
+				"numMetaObjects": 12664,
+				"numObjects": 12564,
+				"numTriangles": 1529554,
+				"numVertices": 3541936,
+				"xktSizeKb": "12443.63",
+				"aabb": [
+					-55.979614507415114,
+					-7.05015978240967,
+					-45.09217850122306,
+					99.36198400332708,
+					27.621967875204458,
+					50.42173751440194
+				]
+			}
+		}
+	],
+	"viewerConfigs": {},
+	"viewerContent": {},
+	"viewerState": {}
+}
