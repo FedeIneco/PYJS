@@ -27,7 +27,6 @@ app.use("/js", express.static(__dirname + "/js"));
 // app.use("/../../js/excel", express.static(__dirname + "/js"));
 app.use("/data/projects", express.static(__dirname + "/data/projects"));
 
-
 const storage = multer.diskStorage({
   destination: "uploads/",
   filename: function (req, file, cb) {
@@ -39,14 +38,13 @@ const upload = multer({
   storage: storage,
 }).array("archivo", 10);
 
-let projects = fs.readdirSync("./data/projects");
-const filteredProjects = projects.filter((item) => item !== "index.json");
-
 app.get("/", async (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "./index.html"));
 });
 
 app.get("/api/projects", async (req, res) => {
+  let projects = fs.readdirSync("./data/projects");
+  const filteredProjects = projects.filter((item) => item !== "index.json");
   let filenames = [];
   for (let i = 0; i < filteredProjects.length; i++) {
     filenames.push(filteredProjects[i]);

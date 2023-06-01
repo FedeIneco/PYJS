@@ -44,9 +44,9 @@ const justiciaContainer = document.getElementById("pset")
 const barEspacios = document.getElementById("bar-espacios");
 
 form.style.display =
-  window.location.href === "http://localhost:3000/" ? "block" : "none";
+  window.location.href === "https://xkt.onrender.com/" ? "block" : "none";
 lista.style.display =
-  window.location.href === "http://localhost:3000/" ? "flex" : "none";
+  window.location.href === "https://xkt.onrender.com/" ? "flex" : "none";
 
 boton.addEventListener("click", enviar);
 function enviar() {
@@ -56,7 +56,7 @@ function enviar() {
     formData.append("archivo", archivos[i]);
   }
   formData.append("texto", texto);
-  fetch("http://localhost:3000/api/convert-to-xkt", {
+  fetch("https://xkt.onrender.com/api/convert-to-xkt", {
     method: "POST",
     body: formData,
   })
@@ -68,6 +68,7 @@ function enviar() {
     })
     .then((data) => {
       console.log(data);
+      archivosCreados();
     })
     .catch((error) => {
       console.error(error);
@@ -75,17 +76,25 @@ function enviar() {
 }
 
 const listado = document.getElementById("menuListado");
+
+// function obtenerListadoCarpetas() {
+//   $.get('/listado-carpetas', function(data) {
+//     $('#listado-carpetas').text(data);
+//   });
+// }
+
 function archivosCreados() {
-  fetch("http://localhost:3000/api/projects")
+  fetch("https://xkt.onrender.com/api/projects")
     .then((response) => response.json())
     .then((data) => {
+      listado.innerHTML = "";
       const filenames = data.filenames;
       filenames.forEach((filename) => {
         // Crear un elemento li
         const li = document.createElement("li");
 
         // Configurar el texto del elemento li
-        li.innerHTML = `<a href="http://localhost:3000/?projectId=${filename}">${filename}</a>`;
+        li.innerHTML = `<a href="https://xkt.onrender.com/?projectId=${filename}">${filename}</a>`;
 
         // Agregar el elemento li a la lista
         listado.appendChild(li);
