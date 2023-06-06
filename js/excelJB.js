@@ -21,8 +21,10 @@ excelInput.addEventListener("change", async () => {
     return objeto.checkLevel;
   });
 
+
   plantasUnicas = [...new Set(plantas)];
   plantasUnicas.sort();
+  plantasUnicas.pop();
 
   let estadosFiltrados = obtenerEstados();
   estados = estadosFiltrados.map(function (objeto) {
@@ -44,8 +46,7 @@ excelInput.addEventListener("change", async () => {
   espaciosUnicos = [... new Set(espacios)];
   const contadorNotariado = obtenerEspaciosUso("S.G. NOTARIADO Y DE LOS REGISTROS");
   const contadorJuridica = obtenerEspaciosUso("D.G. SEG. JURIDICA Y FE PUBLICA");
-  const contadorNacionalidad = obtenerEspaciosUso("S.G. NACIONALIDAD Y ESTADO CIVIL");
-  console.log(contadorJuridica);
+  const contadorNacionalidad = obtenerEspaciosUso("S.G. NACIONALIDAD Y ESTADO CIVIL");  
   await graficarBarEspacios(espaciosUnicos, contadorJuridica.length, contadorNacionalidad.length, contadorNotariado.length);
 
   ceilings = objetos.filter(function (objeto) {
@@ -118,9 +119,9 @@ function obtenerSpaces(floor, level) {
   });
 }
 
-function noObtenerSpaces(floor, level) {
+function noObtenerSpaces(floor) {
   return floor.filter(function (objeto) {
-    return objeto.category !== "Spaces" && objeto.checkLevel === level;
+    return objeto.category !== "Spaces";
   });
 }
 

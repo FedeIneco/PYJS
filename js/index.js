@@ -26,6 +26,7 @@ import {
   usoEspacios,
 } from "./excelJB.js";
 let types = [];
+
 const formData = new FormData();
 const boton = document.getElementById("boton");
 const form = document.getElementById("myForm");
@@ -40,13 +41,15 @@ const linearChart = document.getElementById("linear");
 const floorsSelect = document.getElementById("floors");
 const espaciosButton = document.getElementById("espacios");
 const plantasButton = document.getElementById("plantas");
-const justiciaContainer = document.getElementById("pset")
+const justiciaContainer = document.getElementById("pset");
 const barEspacios = document.getElementById("bar-espacios");
+const capturas = document.getElementById("capturas");
+const canvas = document.getElementById("myCanvas");
 
 form.style.display =
-  window.location.href === "https://xkt.onrender.com/" ? "block" : "none";
+  window.location.href === "http://localhost:3000/" ? "block" : "none";
 lista.style.display =
-  window.location.href === "https://xkt.onrender.com/" ? "flex" : "none";
+  window.location.href === "http://localhost:3000/" ? "flex" : "none";
 
 boton.addEventListener("click", enviar);
 function enviar() {
@@ -56,7 +59,7 @@ function enviar() {
     formData.append("archivo", archivos[i]);
   }
   formData.append("texto", texto);
-  fetch("https://xkt.onrender.com/api/convert-to-xkt", {
+  fetch("http://localhost:3000/api/convert-to-xkt", {
     method: "POST",
     body: formData,
   })
@@ -77,14 +80,8 @@ function enviar() {
 
 const listado = document.getElementById("menuListado");
 
-// function obtenerListadoCarpetas() {
-//   $.get('/listado-carpetas', function(data) {
-//     $('#listado-carpetas').text(data);
-//   });
-// }
-
 function archivosCreados() {
-  fetch("https://xkt.onrender.com/api/projects")
+  fetch("http://localhost:3000/api/projects")
     .then((response) => response.json())
     .then((data) => {
       listado.innerHTML = "";
@@ -94,11 +91,10 @@ function archivosCreados() {
         const li = document.createElement("li");
 
         // Configurar el texto del elemento li
-        li.innerHTML = `<a href="https://xkt.onrender.com/?projectId=${filename}">${filename}</a>`;
+        li.innerHTML = `<a href="http://localhost:3000/?projectId=${filename}">${filename}</a>`;
 
         // Agregar el elemento li a la lista
         listado.appendChild(li);
-        
       });
     })
     .catch((error) => console.error(error));
@@ -381,7 +377,7 @@ window.onload = function () {
     if (!linearChart.classList.contains("ocultar")) {
       linearChart.classList.toggle("ocultar");
     }
-    if(!justiciaContainer.classList.contains("ocultar")){
+    if (!justiciaContainer.classList.contains("ocultar")) {
       justiciaContainer.classList.toggle("ocultar");
     }
   });
@@ -393,7 +389,7 @@ window.onload = function () {
     if (!barChart.classList.contains("ocultar")) {
       barChart.classList.toggle("ocultar");
     }
-    if(!justiciaContainer.classList.contains("ocultar")){
+    if (!justiciaContainer.classList.contains("ocultar")) {
       justiciaContainer.classList.toggle("ocultar");
     }
   });
@@ -405,10 +401,10 @@ window.onload = function () {
     if (!pieChart.classList.contains("ocultar")) {
       pieChart.classList.toggle("ocultar");
     }
-    if(!justiciaContainer.classList.contains("ocultar")){
+    if (!justiciaContainer.classList.contains("ocultar")) {
       justiciaContainer.classList.toggle("ocultar");
     }
-  });  
+  });
   floorsSelect.addEventListener("change", () => {
     const elementoSeleccionado = floorsSelect.value;
     let planta = "";
@@ -426,7 +422,7 @@ window.onload = function () {
         let spaces = [];
         let noSpaces = [];
         espaciosButton.addEventListener("click", function () {
-          // barEspacios.classList.remove("ocultar");
+          barEspacios.classList.remove("ocultar");
           let spacesids = [];
           let noSpacesids = [];
           spaces = obtenerSpaces(planta, elementoSeleccionado);
@@ -436,7 +432,7 @@ window.onload = function () {
           });
           spaces.forEach((elemento) => {
             spacesids.push(elemento.globalID);
-          });          
+          });
           bimViewer.setSpacesShown(true);
           bimViewer.setAllObjectsSelected(false);
           bimViewer.setAllObjectsVisible(false);
@@ -497,8 +493,26 @@ window.onload = function () {
     bimViewer.viewFitObjects(idsClick);
   }
 
+  function handleChartClickEspacios() {
+    let noSpaces = noObtenerSpaces(objetos);
+    let noSpacesids = [];
+    noSpaces.forEach((elemento) => {
+      noSpacesids.push(elemento.globalID);
+    });
+    const idsClick = datos.map((dato) => dato.globalID);
+    const color = convertHexToEdgeColor(colorGrafica);
+    bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
+    bimViewer.viewer.scene.selectedMaterial.fillColor = color;
+    bimViewer.setAllObjectsSelected(false);
+    bimViewer.setObjectsSelected(idsClick, true);
+    bimViewer.setObjectsSelected(noSpacesids, false);
+    bimViewer.setObjectsVisible(noSpacesids, false);
+    bimViewer.viewFitObjects(idsClick);
+  }
+
   barChart.addEventListener("click", handleChartClick);
   pieChart.addEventListener("click", handleChartClick);
+  barEspacios.addEventListener("click", handleChartClick);
 
   function convertRgbToEdgeColor(rgbColor) {
     const components = rgbColor.match(/\d+/g);
@@ -523,11 +537,34 @@ window.onload = function () {
     // Retorna el edgeColor en el formato adecuado
     return [red, green, blue];
   }
+  capturas.addEventListener("click", async (event) => {
+    const imagen = await bimViewer.viewer.getSnapshot({
+      format: "png",
+      width: canvas.width,
+      height: canvas.height,
+      includeGizmos: true,
+    });    
+    const formData = new FormData();
+    formData.append("imagen", imagen);
 
-  const hexColor = "#FF0000"; // Color rojo en formato hexadecimal
-  const edgeColor = convertHexToEdgeColor(hexColor);
+    try {
+      const response = await fetch("http://localhost:3000/guardar-imagen", {
+        method: "POST",
+        body: formData,
+      });
 
-  bimViewer.viewer.scene.selectedMaterial.edgeColor = edgeColor;
+      if (response.ok) {
+        console.log("Imagen guardada en el servidor");
+        window.location.href = "captura";
+      
+      } else {
+        console.error("Error al guardar la imagen en el servidor");
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud al servidor:", error);
+    }
+  });
 
+  // html2pdf().from(container).save();
   window.bimViewer = bimViewer; // For debugging
 };

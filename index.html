@@ -59,6 +59,7 @@
       <button id="espacios">Mostrar espacios</button>
       <button id="plantas">Mostrar planta</button>
       <input type="file" id="fileInput" />
+      <button id="capturas">Hacer captura</button>
     </div>
     <div id="myExplorer"></div>
     <div id="myToolbar"></div>
@@ -108,7 +109,7 @@
       </div>
     </div>
     <div class="grafica-container ocultar" id="pie">
-      <div id="pie">
+      <div>
         <h2>Ocupaciones general</h2>
         <div>
           <canvas id="pie-chart"></canvas>
@@ -148,10 +149,14 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
   <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
   <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="lib/popper.js"></script>
-  <script src="lib/tippy.js"></script>
+  <script src="lib/tippy.js"></script>  
+  <script src="js/html2canvas.js"></script>
   <script type="module" src="js/excel.js"></script>
   <script type="module" src="js/excelJB.js"></script>
   <script type="module" src="js/index.js"></script>

@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;    
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.checks{
+    display: flex;
+    gap: .5rem;
+}
+
+
+button{
+    margin-left: 1rem;
+}
+#datosImprimir{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+#datos{
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+.cuadrado{
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    height: 25px;
+    width: 45px;
+}
+
+.colores div{
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    margin-top: .5rem;
+}

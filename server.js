@@ -9,6 +9,7 @@ const fs = require("fs");
 const app = express();
 app.use(cors());
 app.use("/css", express.static(__dirname + "/css"));
+app.use("/downloads", express.static(__dirname + "/downloads"));
 app.use(
   "/lib/fontawesome-free-5.11.2-web/css",
   express.static(__dirname + "/lib/fontawesome-free-5.11.2-web/css")
@@ -24,7 +25,6 @@ app.use(
 );
 app.use("/lib", express.static(__dirname + "/lib"));
 app.use("/js", express.static(__dirname + "/js"));
-// app.use("/../../js/excel", express.static(__dirname + "/js"));
 app.use("/data/projects", express.static(__dirname + "/data/projects"));
 
 const storage = multer.diskStorage({
@@ -34,12 +34,27 @@ const storage = multer.diskStorage({
   },
 });
 
+const storageImg = multer.diskStorage({
+  destination: "downloads/",
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
 const upload = multer({
   storage: storage,
 }).array("archivo", 10);
 
+const uploadImg = multer({
+  storage: storage,
+}).single("imagen");
+
 app.get("/", async (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "./index.html"));
+});
+
+app.get("/captura", async (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, "./captura.html"));
 });
 
 app.get("/api/projects", async (req, res) => {
@@ -75,6 +90,23 @@ app.post("/api/convert-to-xkt", upload, (req, res) => {
     }
     console.log(`Salida del comando: ${stdout}`);
     return res.status(200).json({ mensaje: "Comando ejecutado correctamente" });
+  });
+});
+
+app.post("/guardar-imagen", uploadImg, (req, res) => {  
+  const imagenBase64 = req.body.imagen; // Obtener los datos de la imagen codificada en base64  
+  const nombreArchivo = "captura.png"; // Especificar el nombre de archivo deseado
+  const rutaDestino = path.join(__dirname, "downloads", nombreArchivo);  
+  const imagenData = imagenBase64.replace(/^data:image\/png;base64,/, "")
+  // Guardar la imagen en el servidor
+  fs.writeFile(rutaDestino, imagenData,'base64', (error) => {
+    if (error) {
+      console.error("Error al guardar la imagen en el servidor:", error);
+      res.sendStatus(500);
+    } else {
+      console.log("Imagen guardada en el servidor:", rutaDestino);
+      res.sendStatus(200);
+    }
   });
 });
 

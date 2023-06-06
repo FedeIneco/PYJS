@@ -180,37 +180,21 @@ async function graficarBarEspacios(
   espaciosContador2,
   espaciosContador3
 ) {
-
-console.log(espaciosContador1, espaciosContador2, espaciosContador3);
-  const data = {
-    labels: elementos,
-    datasets: [
-      {
-        label: elementos[0],
-        data:espaciosContador1,
-        borderColor: "#ff4d4d",
-        backgroundColor: "#ff4d4d",
-        borderWidth: 1,
-      },
-      {
-        label: elementos[1],
-        data: espaciosContador2,
-        borderColor: "#ffff4d",
-        backgroundColor: "#ffff4d",
-        borderWidth: 1,
-      },
-      {
-        label: elementos[2],
-        data: espaciosContador3,
-        borderColor: "#70db70",
-        backgroundColor: "#70db70",
-        borderWidth: 1,
-      },
-    ],
-  };
+  const array = [espaciosContador1, espaciosContador2, espaciosContador3];
   let barEs = await new Chart(barChartEspacio, {
-    type: "bar",
-    data: data,
+    type: "pie",
+    data: {
+      labels: elementos,
+      datasets:[
+        {
+          backgroundColor: [
+          "#8844B5", 
+          "#B9B9DD", 
+          "#6B84E4", 
+        ],
+        data: array}
+      ]
+    },
     options: {
       title: {
         display: true,
@@ -226,25 +210,28 @@ console.log(espaciosContador1, espaciosContador2, espaciosContador3);
       { intersect: true },
       false
     );
+    console.log(elements);
+    // Verificar si se han encontrado elementos
     if (elements.length > 0) {
-      // Recorrer los elementos obtenidos
-      elements.forEach((element) => {
-        // Obtener el índice del elemento dentro del conjunto de datos
-        const datasetIndex = element.datasetIndex;
-        const index = element.index;
+      // Obtener el primer elemento clicado
+      const element = elements[0];
 
-        // Obtener el valor y la etiqueta del elemento
-        const fecha = bar.data.labels[index];
-        const estado = bar.data.datasets[datasetIndex].label;
-        datos = idsElementosClickadosP2(fecha, estado);
-        colorGrafica = bar.data.datasets[datasetIndex].backgroundColor;
-      });
+      const index = element.index;
+
+      const label = barEs.data.labels[index];      
+      colorGrafica = barEs.data.datasets[0].backgroundColor[index];
+      datos = elementosSpacio(label);
+      console.log(datos);
     }
   });
 }
 
 function idsElementosClickadosP1(datasetLabel) {
   return objetos.filter((element) => element.estado === datasetLabel);
+}
+
+function elementosSpacio(datasetLabel){
+  return objetos.filter((element) => element.spaceUso === datasetLabel);
 }
 function idsElementosClickadosP2(fecha, datasetLabel) {
   if (fecha) {
