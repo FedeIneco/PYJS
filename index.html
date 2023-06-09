@@ -1,163 +1,141 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="img/icono-Ineco.ico" type="image/x-icon" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link
-      rel="stylesheet"
-      href="lib/fontawesome-free-5.11.2-web/css/all.min.css"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="lib/xeokit-bim-viewer/xeokit-bim-viewer.css"
-      type="text/css"
-    />
 
-    <link rel="stylesheet" href="css/style.css" />
-    <title>INECO viewer</title>
-  </head>
-  <body>
-    <input type="checkbox" id="explorer_toggle" />
-    <label
-      for="explorer_toggle"
-      class="xeokit-i18n explorer_toggle_label xeokit-btn fas fa-2x fa-sitemap"
-      data-xeokit-i18ntip="toolbar.toggleExplorer"
-      data-tippy-content="Toggle explorer"
-    ></label>
-    <input type="checkbox" id="inspector_toggle" />
-    <label
-      id="inspector_toggle_label"
-      for="inspector_toggle"
-      class="xeokit-i18n inspector_toggle_label xeokit-btn fas fa-info-circle fa-2x"
-      data-xeokit-i18ntip="toolbar.toggleProperties"
-      data-tippy-content="Toggle properties"
-    ></label>
-    <div class="header">
-      <div id="title">
-        <h1 class="title"><a href="http://localhost:3000/">ATÓN</a></h1>
-        <span class="version">versión POC.01</span>
-      </div>
-      <div class="imagen">
-        <img src="img/justicia-removebg-preview.png" alt="Ministerio Justicia">
-        <img src="img/logo_ineco_blanco.png" alt="Logo Ineco" />
-      </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="img/icono-Ineco.ico" type="image/x-icon" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="stylesheet" href="lib/fontawesome-free-5.11.2-web/css/all.min.css" type="text/css" />
+  <link rel="stylesheet" href="lib/xeokit-bim-viewer/xeokit-bim-viewer.css" type="text/css" />
 
-    </div>
-    <div id="listado">
-      <ul id="menuListado"></ul>
-    </div>
-    <div class="filtros">
-      <select name="floors" id="floors">
-        <option value="default">Elige una planta</option>
-      </select>
-      <!-- <select name="ifcTypes" id="ifcTypes">
-      <option value="default">Elige un IFCType</option>
-      </select> -->
-      <button id="espacios">Mostrar espacios</button>
-      <button id="plantas">Mostrar planta</button>
-      <input type="file" id="fileInput" />
-      <button id="capturas">Hacer captura</button>
-    </div>
-    <div id="myExplorer"></div>
-    <div id="myToolbar"></div>
-    <div id="myInspector"></div>
-    <div id="myViewer">
-      <canvas id="myCanvas"></canvas>
-      <canvas id="myNavCubeCanvas"></canvas>
-    </div>
-    <form id="myForm" enctype="multipart/form-data">
-      <label for="texto">Nombre proyecto:</label>
-      <input type="text" id="texto" name="texto" /><br /><br />
-      <label for="archivo">Archivos:</label>
-      <input type="file" id="archivo" name="archivo" multiple /><br /><br />
-      <button type="button" id="boton">Enviar</button>
-    </form>
-    <div id="save-export">
-      <div id="save-export-container">
-        <button
-          class="fa fa-file-download xeokit-btn disabled"
-          id="export-btn"
-        ></button>
-        <button class="fa fa-save xeokit-btn disabled" id="save-btn"></button>
-      </div>
-      <div id="charts-container">
-        <button
-          class="fas fa-chart-pie xeokit-btn disabled graficos"
-          id="pie-btn"
-        ></button>
-        <button
-          class="fas fa-chart-bar xeokit-btn disabled graficos"
-          id="bar-btn"
-        ></button>
-        <button
-          class="fas fa-chart-line xeokit-btn disabled graficos"
-          id="line-btn"
-        ></button>
-      </div>
-    </div>
-    <div class="grafica-container ocultar" id="pset">      
-    </div>
-    <div class="grafica-container ocultar" id="bar-espacios">
-      <div id="barChartEspacios">
-        <h2>Ocupaciones general</h2>
-        <div>
-          <canvas id="bar-chart-espacios"></canvas>
-        </div>
-      </div>
-    </div>
-    <div class="grafica-container ocultar" id="pie">
-      <div>
-        <h2>Ocupaciones general</h2>
-        <div>
-          <canvas id="pie-chart"></canvas>
-        </div>
-      </div>
-    </div>
-    <div class="grafica-container ocultar" id="bar">
-      <h2>Estados por fecha de planta primera</h2>
-      <div>
-        <canvas id="bar-chart"></canvas>
-      </div>
-    </div>
-    <div class="grafica-container ocultar" id="linear">
-      <h2>Estados por fecha de planta primera</h2>
-      <div>
-        <canvas id="linear-chart"></canvas>
-      </div>
-    </div>
-    <div id="grupoSeleccion">
-      <div>
-        <p>Escribe nombre para el grupo de selección</p>
-        <input
-          type="text"
-          name="selección"
-          id="setSelectionName"
-          placeholder="Escribe el nombre aqui"
-        />
-        <button id="aceptarNombre">Aceptar</button>
-      </div>
-    </div>
-  </body>
+  <link rel="stylesheet" href="css/style.css" />
+  <title>INECO viewer</title>
+</head>
 
-  <!-- Tooltips libraries -->
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
-    integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
-  <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
-  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="lib/popper.js"></script>
-  <script src="lib/tippy.js"></script>  
-  <script src="js/html2canvas.js"></script>
-  <script type="module" src="js/excel.js"></script>
-  <script type="module" src="js/excelJB.js"></script>
-  <script type="module" src="js/index.js"></script>
+<body>
+  <input type="checkbox" id="explorer_toggle" />
+  <label for="explorer_toggle" class="xeokit-i18n explorer_toggle_label xeokit-btn fas fa-2x fa-sitemap"
+    data-xeokit-i18ntip="toolbar.toggleExplorer" data-tippy-content="Toggle explorer"></label>
+  <label for="explorer_toggle" id="bordeIzquierdo">
+    <div class="iconoIzquierda">
+      <i class="fas fa-angle-right"></i>
+  </div>
+  </label>
+  <label for="inspector_toggle" id="bordeDerecho">
+    <div class="iconoDerecha">
+      <i class="fas fa-angle-left"></i>
+  </div>
+  </label>
+  <input type="checkbox" id="inspector_toggle" />
+  <label id="inspector_toggle_label" for="inspector_toggle"
+    class="xeokit-i18n inspector_toggle_label xeokit-btn fas fa-info-circle fa-2x"
+    data-xeokit-i18ntip="toolbar.toggleProperties" data-tippy-content="Toggle properties"></label>
+  <div class="header">
+    <div id="title">
+      <h1 class="title"><a href="http://localhost:3000/">ATÓN</a></h1>
+      <span class="version">versión POC.01</span>
+    </div>
+    <div class="imagen">
+      <img src="img/justicia-removebg-preview.png" alt="Ministerio Justicia">
+      <img src="img/logo_ineco_blanco.png" alt="Logo Ineco" />
+    </div>
+
+  </div>
+  <div id="listado">
+    <ul id="menuListado"></ul>
+  </div>
+  <div class="filtros">
+    <select name="floors" id="floors">
+      <option value="default">Elige una planta</option>
+    </select>
+    <button id="espacios">Mostrar espacios</button>
+    <button id="plantas">Mostrar planta</button>
+    <button id="ocupacion">Mostrar ocupacion</button>
+    <input type="file" id="fileInput" />
+    <button id="capturas">Hacer captura</button>
+  </div>
+  <div id="myExplorer"></div>
+  <div></div>
+  <div id="myToolbar"></div>
+  <div id="myInspector"></div>
+  <div id="myViewer">
+    <canvas id="myCanvas"></canvas>
+    <canvas id="myNavCubeCanvas"></canvas>
+  </div>
+  <form id="myForm" enctype="multipart/form-data">
+    <label for="texto">Nombre proyecto:</label>
+    <input type="text" id="texto" name="texto" /><br /><br />
+    <label for="archivo">Archivos:</label>
+    <input type="file" id="archivo" name="archivo" multiple /><br /><br />
+    <button type="button" id="boton">Enviar</button>
+  </form>
+  <div id="save-export">
+    <div id="save-export-container">
+      <button class="fa fa-file-download xeokit-btn disabled" id="export-btn"></button>
+      <button class="fa fa-save xeokit-btn disabled" id="save-btn"></button>
+    </div>
+    <div id="charts-container">
+      <button class="fas fa-chart-pie xeokit-btn disabled graficos" id="pie-btn"></button>
+      <button class="fas fa-chart-bar xeokit-btn disabled graficos" id="bar-btn"></button>
+      <button class="fas fa-chart-line xeokit-btn disabled graficos" id="line-btn"></button>
+    </div>
+  </div>
+  <div class="grafica-container ocultar" id="pset">
+  </div>
+  <div class="grafica-container ocultar" id="bar-espacios">
+    <div id="barChartEspacios">
+      <h2>Ocupaciones general</h2>
+      <div>
+        <canvas id="bar-chart-espacios"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="grafica-container ocultar" id="pie">
+    <div>
+      <h2>Ocupaciones general</h2>
+      <div>
+        <canvas id="pie-chart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="grafica-container ocultar" id="bar">
+    <h2>Estados por fecha de planta primera</h2>
+    <div>
+      <canvas id="bar-chart"></canvas>
+    </div>
+  </div>
+  <div class="grafica-container ocultar" id="linear">
+    <h2>Estados por fecha de planta primera</h2>
+    <div>
+      <canvas id="linear-chart"></canvas>
+    </div>
+  </div>
+  <div id="grupoSeleccion">
+    <div>
+      <p>Escribe nombre para el grupo de selección</p>
+      <input type="text" name="selección" id="setSelectionName" placeholder="Escribe el nombre aqui" />
+      <button id="aceptarNombre">Aceptar</button>
+    </div>
+  </div>
+</body>
+
+<!-- Tooltips libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+  integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+<script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+  integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="lib/popper.js"></script>
+<script src="lib/tippy.js"></script>
+<script src="js/html2canvas.js"></script>
+<script type="module" src="js/excel.js"></script>
+<script type="module" src="js/excelJB.js"></script>
+<script type="module" src="js/index.js"></script>
+
 </html>

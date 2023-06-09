@@ -5,6 +5,8 @@ import {
   addObserver,
   agregarObservador,
   array,
+
+  
 } from "../lib/xeokit-bim-viewer/xeokit-bim-viewer.es.js";
 
 import { datos, colorGrafica } from "./graficas.js";
@@ -23,7 +25,9 @@ import {
   noObtenerSpaces,
   ceilings,
   falsosTechosP1,
+  obtenerEspaciosUso,
   usoEspacios,
+  obtenerOcupacion,
 } from "./excelJB.js";
 let types = [];
 
@@ -45,6 +49,7 @@ const justiciaContainer = document.getElementById("pset");
 const barEspacios = document.getElementById("bar-espacios");
 const capturas = document.getElementById("capturas");
 const canvas = document.getElementById("myCanvas");
+const ocupacionesButton = document.getElementById("ocupacion");
 
 form.style.display =
   window.location.href === "http://localhost:3000/" ? "block" : "none";
@@ -405,7 +410,7 @@ window.onload = function () {
       justiciaContainer.classList.toggle("ocultar");
     }
   });
-  floorsSelect.addEventListener("change", () => {
+  floorsSelect.addEventListener("change", () => {    
     const elementoSeleccionado = floorsSelect.value;
     let planta = "";
     for (let i = 0; i < plantasUnicas.length; i++) {
@@ -422,6 +427,9 @@ window.onload = function () {
         let spaces = [];
         let noSpaces = [];
         espaciosButton.addEventListener("click", function () {
+          const contadorNotariado = obtenerEspaciosUso("S.G. NOTARIADO Y DE LOS REGISTROS");
+          const contadorJuridica = obtenerEspaciosUso("D.G. SEG. JURIDICA Y FE PUBLICA");
+          const contadorNacionalidad = obtenerEspaciosUso("S.G. NACIONALIDAD Y ESTADO CIVIL");  
           barEspacios.classList.remove("ocultar");
           let spacesids = [];
           let noSpacesids = [];
@@ -433,11 +441,27 @@ window.onload = function () {
           spaces.forEach((elemento) => {
             spacesids.push(elemento.globalID);
           });
+          const color = convertHexToEdgeColor("#37375C");
+          const color2 = convertHexToEdgeColor("#8844B5");
+          const color3 = convertHexToEdgeColor("#6B84E4")
+    
           bimViewer.setSpacesShown(true);
           bimViewer.setAllObjectsSelected(false);
           bimViewer.setAllObjectsVisible(false);
           bimViewer.setObjectsVisible(spacesids, true);
-          bimViewer.setObjectsVisible(noSpacesids, false);
+          bimViewer.setObjectsVisible(noSpacesids, false);          
+          contadorNotariado.forEach((elemento) => {
+            const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];            
+            objetoSeleccionado.colorize = color3;            
+          });
+          contadorJuridica.forEach((elemento) => {
+            const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];
+            objetoSeleccionado.colorize = color2;
+          });
+          contadorNacionalidad.forEach((elemento) => {
+            const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];
+            objetoSeleccionado.colorize = color;
+          });
         });
         break;
       } else {
@@ -493,26 +517,23 @@ window.onload = function () {
     bimViewer.viewFitObjects(idsClick);
   }
 
-  function handleChartClickEspacios() {
-    let noSpaces = noObtenerSpaces(objetos);
-    let noSpacesids = [];
-    noSpaces.forEach((elemento) => {
-      noSpacesids.push(elemento.globalID);
-    });
-    const idsClick = datos.map((dato) => dato.globalID);
-    const color = convertHexToEdgeColor(colorGrafica);
-    bimViewer.viewer.scene.selectedMaterial.edgeColor = color;
-    bimViewer.viewer.scene.selectedMaterial.fillColor = color;
-    bimViewer.setAllObjectsSelected(false);
-    bimViewer.setObjectsSelected(idsClick, true);
-    bimViewer.setObjectsSelected(noSpacesids, false);
-    bimViewer.setObjectsVisible(noSpacesids, false);
-    bimViewer.viewFitObjects(idsClick);
+  function mostrarColoresOcupacion(elementos, color){
+    const colorOcupacion = convertHexToEdgeColor(color);
+    elementos.forEach((elemento) => {
+      const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];            
+      objetoSeleccionado.colorize = colorOcupacion; 
+    })
   }
-
+  ocupacionesButton.addEventListener("click", () =>{
+    const ocupado = obtenerOcupacion("OCUPADO");
+    const reservado =  obtenerOcupacion("RESERVADO");
+    const vacante = obtenerOcupacion("VACANTE");
+    mostrarColoresOcupacion(ocupado,"#ff4d4d");
+    mostrarColoresOcupacion( reservado, "#ffff4d");
+    mostrarColoresOcupacion(vacante, "#70db70");
+  })
   barChart.addEventListener("click", handleChartClick);
   pieChart.addEventListener("click", handleChartClick);
-  barEspacios.addEventListener("click", handleChartClick);
 
   function convertRgbToEdgeColor(rgbColor) {
     const components = rgbColor.match(/\d+/g);
@@ -538,7 +559,7 @@ window.onload = function () {
     return [red, green, blue];
   }
   capturas.addEventListener("click", async (event) => {
-    const imagen = await bimViewer.viewer.getSnapshot({
+    const imagen = bimViewer.viewer.getSnapshot({
       format: "png",
       width: canvas.width,
       height: canvas.height,
@@ -565,6 +586,6 @@ window.onload = function () {
     }
   });
 
-  // html2pdf().from(container).save();
   window.bimViewer = bimViewer; // For debugging
 };
+

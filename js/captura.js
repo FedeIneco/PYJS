@@ -1,11 +1,12 @@
-function crearPDF(){
-    
+function crearPDF(){    
     const container = document.getElementById('datosImprimir');
-    var opt = {        
-        filename:     'myfile.pdf',          
-        jsPDF:        { orientation: 'landscape', format: 'a3', precision:16 }
-      };
-    html2pdf().from(container).set(opt).save();
+    html2canvas(container).then(canvas => {
+      const imageDataURL = canvas.toDataURL('image/jpg');      
+      const link = document.createElement('a');
+      link.href = imageDataURL;
+      link.download = 'Plano.jpg';
+      link.click();
+  });    
     setTimeout(() => {
     window.location.href = "/?projectId=JBPS2";
     },3000);

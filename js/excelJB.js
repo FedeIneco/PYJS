@@ -137,6 +137,7 @@ function obtenerEstados() {
   });
 }
 
+
 function sumatorioOcupacionPorEstado(estadosFiltrados) {
   for (let i = 0; i < estadosUnicos.length; i++) {
     let sumatorio = 0;
@@ -178,6 +179,12 @@ function obtenerUsoEspacios(){
   });
 }
 
+function obtenerOcupacion(tipo){
+  return objetos.filter(function (objeto) {
+    return objeto.estado === tipo;
+  });
+}
+
 export {
   objetos,
   plantasUnicas,
@@ -189,5 +196,7 @@ export {
   estadosUnicos,
   falsosTechosP1,
   objetosP2,
-  usoEspacios
+  usoEspacios,
+  obtenerEspaciosUso,
+  obtenerOcupacion
 };
