@@ -120,11 +120,9 @@ body {
   margin-top: 2px;
   position: fixed;
   height: 100%;
-  color: #fff;
-  /* background: url('../img/PanelJerarquiaProp.png'); */
+  color: #fff;  
   background-size: contain;
-  overflow: auto;
-  /* border-right: 10px solid rgb(203, 23, 32); */
+  overflow: auto;  
   border-left: 2px solid white;
   padding-bottom: 100px;
   user-select: none;
@@ -154,18 +152,18 @@ body {
 .iconoIzquierda {
   position: absolute;
   top: 50%;
-  left: 12px;
+  left: 20px;
   transform: translate(-50%);
   color: white;
   background-color: rgb(203, 23, 32);
-  border-radius: 50%;
-  height: 25px;
-  width: 25px;
+  border-radius: 0 50% 50% 0;
+  height: 40px;
+  width: 40px;
 }
 
 .iconoIzquierda i {
-  margin-left: 2px;
-  font-size: 1.2rem;
+  margin-left: 4px;
+  font-size: 1.7rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -189,8 +187,7 @@ body {
   user-select: none;
   flex: 1 1 auto;
   color: white;
-  background: transparent;
-  /* background-image: url('../img/PanelJerarquia.png'); */
+  background: transparent;  
   background-size: cover;
   text-align: center;
   vertical-align: middle;
@@ -216,7 +213,10 @@ body {
 #explorer_toggle:checked ~ #bordeIzquierdo {
   left: 460px;
 }
-#explorer_toggle:checked ~ #bordeIzquierdo i::before {
+#explorer_toggle:checked ~ #bordeIzquierdo i{
+  margin-left: 0px;
+}
+#explorer_toggle:checked ~ #bordeIzquierdo i::before {  
   content: "\f104";
 }
 
@@ -265,8 +265,7 @@ body {
   margin-top: 2px;
   position: absolute;
   height: 100%;
-  color: #fff;
-  /* background-image: url('../img/PanelJerarquia.png'); */
+  color: #fff;  
   overflow: auto;
   border-right: 2px solid white;
   padding: 0;
@@ -274,6 +273,18 @@ body {
   z-index: 100000;
   width: 358px;
   transition: all 300ms ease-in-out;
+}
+
+#myFilter{
+  top: 5rem;
+  width: 358px;
+  margin-top: 2px;
+  background-color: red;
+  position: absolute;
+  height: 100%;
+  /* right: -360px; */
+  top: 90%;
+
 }
 
 #bordeDerecho {
@@ -294,18 +305,18 @@ body {
 .iconoDerecha {
   position: absolute;
   top: 50%;
-  right: -13px;
+  right: -20px;
   transform: translate(-50%);
   color: white;
   background-color: rgb(203, 23, 32);
-  border-radius: 50%;
-  height: 25px;
-  width: 25px;
+  border-radius: 50% 0 0 50%;
+  height: 40px;
+  width: 40px;
 }
 
 .iconoDerecha i {
-  right: -2px;
-  font-size: 1.2rem;
+  right: -4px;
+  font-size: 1.7rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -365,7 +376,10 @@ body {
 #inspector_toggle:checked ~ #bordeDerecho {
   right: 420px;
 }
-#inspector_toggle:checked ~ #bordeDerecho i::before{
+#inspector_toggle:checked ~ #bordeDerecho i{
+  right: 0px;
+}
+#inspector_toggle:checked ~ #bordeDerecho i::before {
   content: "\f105";
 }
 
@@ -380,8 +394,7 @@ body {
   width: calc(100% - var(--left));
 }
 
-
-#inspector_toggle:not(:checked) ~ #bordeDerecho i::before{
+#inspector_toggle:not(:checked) ~ #bordeDerecho i::before {
   content: "\f104";
 }
 

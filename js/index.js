@@ -52,9 +52,9 @@ const canvas = document.getElementById("myCanvas");
 const ocupacionesButton = document.getElementById("ocupacion");
 
 form.style.display =
-  window.location.href === "https://xkt.onrender.com/" ? "block" : "none";
+  window.location.href === "https://fedeineco.github.io/pruebaAPI/" ? "block" : "none";
 lista.style.display =
-  window.location.href === "https://xkt.onrender.com/" ? "flex" : "none";
+  window.location.href === "https://fedeineco.github.io/pruebaAPI/" ? "flex" : "none";
 
 boton.addEventListener("click", enviar);
 function enviar() {
@@ -64,7 +64,7 @@ function enviar() {
     formData.append("archivo", archivos[i]);
   }
   formData.append("texto", texto);
-  fetch("https://xkt.onrender.com/api/convert-to-xkt", {
+  fetch("https://fedeineco.github.io/pruebaAPI/api/convert-to-xkt", {
     method: "POST",
     body: formData,
   })
@@ -86,7 +86,7 @@ function enviar() {
 const listado = document.getElementById("menuListado");
 
 function archivosCreados() {
-  fetch("https://xkt.onrender.com/api/projects")
+  fetch("https://fedeineco.github.io/pruebaAPI/api/projects")
     .then((response) => response.json())
     .then((data) => {
       listado.innerHTML = "";
@@ -96,7 +96,7 @@ function archivosCreados() {
         const li = document.createElement("li");
 
         // Configurar el texto del elemento li
-        li.innerHTML = `<a href="https://xkt.onrender.com/?projectId=${filename}">${filename}</a>`;
+        li.innerHTML = `<a href="https://fedeineco.github.io/pruebaAPI/?projectId=${filename}">${filename}</a>`;
 
         // Agregar el elemento li a la lista
         listado.appendChild(li);
@@ -569,7 +569,7 @@ window.onload = function () {
     formData.append("imagen", imagen);
 
     try {
-      const response = await fetch("https://xkt.onrender.com/guardar-imagen", {
+      const response = await fetch("https://fedeineco.github.io/pruebaAPI/guardar-imagen", {
         method: "POST",
         body: formData,
       });
