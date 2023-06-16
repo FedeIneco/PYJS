@@ -120,9 +120,8 @@ body {
   margin-top: 2px;
   position: fixed;
   height: 100%;
-  color: #fff;  
-  background-size: contain;
-  overflow: auto;  
+  color: #fff;    
+  overflow: auto;
   border-left: 2px solid white;
   padding-bottom: 100px;
   user-select: none;
@@ -132,6 +131,87 @@ body {
   z-index: 10;
   width: 460px;
   transition: all 300ms ease-in-out;
+}
+
+#myFilter{
+  position: absolute;  
+  width: 470px;
+  margin-top: 2px;
+  background-color: #15337a;
+  height: 100%;
+  z-index: 100000;
+  padding: 0;
+  left: -490px;
+  top: 90%;
+  border-left: 2px solid white;  
+  overflow: auto;
+  transition: all 300ms ease-in-out;
+}
+
+#desplegableFiltro{
+  height: 15px;
+  background-color: rgb(203, 23, 32);
+  cursor: pointer;
+  position: fixed;
+  width: 470px;
+}
+
+
+#contenidoFiltro h3 {
+  display: flex;
+  align-items: center;
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+#contenidoFiltro h3 i{  
+  margin-right: .5rem;  
+}
+
+#contenidoFiltro{
+  padding: 1rem;
+  margin-top: .6rem;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: .5rem;
+}
+
+#contenidoFiltro select {
+  padding: .3rem;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+#contenidoFiltro button {
+  padding: .5rem 1rem;
+  width: 100%;
+  font-size: 16px;  
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.iconoSubir{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  color: white;
+  bottom: 0px;
+  border-radius:  50% 50% 0 0;
+  background-color: rgb(203, 23, 32);
+  height: 40px;
+  width: 40px;
+}
+
+.iconoSubir i{
+  font-size: 1.7rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);  
 }
 
 #bordeIzquierdo {
@@ -210,8 +290,9 @@ body {
   background-color: #03103f;
   border-color: #03103f;
 } */
+
 #explorer_toggle:checked ~ #bordeIzquierdo {
-  left: 460px;
+  left: 528px;
 }
 #explorer_toggle:checked ~ #bordeIzquierdo i{
   margin-left: 0px;
@@ -223,6 +304,19 @@ body {
 #explorer_toggle:checked ~ #myExplorer {
   left: 56px;
 }
+
+#explorer_toggle:checked ~ #myFilter{
+  left: 56px;
+}
+
+#filter_toggle:checked ~ #myFilter{
+  top: 40%;
+}
+
+#filter_toggle:checked ~ #desplegableFiltro i::before{
+ content: "\f107";
+}
+
 
 #explorer_toggle:checked ~ #myViewer {
   left: 460px;
@@ -269,23 +363,12 @@ body {
   overflow: auto;
   border-right: 2px solid white;
   padding: 0;
-  right: -360px;
+  right: -380px;
   z-index: 100000;
   width: 358px;
   transition: all 300ms ease-in-out;
 }
 
-#myFilter{
-  top: 5rem;
-  width: 358px;
-  margin-top: 2px;
-  background-color: red;
-  position: absolute;
-  height: 100%;
-  /* right: -360px; */
-  top: 90%;
-
-}
 
 #bordeDerecho {
   cursor: pointer;
@@ -365,7 +448,7 @@ body {
 
 #inspector_toggle:checked ~ #myViewer {
   --right: 475;
-  right: 475px;
+  right: 525px;
   width: calc(85% - (var(--left) + var(--right)));
 }
 
@@ -384,13 +467,13 @@ body {
 }
 
 #inspector_toggle:not(:checked) ~ #myInspector {
-  right: -306px;
-  --right: -306px;
+  right: -380px;
+  --right: -380px;
 }
 
 #inspector_toggle:not(:checked) ~ #myViewer {
   --right: 0;
-  right: 0;
+  right: 100px;
   width: calc(100% - var(--left));
 }
 
