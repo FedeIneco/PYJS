@@ -46,11 +46,13 @@ const canvas = document.getElementById("myCanvas");
 const ocupacionesButton = document.getElementById("ocupacion");
 
 form.style.display =
-  window.location.href === "http://localhost:3000/" ? "block" : "none";
+  window.location.href === "https://xkt.onrender.com" ? "block" : "none";
 lista.style.display =
-  window.location.href === "http://localhost:3000/" ? "flex" : "none";
+  window.location.href === "https://xkt.onrender.com" ? "flex" : "none";
 
 boton.addEventListener("click", enviar);
+
+//Función que envía el nombre del proyecto y los archivos que quiere convertir a xkt al servidor
 function enviar() {
   const texto = document.getElementById("texto").value;
   const archivos = document.getElementById("archivo").files;
@@ -58,7 +60,7 @@ function enviar() {
     formData.append("archivo", archivos[i]);
   }
   formData.append("texto", texto);
-  fetch("http://localhost:3000/api/convert-to-xkt", {
+  fetch("https://xkt.onrender.comapi/convert-to-xkt", {
     method: "POST",
     body: formData,
   })
@@ -79,8 +81,9 @@ function enviar() {
 
 const listado = document.getElementById("menuListado");
 
+//Actualiza el listado de proyectos creaados una vez se ha convertido a xkt
 function archivosCreados() {
-  fetch("http://localhost:3000/api/projects")
+  fetch("https://xkt.onrender.comapi/projects")
     .then((response) => response.json())
     .then((data) => {
       listado.innerHTML = "";
@@ -90,7 +93,7 @@ function archivosCreados() {
         const li = document.createElement("li");
 
         // Configurar el texto del elemento li
-        li.innerHTML = `<a href="http://localhost:3000/?projectId=${filename}">${filename}</a>`;
+        li.innerHTML = `<a href="https://xkt.onrender.com?projectId=${filename}">${filename}</a>`;
 
         // Agregar el elemento li a la lista
         listado.appendChild(li);
@@ -563,7 +566,7 @@ window.onload = function () {
     formData.append("imagen", imagen);
 
     try {
-      const response = await fetch("http://localhost:3000/guardar-imagen", {
+      const response = await fetch("https://xkt.onrender.comguardar-imagen", {
         method: "POST",
         body: formData,
       });

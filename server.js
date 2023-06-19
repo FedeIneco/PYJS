@@ -93,13 +93,13 @@ app.post("/api/convert-to-xkt", upload, (req, res) => {
   });
 });
 
-app.post("/guardar-imagen", uploadImg, (req, res) => {  
-  const imagenBase64 = req.body.imagen; // Obtener los datos de la imagen codificada en base64  
+app.post("/guardar-imagen", uploadImg, (req, res) => {
+  const imagenBase64 = req.body.imagen; // Obtener los datos de la imagen codificada en base64
   const nombreArchivo = "captura.png"; // Especificar el nombre de archivo deseado
-  const rutaDestino = path.join(__dirname, "downloads", nombreArchivo);  
-  const imagenData = imagenBase64.replace(/^data:image\/png;base64,/, "")
+  const rutaDestino = path.join(__dirname, "downloads", nombreArchivo);
+  const imagenData = imagenBase64.replace(/^data:image\/png;base64,/, "");
   // Guardar la imagen en el servidor
-  fs.writeFile(rutaDestino, imagenData,'base64', (error) => {
+  fs.writeFile(rutaDestino, imagenData, "base64", (error) => {
     if (error) {
       console.error("Error al guardar la imagen en el servidor:", error);
       res.sendStatus(500);
