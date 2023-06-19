@@ -46,9 +46,9 @@ const canvas = document.getElementById("myCanvas");
 const ocupacionesButton = document.getElementById("ocupacion");
 
 form.style.display =
-  window.location.href === "https://xkt.onrender.com" ? "block" : "none";
+  window.location.href === "https://xkt.onrender.com/" ? "block" : "none";
 lista.style.display =
-  window.location.href === "https://xkt.onrender.com" ? "flex" : "none";
+  window.location.href === "https://xkt.onrender.com/" ? "flex" : "none";
 
 boton.addEventListener("click", enviar);
 
@@ -60,7 +60,7 @@ function enviar() {
     formData.append("archivo", archivos[i]);
   }
   formData.append("texto", texto);
-  fetch("https://xkt.onrender.comapi/convert-to-xkt", {
+  fetch("https://xkt.onrender.com/api/convert-to-xkt", {
     method: "POST",
     body: formData,
   })
@@ -83,7 +83,7 @@ const listado = document.getElementById("menuListado");
 
 //Actualiza el listado de proyectos creaados una vez se ha convertido a xkt
 function archivosCreados() {
-  fetch("https://xkt.onrender.comapi/projects")
+  fetch("https://xkt.onrender.com/api/projects")
     .then((response) => response.json())
     .then((data) => {
       listado.innerHTML = "";
@@ -93,7 +93,7 @@ function archivosCreados() {
         const li = document.createElement("li");
 
         // Configurar el texto del elemento li
-        li.innerHTML = `<a href="https://xkt.onrender.com?projectId=${filename}">${filename}</a>`;
+        li.innerHTML = `<a href="https://xkt.onrender.com/?projectId=${filename}">${filename}</a>`;
 
         // Agregar el elemento li a la lista
         listado.appendChild(li);
