@@ -50,7 +50,7 @@ excelInput.addEventListener("change", async () => {
   //   contadorTipo4
   // );
   // await graficarLinear(costesFecha, labelFecha, fechasGrafica);
-  filtrarIdsPorIfcType(datosPrecios, ifcTypes);
+  // filtrarIdsPorIfcType(datosPrecios, ifcTypes);
 });
 
 function obtenerTypes() {
