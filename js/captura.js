@@ -1,4 +1,4 @@
-function crearPDF(){    
+function crearIMG(){    
     const container = document.getElementById('datosImprimir');
     html2canvas(container).then(canvas => {
       const imageDataURL = canvas.toDataURL('image/jpg');      
@@ -38,5 +38,5 @@ $('#imagen').change(function() {
 
 
 $('#imprimir').click(function () { 
-    crearPDF();
+    crearIMG();
 });

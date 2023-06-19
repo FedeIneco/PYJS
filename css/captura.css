@@ -11,25 +11,45 @@
     padding: 1rem;
 }
 
+#checkbox{
+    font-size: 18px;
+    padding: 1rem;
+    border: 1px solid black;
+    height: 100vh;
+
+}
+
 .checks{
     display: flex;
     gap: .5rem;
 }
 
-
 button{
     margin-left: 1rem;
 }
+
 #datosImprimir{
+    /* background-color: #EF4765; */
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    gap: 3rem;
+    border: 1px solid black;
 }
+
 #datos{
     margin-right: 1rem;
     display: flex;
     flex-direction: row;
     gap: 2rem;
+}
+
+.card{    
+    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 5px;
+    /* box-shadow: 2px 2px rgb(203, 23, 32); */
+    margin-bottom: 1rem;
 }
 .cuadrado{
     border: 2px solid #ccc;
@@ -43,4 +63,39 @@ button{
     flex-direction: row;
     gap: .5rem;
     margin-top: .5rem;
+}
+
+#imprimir{
+    position: absolute;
+    bottom: 10%;   
+}
+
+.button-62 {
+    background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+    border: 0;
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 2.5;
+    outline: transparent;
+    padding: 0 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+}
+
+.button-62:not([disabled]):focus {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.button-62:not([disabled]):hover {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
 }
