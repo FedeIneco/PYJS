@@ -488,7 +488,7 @@ window.onload = function () {
       if (datosPrecios.length > 0) {
         clearInterval(checkIfcTypes);
         crearDesplegable(plantasUnicas, floorsSelect);
-        types = filtrarIdsPorIfcType(datosPrecios, ifcTypes);
+        // types = filtrarIdsPorIfcType(datosPrecios, ifcTypes);
       } else {
         console.log("Cargando...");
       }
