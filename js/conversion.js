@@ -6,7 +6,7 @@ const boton = document.getElementById("boton");
 const input = document.getElementById("archivo");
 const lista = document.getElementById("listado");
 const ifcLoader = new IFCLoader();
-
+ifcLoader.ifcManager.setWasmPath("../wasm/");
 form.style.display =
   window.location.href === "https://xkt.onrender.com/" ? "block" : "none";
 lista.style.display =
