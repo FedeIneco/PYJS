@@ -14,7 +14,7 @@ lista.style.display =
 
 boton.addEventListener("click", enviar);
 
-//Función que envía el nombre del proyecto y los archivos que quiere convertir a xkt al servidor
+//Función que envía el nombre del proyecto y los archivos que quiere convertir a xkt a servidor
 async function enviar() {
   const ifcURL = URL.createObjectURL(input.files[0]);
   const model = await ifcLoader.loadAsync(ifcURL);
