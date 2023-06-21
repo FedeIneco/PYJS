@@ -21,8 +21,8 @@ app.use(
 app.use("/img", express.static(__dirname + "/img"));
 app.use(
   "/lib/fontawesome-free-5.11.2-web/webfonts",
-  express.static(__dirname + "/lib/fontawesome-free-5.11.2-web/webfonts")
-);
+  express.static(__dirname + "/lib/fontawesome-free-5.11.2-web/webfonts"));
+app.use("/wasm", express.static(__dirname + "/wasm"));
 app.use("/lib", express.static(__dirname + "/lib"));
 app.use("/js", express.static(__dirname + "/js"));
 app.use("/data/projects", express.static(__dirname + "/data/projects"));
