@@ -18,14 +18,14 @@ boton.addEventListener("click", enviar);
 async function enviar() {
   const ifcURL = URL.createObjectURL(input.files[0]);
   const model = await ifcLoader.loadAsync(ifcURL);
-  logAllFurniture();
+  await logAllFurniture();
   const texto = document.getElementById("texto").value;
   const archivos = document.getElementById("archivo").files;
   for (let i = 0; i < archivos.length; i++) {
     formData.append("archivo", archivos[i]);
   }
   formData.append("texto", texto);
-  fetch("https://xkt.onrender.com/api/convert-to-xkt", {
+  await fetch("https://xkt.onrender.com/api/convert-to-xkt", {
     method: "POST",
     body: formData,
   })
