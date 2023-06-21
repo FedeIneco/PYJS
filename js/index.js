@@ -45,63 +45,6 @@ const capturas = document.getElementById("capturas");
 const canvas = document.getElementById("myCanvas");
 const ocupacionesButton = document.getElementById("ocupacion");
 
-form.style.display =
-  window.location.href === "https://xkt.onrender.com/" ? "block" : "none";
-lista.style.display =
-  window.location.href === "https://xkt.onrender.com/" ? "flex" : "none";
-
-boton.addEventListener("click", enviar);
-
-//Función que envía el nombre del proyecto y los archivos que quiere convertir a xkt al servidor
-function enviar() {
-  const texto = document.getElementById("texto").value;
-  const archivos = document.getElementById("archivo").files;
-  for (let i = 0; i < archivos.length; i++) {
-    formData.append("archivo", archivos[i]);
-  }
-  formData.append("texto", texto);
-  fetch("https://xkt.onrender.com/api/convert-to-xkt", {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Error en la petición");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      archivosCreados();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-const listado = document.getElementById("menuListado");
-
-//Actualiza el listado de proyectos creaados una vez se ha convertido a xkt
-function archivosCreados() {
-  fetch("https://xkt.onrender.com/api/projects")
-    .then((response) => response.json())
-    .then((data) => {
-      listado.innerHTML = "";
-      const filenames = data.filenames;
-      filenames.forEach((filename) => {
-        // Crear un elemento li
-        const li = document.createElement("li");
-
-        // Configurar el texto del elemento li
-        li.innerHTML = `<a href="https://xkt.onrender.com/?projectId=${filename}">${filename}</a>`;
-
-        // Agregar el elemento li a la lista
-        listado.appendChild(li);
-      });
-    })
-    .catch((error) => console.error(error));
-}
-archivosCreados();
 
 let todasTablaseditadas = document.createElement("table");
 const exportButton = document.getElementById("export-btn");
@@ -566,7 +509,7 @@ window.onload = function () {
     formData.append("imagen", imagen);
 
     try {
-      const response = await fetch("https://xkt.onrender.comguardar-imagen", {
+      const response = await fetch("https://xkt.onrender.com/guardar-imagen", {
         method: "POST",
         body: formData,
       });
