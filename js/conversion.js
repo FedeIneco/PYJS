@@ -110,7 +110,3 @@ async function logAllFurniture() {
   console.log(`Tiempo transcurrido: ${elapsedTime / 60000} minutoss`);
   console.log(objetosPset);
 }
-
-//? 10 properties -> 5
-
-
