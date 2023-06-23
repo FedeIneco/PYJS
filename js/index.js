@@ -45,6 +45,63 @@ const capturas = document.getElementById("capturas");
 const canvas = document.getElementById("myCanvas");
 const ocupacionesButton = document.getElementById("ocupacion");
 
+form.style.display =
+  window.location.href === "https://xkt.onrender.com/" ? "block" : "none";
+lista.style.display =
+  window.location.href === "https://xkt.onrender.com/" ? "flex" : "none";
+
+boton.addEventListener("click", enviar);
+
+//Función que envía el nombre del proyecto y los archivos que quiere convertir a xkt al servidor
+function enviar() {
+  const texto = document.getElementById("texto").value;
+  const archivos = document.getElementById("archivo").files;
+  for (let i = 0; i < archivos.length; i++) {
+    formData.append("archivo", archivos[i]);
+  }
+  formData.append("texto", texto);
+  fetch("https://xkt.onrender.com/api/convert-to-xkt", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Error en la petición");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      archivosCreados();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+const listado = document.getElementById("menuListado");
+
+//Actualiza el listado de proyectos creaados una vez se ha convertido a xkt
+function archivosCreados() {
+  fetch("https://xkt.onrender.com/api/projects")
+    .then((response) => response.json())
+    .then((data) => {
+      listado.innerHTML = "";
+      const filenames = data.filenames;
+      filenames.forEach((filename) => {
+        // Crear un elemento li
+        const li = document.createElement("li");
+
+        // Configurar el texto del elemento li
+        li.innerHTML = `<a href="https://xkt.onrender.com/?projectId=${filename}">${filename}</a>`;
+
+        // Agregar el elemento li a la lista
+        listado.appendChild(li);
+      });
+    })
+    .catch((error) => console.error(error));
+}
+archivosCreados();
 
 let todasTablaseditadas = document.createElement("table");
 const exportButton = document.getElementById("export-btn");
@@ -350,6 +407,15 @@ window.onload = function () {
       justiciaContainer.classList.toggle("ocultar");
     }
   });
+  const cerrar  = document.getElementById("cerrar");
+  const espaciosContainer = document.getElementById("bar-espacios");
+  cerrar.addEventListener("click", () => {
+    if(!espaciosContainer.classList.contains("ocultar")){
+      espaciosContainer.classList.toggle("ocultar");
+    }
+})
+  
+  cerrar.addEventListener("click", () => {})
   floorsSelect.addEventListener("change", () => {    
     const elementoSeleccionado = floorsSelect.value;
     let planta = "";
@@ -390,18 +456,18 @@ window.onload = function () {
           bimViewer.setAllObjectsVisible(false);
           bimViewer.setObjectsVisible(spacesids, true);
           bimViewer.setObjectsVisible(noSpacesids, false);          
-          contadorNotariado.forEach((elemento) => {
-            const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];            
-            objetoSeleccionado.colorize = color3;            
-          });
-          contadorJuridica.forEach((elemento) => {
-            const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];
-            objetoSeleccionado.colorize = color2;
-          });
-          contadorNacionalidad.forEach((elemento) => {
-            const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];
-            objetoSeleccionado.colorize = color;
-          });
+          // contadorNotariado.forEach((elemento) => {
+          //   const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];            
+          //   objetoSeleccionado.colorize = color3;            
+          // });
+          // contadorJuridica.forEach((elemento) => {
+          //   const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];
+          //   objetoSeleccionado.colorize = color2;
+          // });
+          // contadorNacionalidad.forEach((elemento) => {
+          //   const objetoSeleccionado = bimViewer.viewer.scene.objects[elemento.globalID];
+          //   objetoSeleccionado.colorize = color;
+          // });
         });
         break;
       } else {
@@ -428,7 +494,7 @@ window.onload = function () {
 
   datosInput.addEventListener("change", async () => {
     const checkIfcTypes = setInterval(() => {
-      if (datosPrecios.length > 0) {
+      if (objetos.length > 0) {
         clearInterval(checkIfcTypes);
         crearDesplegable(plantasUnicas, floorsSelect);
         // types = filtrarIdsPorIfcType(datosPrecios, ifcTypes);

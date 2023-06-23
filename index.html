@@ -52,12 +52,12 @@
     </select>
     <button id="espacios">Mostrar espacios</button>
     <button id="plantas">Mostrar planta</button>
-    <button id="ocupacion">Mostrar ocupacion</button>
+    <button id="ocupacion" style="display: none;">Mostrar ocupacion</button>
     <input type="file" id="fileInput" />
-    <button id="capturas">Hacer captura</button>
+    <button id="capturas" style="display: none;">Hacer captura</button>
   </div>
   <div id="myExplorer"></div>
-  <div id="myFilter">
+  <div id="myFilter" style="display: none;">
     <label for="filter_toggle" id="desplegableFiltro">
       <div class="iconoSubir">
         <i class="fas fa-angle-up"></i>
@@ -87,7 +87,7 @@
     <input type="file" id="archivo" name="archivo" multiple /><br /><br />
     <button type="button" id="boton">Enviar</button>
   </form>
-  <div id="save-export">
+  <div id="save-export" style="display: none;">
     <div id="save-export-container">
       <button class="fa fa-file-download xeokit-btn disabled" id="export-btn"></button>
       <button class="fa fa-save xeokit-btn disabled" id="save-btn"></button>
@@ -102,8 +102,9 @@
   </div>
   <div class="grafica-container ocultar" id="bar-espacios">
     <div id="barChartEspacios">
+      <span id= "cerrar" style="float: right; margin-right: 0.2rem; cursor: pointer;">Cerrar</span>
       <h2>Ocupaciones general</h2>
-      <div>
+      <div>        
         <canvas id="bar-chart-espacios"></canvas>
       </div>
     </div>
