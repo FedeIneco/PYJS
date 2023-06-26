@@ -1,5 +1,12 @@
-import { graficarBar, graficarLinear, graficarPie, graficarBarEspacios } from "./graficas.js";
-const excelInput = document.getElementById("fileInput");
+import {
+  graficarBar,
+  graficarLinear,
+  graficarPie,
+  graficarBarEspacios,
+} from "./graficas.js";
+//const excelInput = document.getElementById("fileInput");
+
+const filePath = "../database/GESTION_PUESTOS.xlsx";
 let objetos = [];
 let plantasUnicas = [];
 let plantasFiltradas = [];
@@ -13,14 +20,36 @@ let falsosTechosP1 = [];
 let usoEspacios = [];
 let espaciosUnicos = [];
 
-excelInput.addEventListener("change", async () => {
-  const content = await readXlsxFile(excelInput.files[0]);
+const readExcelFile = async () => {  
+  const response = await fetch(filePath);
+  const arrayBuffer = await response.arrayBuffer();
+  const data = new Uint8Array(arrayBuffer);
+  const workbook = XLSX.read(data, { type: 'array' });
+  const sheetName = workbook.SheetNames[0];
+  const worksheet = workbook.Sheets[sheetName];
+  const content = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+  const sheetName2 = workbook.SheetNames[1];
+  const worksheet2 = workbook.Sheets[sheetName2];
+  const content2 = XLSX.utils.sheet_to_json(worksheet2, { header: 1 });
+  const formattedData = content2.map(row => {
+    return row.map(cell => {
+      if (typeof cell === 'number' && cell >= 10 && cell <= 2958465) {
+        const excelDate = new Date((cell - 1) * 24 * 60 * 60 * 1000);
+        const day = excelDate.getDate();
+        const month = excelDate.getMonth() + 1;
+        const year = excelDate.getFullYear();
+        return `${day}/${month}/${year}`;
+      }
+      return cell;
+    });
+  });
+  console.log(content);
+  console.log(formattedData);
 
   objetos = await crearObjetosP1(content);
   let plantas = objetos.map(function (objeto) {
     return objeto.checkLevel;
   });
-
 
   plantasUnicas = [...new Set(plantas)];
   plantasUnicas.sort();
@@ -41,13 +70,24 @@ excelInput.addEventListener("change", async () => {
   usoEspacios = obtenerUsoEspacios();
   let espacios = usoEspacios.map(function (objeto) {
     return objeto.spaceUso;
-  })
+  });
 
-  espaciosUnicos = [... new Set(espacios)];
-  const contadorNotariado = obtenerEspaciosUso("S.G. NOTARIADO Y DE LOS REGISTROS");
-  const contadorJuridica = obtenerEspaciosUso("D.G. SEG. JURIDICA Y FE PUBLICA");
-  const contadorNacionalidad = obtenerEspaciosUso("S.G. NACIONALIDAD Y ESTADO CIVIL");  
-  await graficarBarEspacios(espaciosUnicos, contadorJuridica.length, contadorNacionalidad.length, contadorNotariado.length);
+  espaciosUnicos = [...new Set(espacios)];
+  const contadorNotariado = obtenerEspaciosUso(
+    "S.G. NOTARIADO Y DE LOS REGISTROS"
+  );
+  const contadorJuridica = obtenerEspaciosUso(
+    "D.G. SEG. JURIDICA Y FE PUBLICA"
+  );
+  const contadorNacionalidad = obtenerEspaciosUso(
+    "S.G. NACIONALIDAD Y ESTADO CIVIL"
+  );
+  await graficarBarEspacios(
+    espaciosUnicos,
+    contadorJuridica.length,
+    contadorNacionalidad.length,
+    contadorNotariado.length
+  );
 
   ceilings = objetos.filter(function (objeto) {
     return objeto.category === "Ceilings";
@@ -56,13 +96,15 @@ excelInput.addEventListener("change", async () => {
   sumatorioOcupacionPorEstado(estadosFiltrados);
   await graficarPie(estadosUnicos, sumatorioEStados);
 
-  const contentPage2 = await readXlsxFile(excelInput.files[0], { sheet: 2 });
-  objetosP2 = await crearObjetosP2(contentPage2);
-  let fechas = objetosP2.map(function (objeto) {
-    return objeto.date.getDate() + "/" + (objeto.date.getMonth() + 1);
-  });
+  // const contentPage2 = await readXlsxFile(excelInput.files[0], { sheet: 2 });
+  objetosP2 = await crearObjetosP2(formattedData);
+  console.log(typeof objetosP2[0].date);  
+  let fechas = objetosP2.map(function (objeto) {    
+    return objeto.date.substring(0,5);
+  });  
   fechasUnicas = [...new Set(fechas)];
   fechasUnicas.sort();
+  console.log(fechasUnicas);
   const vacante = obtenerEstadosPorDia(fechasUnicas, "VACANTE");
   const ocupado = obtenerEstadosPorDia(fechasUnicas, "OCUPADO");
   const reservado = obtenerEstadosPorDia(fechasUnicas, "RESERVADO");
@@ -74,7 +116,7 @@ excelInput.addEventListener("change", async () => {
     reservado,
     vacante
   );
-});
+};
 
 async function crearObjetosP1(excel) {
   let objetos = [];
@@ -90,8 +132,8 @@ async function crearObjetosP1(excel) {
     elemento.globalID = excel[index][11];
     elemento.workset = excel[index][13];
     elemento.spaceUso = excel[index][14];
-    objetos.push(elemento);    
-  }  
+    objetos.push(elemento);
+  }
   return objetos;
 }
 
@@ -137,7 +179,6 @@ function obtenerEstados() {
   });
 }
 
-
 function sumatorioOcupacionPorEstado(estadosFiltrados) {
   for (let i = 0; i < estadosUnicos.length; i++) {
     let sumatorio = 0;
@@ -156,7 +197,7 @@ function obtenerEstadosPorDia(fechasUnicas, estadoFiltro) {
     let contador = 0;
     for (let j = 0; j < objetosP2.length; j++) {
       const fechaObjeto = objetosP2[j].date;
-      const diaMes = fechaObjeto.getDate() + "/" + (fechaObjeto.getMonth() + 1);
+      const diaMes = fechaObjeto.substring(0,5);
 
       if (fechasUnicas[i] === diaMes && objetosP2[j].estado === estadoFiltro) {
         contador++;
@@ -167,23 +208,24 @@ function obtenerEstadosPorDia(fechasUnicas, estadoFiltro) {
   return arrayContador;
 }
 
-function obtenerEspaciosUso(tipo){
+function obtenerEspaciosUso(tipo) {
   return objetos.filter(function (objeto) {
     return objeto.spaceUso === tipo;
   });
 }
 
-function obtenerUsoEspacios(){
+function obtenerUsoEspacios() {
   return objetos.filter(function (objeto) {
     return objeto.spaceUso != null;
   });
 }
 
-function obtenerOcupacion(tipo){
+function obtenerOcupacion(tipo) {
   return objetos.filter(function (objeto) {
     return objeto.estado === tipo;
   });
 }
+readExcelFile();
 
 export {
   objetos,
@@ -198,5 +240,5 @@ export {
   objetosP2,
   usoEspacios,
   obtenerEspaciosUso,
-  obtenerOcupacion
+  obtenerOcupacion,
 };

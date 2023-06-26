@@ -5,7 +5,8 @@ const multer = require("multer");
 const mimeType = require("mime-types");
 const { exec } = require("child_process");
 const fs = require("fs");
-
+const spawn = require("child_process").spawn;
+const pythonProcess = spawn("python", ["../python/index.py"]);
 const app = express();
 app.use(cors());
 app.use("/css", express.static(__dirname + "/css"));
@@ -21,10 +22,12 @@ app.use(
 app.use("/img", express.static(__dirname + "/img"));
 app.use(
   "/lib/fontawesome-free-5.11.2-web/webfonts",
-  express.static(__dirname + "/lib/fontawesome-free-5.11.2-web/webfonts"));
+  express.static(__dirname + "/lib/fontawesome-free-5.11.2-web/webfonts")
+);
 app.use("/wasm", express.static(__dirname + "/wasm"));
 app.use("/lib", express.static(__dirname + "/lib"));
 app.use("/js", express.static(__dirname + "/js"));
+app.use("/database", express.static(__dirname + "/database"));
 app.use("/data/projects", express.static(__dirname + "/data/projects"));
 
 const storage = multer.diskStorage({
@@ -81,15 +84,35 @@ app.get("/api/files", async (req, res) => {
 app.post("/api/convert-to-xkt", upload, (req, res) => {
   const texto = req.body.texto;
 
-  const command = `node createProject.js -p ${texto} -s ./uploads/*.ifc`;
+  // Comando para ejecutar createProject.js
+  const createProjectCommand = `node createProject.js -p ${texto} -s ./uploads/*.ifc`;
 
-  exec(command, (error, stdout, stderr) => {
+  // Comando para ejecutar python.js
+  const pythonCommand = "node python.js";
+
+  // Ejecutar createProject.js
+  exec(createProjectCommand, (error, stdout, stderr) => {
     if (error) {
-      console.error(`Error al ejecutar el comando: ${error}`);
-      return res.status(500).json({ error: "Error al ejecutar el comando" });
+      console.error(`Error al ejecutar createProject.js: ${error}`);
+      return res
+        .status(500)
+        .json({ error: "Error al ejecutar createProject.js" });
     }
-    console.log(`Salida del comando: ${stdout}`);
-    return res.status(200).json({ mensaje: "Comando ejecutado correctamente" });
+
+    console.log(`Salida de createProject.js: ${stdout}`);
+
+    // Ejecutar python.js
+    exec(pythonCommand, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error al ejecutar python.js: ${error}`);
+        return res.status(500).json({ error: "Error al ejecutar python.js" });
+      }
+
+      console.log(`Salida de python.js: ${stdout}`);
+      return res
+        .status(200)
+        .json({ mensaje: "Comandos ejecutados correctamente" });
+    });
   });
 });
 
@@ -113,3 +136,13 @@ app.post("/guardar-imagen", uploadImg, (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
   console.log("Servidor iniciado en el http://localhost:3000/");
 });
+
+function ejecutarPython() {
+  let pRes = "";
+  pythonProcess.stdout.on("data", function (data) {
+    pRes += data.toString();
+  });
+  pythonProcess.stdout.on("end", function () {
+    console.log("FINISHED");
+  });
+}

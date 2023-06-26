@@ -46,9 +46,9 @@ const canvas = document.getElementById("myCanvas");
 const ocupacionesButton = document.getElementById("ocupacion");
 
 form.style.display =
-  window.location.href === "https://xkt.onrender.com/" ? "block" : "none";
+  window.location.href === "http://localhost:3000/" ? "block" : "none";
 lista.style.display =
-  window.location.href === "https://xkt.onrender.com/" ? "flex" : "none";
+  window.location.href === "http://localhost:3000/" ? "flex" : "none";
 
 boton.addEventListener("click", enviar);
 
@@ -60,7 +60,7 @@ function enviar() {
     formData.append("archivo", archivos[i]);
   }
   formData.append("texto", texto);
-  fetch("https://xkt.onrender.com/api/convert-to-xkt", {
+  fetch("http://localhost:3000/api/convert-to-xkt", {
     method: "POST",
     body: formData,
   })
@@ -83,7 +83,7 @@ const listado = document.getElementById("menuListado");
 
 //Actualiza el listado de proyectos creaados una vez se ha convertido a xkt
 function archivosCreados() {
-  fetch("https://xkt.onrender.com/api/projects")
+  fetch("http://localhost:3000/api/projects")
     .then((response) => response.json())
     .then((data) => {
       listado.innerHTML = "";
@@ -93,7 +93,7 @@ function archivosCreados() {
         const li = document.createElement("li");
 
         // Configurar el texto del elemento li
-        li.innerHTML = `<a href="https://xkt.onrender.com/?projectId=${filename}">${filename}</a>`;
+        li.innerHTML = `<a href="http://localhost:3000/?projectId=${filename}">${filename}</a>`;
 
         // Agregar el elemento li a la lista
         listado.appendChild(li);
@@ -491,18 +491,19 @@ window.onload = function () {
     bimViewer.setObjectsVisible(techosIds, false);
     bimViewer.set3DEnabled(false);
   });
-
-  datosInput.addEventListener("change", async () => {
-    const checkIfcTypes = setInterval(() => {
+  
+    const checkIfcTypes = setInterval(() => {    
       if (objetos.length > 0) {
         clearInterval(checkIfcTypes);
         crearDesplegable(plantasUnicas, floorsSelect);
+        pieButton.classList.remove("disabled");
+        barButton.classList.remove("disabled");
+        linearButton.classList.remove("disabled");
         // types = filtrarIdsPorIfcType(datosPrecios, ifcTypes);
       } else {
         console.log("Cargando...");
       }
     }, 1000);
-  });
 
   function crearDesplegable(datosDesplegable, select) {
     datosDesplegable.forEach((elementoDesplegable) => {
@@ -575,7 +576,7 @@ window.onload = function () {
     formData.append("imagen", imagen);
 
     try {
-      const response = await fetch("https://xkt.onrender.com/guardar-imagen", {
+      const response = await fetch("http://localhost:3000/guardar-imagen", {
         method: "POST",
         body: formData,
       });

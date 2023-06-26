@@ -29,8 +29,8 @@
 			"name": "JBPS2"
 		},
 		{
-			"id": "Hola",
-			"name": "Hola"
+			"id": true,
+			"name": true
 		}
 	]
 }
