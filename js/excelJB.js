@@ -43,8 +43,7 @@ const readExcelFile = async () => {
       return cell;
     });
   });
-  console.log(content);
-  console.log(formattedData);
+
 
   objetos = await crearObjetosP1(content);
   let plantas = objetos.map(function (objeto) {
@@ -98,13 +97,11 @@ const readExcelFile = async () => {
 
   // const contentPage2 = await readXlsxFile(excelInput.files[0], { sheet: 2 });
   objetosP2 = await crearObjetosP2(formattedData);
-  console.log(typeof objetosP2[0].date);  
   let fechas = objetosP2.map(function (objeto) {    
     return objeto.date.substring(0,5);
   });  
   fechasUnicas = [...new Set(fechas)];
   fechasUnicas.sort();
-  console.log(fechasUnicas);
   const vacante = obtenerEstadosPorDia(fechasUnicas, "VACANTE");
   const ocupado = obtenerEstadosPorDia(fechasUnicas, "OCUPADO");
   const reservado = obtenerEstadosPorDia(fechasUnicas, "RESERVADO");
