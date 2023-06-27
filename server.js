@@ -102,17 +102,17 @@ app.post("/api/convert-to-xkt", upload, (req, res) => {
     console.log(`Salida de createProject.js: ${stdout}`);
 
     // Ejecutar python.js
-    exec(pythonCommand, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error al ejecutar python.js: ${error}`);
-        return res.status(500).json({ error: "Error al ejecutar python.js" });
-      }
+    // exec(pythonCommand, (error, stdout, stderr) => {
+    //   if (error) {
+    //     console.error(`Error al ejecutar python.js: ${error}`);
+    //     return res.status(500).json({ error: "Error al ejecutar python.js" });
+    //   }
 
-      console.log(`Salida de python.js: ${stdout}`);
-      return res
-        .status(200)
-        .json({ mensaje: "Comandos ejecutados correctamente" });
-    });
+    //   console.log(`Salida de python.js: ${stdout}`);
+    //   return res
+    //     .status(200)
+    //     .json({ mensaje: "Comandos ejecutados correctamente" });
+    // });
   });
 });
 
