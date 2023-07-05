@@ -121,25 +121,25 @@ const readExcelFile = async () => {
   );
 };
 
-// async function crearObjetosP1(excel) {
-//   let objetos = [];
-//   for (let index = 1; index < excel.length; index++) {
-//     const elemento = {};
-//     elemento.idInterno = excel[index][0];
-//     elemento.category = excel[index][2];
-//     elemento.checkLevel = excel[index][3];
-//     elemento.spaceCheck = excel[index][4];
-//     elemento.codEspacio = excel[index][5];
-//     elemento.codPuesto = excel[index][6];
-//     elemento.estado = excel[index][8];
-//     // elemento.globalID = excel[index][0];
-//     elemento.globalID = excel[index][11];
-//     elemento.workset = excel[index][13];
-//     elemento.spaceUso = excel[index][14];
-//     objetos.push(elemento);
-//   }
-//   return objetos;  
-// }
+async function crearObjetosP1(excel) {
+  let objetos = [];
+  for (let index = 1; index < excel.length; index++) {
+    const elemento = {};
+    elemento.idInterno = excel[index][0];
+    elemento.category = excel[index][2];
+    elemento.checkLevel = excel[index][3];
+    elemento.spaceCheck = excel[index][4];
+    elemento.codEspacio = excel[index][5];
+    elemento.codPuesto = excel[index][6];
+    elemento.estado = excel[index][8];
+    // elemento.globalID = excel[index][0];
+    elemento.globalID = excel[index][11];
+    elemento.workset = excel[index][13];
+    elemento.spaceUso = excel[index][14];
+    objetos.push(elemento);
+  }
+  return objetos;  
+}
 
 // function agruparObjetos() {
 //   const transformedData = content.map((line) => {
