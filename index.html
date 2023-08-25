@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="img/icono-Ineco.ico" type="image/x-icon" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="stylesheet" href="lib/fontawesome-free-5.11.2-web/css/all.css" type="text/css"/>
-  <link rel="stylesheet" href="lib/xeokit-bim-viewer/xeokit-bim-viewer.css" type="text/css"/>
-  <meta name="description" content="Conversor y Visor IFC con integración de Bases de Datos externas">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />  
+  <link rel="stylesheet" href="lib/fontawesome-free-5.11.2-web/css/all.css" type="text/css" />
+  <link rel="stylesheet" href="lib/xeokit-bim-viewer/xeokit-bim-viewer.css" type="text/css" />
+  <meta name="description" content="Conversor y Visor IFC con integración de Bases de Datos externas">  
   <link rel="stylesheet" href="css/style.css" />
   <title>INECO viewer</title>
 </head>
@@ -38,7 +39,7 @@
     </div>
     <div class="imagen">
       <img src="img/justicia-removebg-preview_1.webp" alt="Ministerio Justicia" style="width: 10rem;">
-      <img src="img/logo_ineco_blanco.webp" alt="Logo Ineco"  style="width: 10rem;"/>
+      <img src="img/logo_ineco_blanco.webp" alt="Logo Ineco" style="width: 10rem;" />
     </div>
 
   </div>
@@ -48,9 +49,9 @@
     </select>
     <button id="espacios">Mostrar espacios 1ª planta</button>
     <button id="plantas">Mostrar sitios planta</button>
-    <button id="ocupacion" style="display: none;">Mostrar ocupacion</button>
+    <button id="ocupacion" >Mostrar ocupacion</button>
     <input type="file" id="fileInput" style="display: none;" />
-    <button id="capturas" style="display: none;">Hacer captura</button>
+    <button id="capturas">Hacer captura</button>
   </div>
   <div id="myExplorer">
     <h2>Listado de proyectos</h2>
@@ -88,43 +89,91 @@
     <input type="file" id="archivo" name="archivo" multiple />
     <button type="button" id="boton">Enviar</button>
   </form>
-  <div id="save-export" >
+  <div id="save-export">
     <div id="save-export-container" style="display: none;">
       <button class="fa fa-file-download xeokit-btn disabled" id="export-btn" title="Download properties"></button>
       <button class="fa fa-save xeokit-btn disabled" id="save-btn" title="Save property"></button>
     </div>
     <div id="charts-container" style="display: none;">
+      <button class="fas fa-tasks xeokit-btn graficos" id="check-btn" title="Pie Chart"></button>
       <button class="fas fa-chart-pie xeokit-btn disabled graficos" id="pie-btn" title="Pie Chart"></button>
       <button class="fas fa-chart-bar xeokit-btn disabled graficos" id="bar-btn" title="Bar Chart"></button>
       <button class="fas fa-chart-line xeokit-btn disabled graficos" id="line-btn" title="Line Chart"></button>
     </div>
   </div>
+  <div id="checkContainer" class="ocultar">
+    <div class="w3-bar w3-black">
+      <button class="w3-bar-item w3-button" onclick="openCity('Project')">Check Project</button>
+      <button class="w3-bar-item w3-button" onclick="openCity('Name')">Check Name</button>      
+      <button class="w3-bar-item w3-button" onclick="openCity('Pset')">Check Psets</button>
+      <button class="w3-bar-item w3-button" onclick="openCity('All')">Check All</button>
+    </div>
+   
+    <div id="Project" class="w3-container checks">
+      <h2>Check Project Name</h2>
+      <button id="checkName">Check Project Name</button>
+    </div>
+    <div id="Name" class="w3-container checks" style="display:none">
+      <h3>Name CheckList</h3>
+      <div class="elementosCheck">
+        <p>Elige que quieres checkear:</p>
+        <div class="checkContainer">
+          <select name="ifcType" id="ifcType">
+          </select>
+          <div id="checkButtons">
+            <button id="correctos">Mostrar Correctos</button>
+            <button id="incorrectos">Mostrar Incorrectos</button>
+          </div>        
+        </div>
+        <p id="resultado">El <span id="porcentaje"></span>% de los elementos <span id="ifcTypeText"></span> han pasado el test</p>
+        <div class="exportContainer">
+          <button id="exportWrong">Exportar datos erróneos</button>        
+        </div>
+      </div>
+    </div>    
+    <div id="Pset" class="w3-container checks" style="display:none">
+      <h2>Check Psets</h2>
+      <p>Tokyo is the capital of Japan.</p>
+    </div>
+    <div id="All" class="w3-container checks" style="display:none">
+      <h2>Check All names</h2>
+      <button id="checkAllNames">Check All Properties Name</button>
+    </div>
+
+  </div>
   <div class="grafica-container ocultar" id="pset">
   </div>
   <div class="grafica-container ocultar" id="bar-espacios">
     <div id="barChartEspacios">
-      <h2>Ocupaciones general <span id= "cerrarEspacios" style="float: right; margin-right: 0.2rem; cursor: pointer;"><i class="fas fa-times" style="margin-right: 1rem;"></i></span></h2>
-      <div>        
+      <h2>Ocupaciones general <span id="cerrarEspacios" style="float: right; margin-right: 0.2rem; cursor: pointer;"><i
+            class="fas fa-times" style="margin-right: 1rem;"></i></span></h2>
+      <div>
         <canvas id="bar-chart-espacios"></canvas>
       </div>
     </div>
   </div>
   <div class="grafica-container ocultar" id="pie">
     <div>
-      <h2>Ocupaciones general<span id= "cerrarOcupaciones" style="float: right; margin-right: 0.2rem; cursor: pointer;"><i class="fas fa-times" style="margin-right: 1rem;"></i></span></h2>
+      <h2>Ocupaciones general<span id="cerrarOcupaciones"
+          style="float: right; margin-right: 0.2rem; cursor: pointer;"><i class="fas fa-times"
+            style="margin-right: 1rem;"></i></span></h2>
       <div>
         <canvas id="pie-chart"></canvas>
       </div>
     </div>
   </div>
   <div class="grafica-container ocultar" id="bar">
-    <h2>Estados por fecha de planta primera<span id= "cerraEstados" style="float: right; margin-right: 0.2rem; cursor: pointer;"><i class="fas fa-times" style="margin-right: 1rem;"></i></span></h2>
+    <h2>Estados por fecha de planta primera<span id="cerraEstados"
+        style="float: right; margin-right: 0.2rem; cursor: pointer;"><i class="fas fa-times"
+          style="margin-right: 1rem;"></i></span></h2>
     <div>
       <canvas id="bar-chart"></canvas>
     </div>
   </div>
   <div class="grafica-container ocultar" id="linear">
-    <h2>Estados por fecha de planta primera<span id= "cerrarEstadosPlanta" style="float: right; margin-right: 0.2rem; cursor: pointer;"><i class="fas fa-times" style="margin-right: 1rem;"></i></span></h2>
+    <h2>Estados por fecha de planta primera<span id="cerrarEstadosPlanta"
+        style="float: right; margin-right: 0.2rem; cursor: pointer;"><i class="fas fa-times"
+          style="margin-right: 1rem;"></i></span></h2>
     <div>
       <canvas id="linear-chart"></canvas>
     </div>
@@ -140,12 +189,23 @@
 
 <!-- Tooltips libraries -->
 <script src="js/cdnjs.cloudflare.com_ajax_libs_Chart.js_3.9.1_chart.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 <script src="lib/popper.js"></script>
 <script src="lib/tippy.js"></script>
 <script src="js/html2canvas.hertzen.com_dist_html2canvas.min.js"></script>
 <script type="module" src="js/excelJB.js"></script>
+<script src="js/excelpy.js"></script>
 <script type="module" src="js/index.js"></script>
+<script>
+  function openCity(cityName) {
+  var i;  
+  var x = document.getElementsByClassName("checks");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  document.getElementById(cityName).style.display = "block";  
+}
+</script>
 </html>

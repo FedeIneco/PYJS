@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/captura.min.css" />
+  <link rel="stylesheet" href="css/captura.css" />
   <title>Captura</title>
 </head>
 
@@ -27,37 +27,59 @@
     <div id="datosImprimir">
       <img src="downloads/captura.png" alt="Captura imagen" id="captura" />
       <div id="datos">
+        <div class="logo">
+          <img src="./img/justicia-removebg-preview_1.webp" alt="Logo Justicia">
+        </div>
+        <div class="fecha">
+          <span>Fecha</span>
+          <div>
+            <p id="dia"></p>
+          </div>
+        </div>
         <div id="ocupacion" class="card" style="display: none;">
           <h3>Leyenda Ocupaciones</h3>
           <div class="colores">
-            <div><p class="cuadrado" style="background-color: #ff4d4d;"></p><span>Ocupado</span></div>
-            <div><p class="cuadrado" style="background-color: #ffff4d;"></p><span>Reservado</span></div>
-            <div><p class="cuadrado" style="background-color: #70db70;"></p><span>Vacante</span></div>
+            <div>
+              <p class="cuadrado" style="background-color: #ff4d4d;"></p><span>Ocupado</span>
+            </div>
+            <div>
+              <p class="cuadrado" style="background-color: #ffff4d;"></p><span>Reservado</span>
+            </div>
+            <div>
+              <p class="cuadrado" style="background-color: #70db70;"></p><span>Vacante</span>
+            </div>
           </div>
         </div>
-        <div id="espacios" class="card"style="display: none;">
+        <div id="espacios" class="card" style="display: none;">
           <h3>
             Leyenda espacios
           </h3>
           <div class="colores">
-            <div><p class="cuadrado" style="background-color: #8844B5;"></p><span>D.G. SEG. JURIDICA Y FE
-                PUBLICA</span></div>
-            <div><p class="cuadrado" style="background-color: #B9B9DD;"></p><span>S.G. NACIONALIDAD Y ESTADO
-                CIVIL</span></div>
-            <div><p class="cuadrado" style="background-color: #6B84E4;"></p><span>S.G. NOTARIADO Y DE LOS
-                REGISTROS</span></div>
+            <div>
+              <p class="cuadrado" style="background-color: #8844B5;"></p><span>D.G. SEG. JURIDICA Y FE
+                PUBLICA</span>
+            </div>
+            <div>
+              <p class="cuadrado" style="background-color: #B9B9DD;"></p><span>S.G. NACIONALIDAD Y ESTADO
+                CIVIL</span>
+            </div>
+            <div>
+              <p class="cuadrado" style="background-color: #6B84E4;"></p><span>S.G. NOTARIADO Y DE LOS
+                REGISTROS</span>
+            </div>
           </div>
         </div>
       </div>
+      <div></div>
     </div>
   </div>
   <button id="imprimir" class="button-62" role="button">IMPRIMIR PLANO</button>
 
 
-<script src="js/html2canvas.hertzen.com_dist_html2canvas.min.js"></script>
+  <script src="js/html2canvas.hertzen.com_dist_html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
     integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/captura.js"></script>
 </body>
 
