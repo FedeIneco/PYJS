@@ -31,6 +31,10 @@
 		{
 			"id": true,
 			"name": true
+		},
+		{
+			"id": "exTdatos",
+			"name": "exTdatos"
 		}
 	]
 }

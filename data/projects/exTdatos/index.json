@@ -1,0 +1,110 @@
+{
+	"id": "exTdatos",
+	"name": "exTdatos",
+	"created": "Wed, 14 Jun 2017 07:00:00 GMT",
+	"models": [
+		{
+			"id": "203408-MONT-BIM-0301-EST-PRO",
+			"name": "203408-MONT-BIM-0301-EST-PRO",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 7875,
+				"numMetaObjects": 737,
+				"numObjects": 710,
+				"numTriangles": 24753,
+				"numVertices": 53387,
+				"xktSizeKb": "339.54",
+				"aabb": [
+					431690.8409498248,
+					34.58999999999999,
+					-4594335.436075396,
+					431773.65845609206,
+					52.43921883318629,
+					-4594118.307010873
+				]
+			}
+		},
+		{
+			"id": "203408-MONT-BIM-0501-ARQ-EXT",
+			"name": "203408-MONT-BIM-0501-ARQ-EXT",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 2769,
+				"numMetaObjects": 276,
+				"numObjects": 262,
+				"numTriangles": 198923,
+				"numVertices": 544260,
+				"xktSizeKb": "1692.53",
+				"aabb": [
+					431656.99678921944,
+					45.390000000000185,
+					-4594407.461710764,
+					431824.82684373803,
+					65.06152755737324,
+					-4594076.099125067
+				]
+			}
+		},
+		{
+			"id": "203408-MONT-BIM-0502-ARQ-PRO",
+			"name": "203408-MONT-BIM-0502-ARQ-PRO",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 8971,
+				"numMetaObjects": 928,
+				"numObjects": 847,
+				"numTriangles": 341601,
+				"numVertices": 872245,
+				"xktSizeKb": "1850.72",
+				"aabb": [
+					431664.52565940697,
+					42.24999999999943,
+					-4594414.229241236,
+					431820.37848049763,
+					52.47483249198752,
+					-4594077.181562868
+				]
+			}
+		},
+		{
+			"id": "203408-MONT-BIM-0601-INS-PRO",
+			"name": "203408-MONT-BIM-0601-INS-PRO",
+			"metadata": {
+				"sourceFormat": "IFC",
+				"schemaVersion": "",
+				"title": "",
+				"author": "",
+				"created": "",
+				"numPropertySets": 6691,
+				"numMetaObjects": 582,
+				"numObjects": 576,
+				"numTriangles": 94007,
+				"numVertices": 209083,
+				"xktSizeKb": "810.00",
+				"aabb": [
+					431693.91859402834,
+					40.29999999999939,
+					-4594322.284002656,
+					431769.4017573198,
+					51.70000000000002,
+					-4594129.088611613
+				]
+			}
+		}
+	],
+	"viewerConfigs": {},
+	"viewerContent": {},
+	"viewerState": {}
+}
