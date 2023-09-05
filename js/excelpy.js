@@ -317,8 +317,7 @@ async function readExcel2File() {
   const sheetName = workbook.SheetNames[0];
   const worksheet = workbook.Sheets[sheetName];
   const content = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-  objs = await agruparObjetos(content);
-  console.log(arrayObjetos);
+  objs = await agruparObjetos(content);  
   testName(namePattern, arrayObjetos);
   crearSelect();
 }
@@ -366,7 +365,7 @@ async function agruparObjetos(content) {
 
   const end = performance.now();
   const duration = end - start;
-  console.log(`El proceso tardó ${duration} milisegundos en completarse.`);
+  // console.log(`El proceso tardó ${duration} milisegundos en completarse.`);
 
   arrayObjetos = groupedData;
 }
@@ -427,7 +426,7 @@ ifcType.addEventListener("change", (e) => {
   const selectedValue = e.target.value;
   objetos = obtenerIdsxIfc(selectedValue);
   const regex = /^0550_ARQ.*$/;
-  console.log(objetos);
+  // console.log(objetos);
   testName(regex, objetos, selectedValue);
 });
 

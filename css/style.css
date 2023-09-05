@@ -120,7 +120,7 @@ body {
   margin-top: 2px;
   position: fixed;
   height: 100%;
-  color: #fff;    
+  color: #fff;
   overflow: auto;
   border-left: 2px solid white;
   padding-bottom: 100px;
@@ -133,8 +133,8 @@ body {
   transition: all 300ms ease-in-out;
 }
 
-#myFilter{
-  position: absolute;  
+#myFilter {
+  position: absolute;
   width: 470px;
   margin-top: 2px;
   background-color: #15337a;
@@ -143,19 +143,18 @@ body {
   padding: 0;
   left: -490px;
   top: 90%;
-  border-left: 2px solid white;  
+  border-left: 2px solid white;
   overflow: auto;
   transition: all 300ms ease-in-out;
 }
 
-#desplegableFiltro{
+#desplegableFiltro {
   height: 15px;
   background-color: rgb(203, 23, 32);
   cursor: pointer;
   position: fixed;
   width: 470px;
 }
-
 
 #contenidoFiltro h3 {
   display: flex;
@@ -165,53 +164,53 @@ body {
   font-size: 1.3rem;
 }
 
-#contenidoFiltro h3 i{  
-  margin-right: .5rem;  
+#contenidoFiltro h3 i {
+  margin-right: 0.5rem;
 }
 
-#contenidoFiltro{
+#contenidoFiltro {
   padding: 1rem;
-  margin-top: .6rem;
+  margin-top: 0.6rem;
   display: flex;
   flex-direction: column;
   width: 50%;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 #contenidoFiltro select {
-  padding: .3rem;
+  padding: 0.3rem;
   font-size: 14px;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
 
 #contenidoFiltro button {
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   width: 100%;
-  font-size: 16px;  
+  font-size: 16px;
   border-radius: 4px;
   border: none;
   cursor: pointer;
 }
 
-.iconoSubir{
+.iconoSubir {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
   color: white;
   bottom: 0px;
-  border-radius:  50% 50% 0 0;
+  border-radius: 50% 50% 0 0;
   background-color: rgb(203, 23, 32);
   height: 40px;
   width: 40px;
 }
 
-.iconoSubir i{
+.iconoSubir i {
   font-size: 1.7rem;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);  
+  transform: translate(-50%, -50%);
 }
 
 #bordeIzquierdo {
@@ -267,7 +266,7 @@ body {
   user-select: none;
   flex: 1 1 auto;
   color: white;
-  background: transparent;  
+  background: transparent;
   background-size: cover;
   text-align: center;
   vertical-align: middle;
@@ -294,10 +293,10 @@ body {
 #explorer_toggle:checked ~ #bordeIzquierdo {
   left: 448px;
 }
-#explorer_toggle:checked ~ #bordeIzquierdo i{
+#explorer_toggle:checked ~ #bordeIzquierdo i {
   margin-left: 0px;
 }
-#explorer_toggle:checked ~ #bordeIzquierdo i::before {  
+#explorer_toggle:checked ~ #bordeIzquierdo i::before {
   content: "\f104";
 }
 
@@ -305,18 +304,17 @@ body {
   left: 56px;
 }
 
-#explorer_toggle:checked ~ #myFilter{
+#explorer_toggle:checked ~ #myFilter {
   left: 56px;
 }
 
-#filter_toggle:checked ~ #myFilter{
+#filter_toggle:checked ~ #myFilter {
   top: 40%;
 }
 
-#filter_toggle:checked ~ #desplegableFiltro i::before{
- content: "\f107";
+#filter_toggle:checked ~ #desplegableFiltro i::before {
+  content: "\f107";
 }
-
 
 #explorer_toggle:checked ~ #myViewer {
   left: 380px;
@@ -359,7 +357,7 @@ body {
   margin-top: 2px;
   position: absolute;
   height: 100%;
-  color: #fff;  
+  color: #fff;
   overflow: auto;
   border-right: 2px solid white;
   padding: 0;
@@ -368,7 +366,6 @@ body {
   width: 358px;
   transition: all 300ms ease-in-out;
 }
-
 
 #bordeDerecho {
   cursor: pointer;
@@ -459,7 +456,7 @@ body {
 #inspector_toggle:checked ~ #bordeDerecho {
   right: 420px;
 }
-#inspector_toggle:checked ~ #bordeDerecho i{
+#inspector_toggle:checked ~ #bordeDerecho i {
   right: 0px;
 }
 #inspector_toggle:checked ~ #bordeDerecho i::before {
@@ -492,8 +489,8 @@ body {
   position: absolute;
   z-index: 9999999;
   width: 100%;
-  display: flex;  
-  
+  display: flex;
+
   /* align-items: center; */
   /* justify-content: center; */
   top: 1rem;
@@ -604,6 +601,172 @@ body {
   display: none;
 }
 
+#checkContainer {
+  width: 50%;
+  height: 300px;
+  z-index: 99999999999999999999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.w3-container{
+  background-color: #ccc;
+  height: 100%;
+}
+
+.w3-container:after,
+.w3-container:before,
+.w3-panel:after,
+.w3-panel:before,
+.w3-row:after,
+.w3-row:before,
+.w3-row-padding:after,
+.w3-row-padding:before,
+.w3-cell-row:before,
+.w3-cell-row:after,
+.w3-clear:after,
+.w3-clear:before,
+.w3-bar:before,
+.w3-bar:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.w3-bar-block .w3-dropdown-hover,
+.w3-bar-block .w3-dropdown-click {
+  width: 100%;
+}
+.w3-container,
+.w3-panel {
+  padding:16px;
+}
+.w3-panel {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.w3-bar-block .w3-dropdown-hover .w3-dropdown-content,
+.w3-bar-block .w3-dropdown-click .w3-dropdown-content {
+  min-width: 100%;
+}
+.w3-bar-block .w3-dropdown-hover .w3-button,
+.w3-bar-block .w3-dropdown-click .w3-button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+}
+
+.w3-cell-row:before,
+.w3-cell-row:after,
+.w3-clear:after,
+.w3-clear:before,
+.w3-bar:before,
+.w3-bar:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.w3-bar {
+  width: 100%;
+  overflow: hidden;
+}
+.w3-center .w3-bar {
+  display: inline-block;
+  width: auto;
+}
+.w3-bar .w3-bar-item {
+  padding: 8px 16px;
+  float: left;
+  width: auto;
+  border: none;
+  display: block;
+  outline: 0;
+}
+.w3-bar .w3-dropdown-hover,
+.w3-bar .w3-dropdown-click {
+  position: static;
+  float: left;
+}
+.w3-btn,
+.w3-button {
+  border: none;
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: inherit;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.w3-btn,
+.w3-button {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.w3-disabled,
+.w3-btn:disabled,
+.w3-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+.w3-disabled *,
+:disabled * {
+  pointer-events: none;
+}
+.w3-dropdown-hover:hover > .w3-button:first-child,
+.w3-dropdown-click:hover > .w3-button:first-child {
+  background-color: #ccc;
+  color: #000;
+}
+.w3-bar-block .w3-dropdown-hover .w3-button,
+.w3-bar-block .w3-dropdown-click .w3-button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+}
+.w3-bar .w3-button {
+  white-space: normal;
+}
+.w3-dropdown-hover.w3-mobile,
+.w3-dropdown-hover.w3-mobile .w3-btn,
+.w3-dropdown-hover.w3-mobile .w3-button,
+.w3-dropdown-click.w3-mobile,
+.w3-dropdown-click.w3-mobile .w3-btn,
+.w3-dropdown-click.w3-mobile .w3-button {
+  width: 100%;
+}
+
+.w3-bar-block .w3-bar-item {
+  width: 100%;
+  display: block;
+  padding: 8px 16px;
+  text-align: left;
+  border: none;
+  white-space: normal;
+  float: none;
+  outline: 0;
+}
+.w3-bar-block.w3-center .w3-bar-item {
+  text-align: center;
+}
+.w3-block {
+  display: block;
+  width: 100%;
+}
+
+.w3-black,
+.w3-hover-black:hover {
+  color: #fff !important;
+  background-color: #000 !important;
+}
 @media all and (max-width: 780px) {
   .grafica-container {
     width: auto;
