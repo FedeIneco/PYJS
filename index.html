@@ -103,12 +103,11 @@
   </div>
   <div id="checkContainer" class="ocultar">
     <div class="w3-bar w3-black">
-      <button class="w3-bar-item w3-button" onclick="openCity('Project')">Check Project</button>
-      <button class="w3-bar-item w3-button" onclick="openCity('Name')">Check Name</button>      
-      <button class="w3-bar-item w3-button" onclick="openCity('Pset')">Check Psets</button>
-      <button class="w3-bar-item w3-button" onclick="openCity('All')">Check All</button>
+      <button class="w3-bar-item w3-button" onclick="openTabs('Project')">Check Project</button>
+      <button class="w3-bar-item w3-button" onclick="openTabs('Name')">Check Name</button>      
+      <button class="w3-bar-item w3-button" onclick="openTabs('Pset')">Check Psets</button>
+      <button class="w3-bar-item w3-button" onclick="openTabs('All')">Check All</button>
     </div>
-   
     <div id="Project" class="w3-container checks">
       <h2>Check Project Name</h2>
       <button id="checkName">Check Project Name</button>
@@ -196,10 +195,10 @@
 <script src="lib/tippy.js"></script>
 <script src="js/html2canvas.hertzen.com_dist_html2canvas.min.js"></script>
 <script type="module" src="js/excelJB.js"></script>
-<script src="js/excelpy.js"></script>
+<script type="module" src="js/excelpy.js"></script>
 <script type="module" src="js/index.js"></script>
 <script>
-  function openCity(cityName) {
+  function openTabs(cityName) {
   var i;  
   var x = document.getElementsByClassName("checks");
   for (i = 0; i < x.length; i++) {

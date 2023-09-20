@@ -1,7 +1,16 @@
+//*Leer xlsx en las que se muestran las regExp para validar elementos
+
+/* 
+* The above code is written in JavaScript and it is defining variables and selecting elements from the
+* HTML document using their respective IDs. */
 const ifcType = document.getElementById("ifcType");
 const resultado = document.getElementById("resultado");
 const porcentaje = document.getElementById("porcentaje");
 const ifcTypeText = document.getElementById("ifcTypeText");
+/* 
+* The above code is declaring a constant variable `filePath` and assigning it a string value
+* representing the file path to a spreadsheet file named "BEXEL Property Checker Sample Spreadsheet
+* BASIC.xlsx" located in the "../database" directory. */
 const filePath =
   "../database/BEXEL Property Checker Sample Spreadsheet BASIC.xlsx";
 let namePattern;
@@ -14,7 +23,15 @@ let ids = [];
 let objBien;
 let objMal;
 let idsBien;
-let idsMal;
+let idsMal;/**
+ * The function `readExcelFile` reads data from an Excel file and converts specific sheets
+ * into JSON format.
+ */
+
+/**
+ * *The function `readExcelFile` reads data from an Excel file and converts specific sheets into JSON
+ * *format.
+ */
 const readExcelFile = async () => {
   const response = await fetch(filePath);
   const arrayBuffer = await response.arrayBuffer();
@@ -44,6 +61,13 @@ const readExcelFile = async () => {
   dataBeams = beams(beamsContent);
 };
 
+/**
+ * *The function `pNaming` takes in an array of data and extracts specific elements to create an array
+ * *of naming patterns.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data
+ * *and contains four elements: the domain, the property, the naming pattern, and the test.
+ * @returns an array of objects that represent naming patterns.
+ */
 function pNaming(data) {
   let namingPatterns = [];
   for (let index = 1; index < data.length; index++) {
@@ -57,6 +81,16 @@ function pNaming(data) {
   return namingPatterns;
 }
 
+/**
+ * *The function `propertyPat` takes in an array of data and creates an array of objects with properties
+ * *based on the data.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data,
+ * *where each element in the inner array represents a column value. The first element in each inner
+ * *array represents the category, the second element represents the property name pattern, and the
+ * *third element represents the test.
+ * @returns an array of objects, where each object has the properties "category",
+ * *"propertyNamePattern", and "test".
+ */
 function propertyPat(data) {
   let pPatterns = [];
   for (let index = 1; index < data.length; index++) {
@@ -69,6 +103,14 @@ function propertyPat(data) {
   return pPatterns;
 }
 
+/**
+ * *The function "airTerm" takes in a 2D array of data and converts it into an array of objects with
+ * *specific properties.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data,
+ * *and each element within the inner array represents a column value.
+ * @returns The function `airTerm` returns an array `dataTerm` containing objects with properties
+ * *`parameterName`, `pset`, `valueType`, `phase`, and `condition`.
+ */
 function airTerm(data) {
   let dataTerm = [];
   for (let index = 1; index < data.length; index++) {
@@ -83,6 +125,14 @@ function airTerm(data) {
   return dataTerm;
 }
 
+/**
+ * *The function "beams" takes in a 2D array of data and converts it into an array of objects with
+ * *specific properties.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a set of data
+ * *for a beam. The inner arrays have the following structure:
+ * @returns The function `beams` returns an array `databeams` containing objects with properties
+ * *`parameterName`, `pset`, `valueType`, `phase`, `condition`, and `key`.
+ */
 function beams(data) {
   let databeams = [];
   for (let index = 1; index < data.length; index++) {
@@ -98,6 +148,13 @@ function beams(data) {
   return databeams;
 }
 
+/**
+ * *The function "ceilings" takes in a 2D array of data and returns an array of objects with specific
+ * *properties extracted from the data.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data,
+ * *and each element within the inner array represents a column value.
+ * @returns an array of objects called "ceilings".
+ */
 function ceilings(data) {
   let ceilings = [];
   for (let index = 1; index < data.length; index++) {
@@ -113,6 +170,13 @@ function ceilings(data) {
   return ceilings;
 }
 
+/**
+ * *The function `curtainPanels` takes in an array of data and returns an array of objects representing
+ * *curtain panels.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data,
+ * *and each element within the inner array represents a column value.
+ * @returns The function `curtainPanels` returns an array of objects representing curtain panels.
+ */
 function curtainPanels(data) {
   let panels = [];
   for (let index = 1; index < data.length; index++) {
@@ -128,6 +192,13 @@ function curtainPanels(data) {
   return panels;
 }
 
+/**
+ * *The function "curtainWalls" takes in a 2D array of data and returns an array of objects representing
+ * *curtain walls.
+ * @param data - An array of arrays containing the data for each curtain wall. Each inner array
+ * *represents a curtain wall and contains the following elements:
+ * @returns The function `curtainWalls` returns an array of objects representing curtain walls.
+ */
 function curtainWalls(data) {
   let walls = [];
   for (let index = 1; index < data.length; index++) {
@@ -143,6 +214,12 @@ function curtainWalls(data) {
   return walls;
 }
 
+/**
+ * *The function "doors" takes in a 2D array of data and returns an array of objects representing doors.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data,
+ * *and each element within the inner array represents a column value.
+ * @returns an array of objects representing doors.
+ */
 function doors(data) {
   let doors = [];
   for (let index = 1; index < data.length; index++) {
@@ -158,6 +235,14 @@ function doors(data) {
   return doors;
 }
 
+/**
+ * *The function "furniture" takes in an array of data and returns an array of objects representing
+ * *furniture items.
+ * @param data - An array of arrays, where each inner array represents a row of data. Each inner array
+ * *should have 6 elements, representing the values for the following properties of a furniture item:
+ * *parameterName, pset, valueType, phase, condition, and key.
+ * @returns an array of objects representing furniture items.
+ */
 function furniture(data) {
   let furniture = [];
   for (let index = 1; index < data.length; index++) {
@@ -189,6 +274,13 @@ function furniture(data) {
 //       return furniture;
 // }
 
+/**
+ * *The function "pipes" takes in a 2D array of data and converts it into an array of objects with
+ * *specific properties.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a pipe and
+ * *contains the following elements:
+ * @returns an array of objects representing pipes.
+ */
 function pipes(data) {
   let pipes = [];
   for (let index = 1; index < data.length; index++) {
@@ -204,6 +296,13 @@ function pipes(data) {
   return pipes;
 }
 
+/**
+ * *The railings function takes in a 2D array of data and converts it into an array of objects with
+ * *specific properties.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a set of data
+ * *for a railing. The inner arrays have the following structure:
+ * @returns an array of objects called "railings".
+ */
 function railings(data) {
   let railings = [];
   for (let index = 1; index < data.length; index++) {
@@ -219,6 +318,12 @@ function railings(data) {
   return railings;
 }
 
+/**
+ * *The function "roofs" takes in a 2D array of data and returns an array of objects representing roofs.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data,
+ * *and each element within the inner array represents a column value.
+ * @returns an array of objects representing roofs.
+ */
 function roofs(data) {
   let roofs = [];
   for (let index = 1; index < data.length; index++) {
@@ -234,6 +339,13 @@ function roofs(data) {
   return roofs;
 }
 
+/**
+ * *The function "site" takes in an array of data and returns a new array of objects with specific
+ * *properties assigned from the input data.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data,
+ * *where each element in the inner array represents a column value.
+ * @returns an array called "site" which contains objects.
+ */
 function site(data) {
   let site = [];
   for (let index = 1; index < data.length; index++) {
@@ -249,6 +361,13 @@ function site(data) {
   return site;
 }
 
+/**
+ * *The function "slabs" takes in a 2D array of data and returns an array of objects with specific
+ * *properties extracted from the data.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data,
+ * *and each element within the inner array represents a column value.
+ * @returns an array of objects called "slabs".
+ */
 function slabs(data) {
   let slabs = [];
   for (let index = 1; index < data.length; index++) {
@@ -264,6 +383,12 @@ function slabs(data) {
   return slabs;
 }
 
+/**
+ * *The `stairs` function takes in an array of data and returns an array of objects representing stairs.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a set of
+ * *parameters for a stair. The inner arrays have the following structure:
+ * @returns an array called "stairs" which contains objects.
+ */
 function stairs(data) {
   let stairs = [];
   for (let index = 1; index < data.length; index++) {
@@ -279,6 +404,12 @@ function stairs(data) {
   return stairs;
 }
 
+/**
+ * *The function "walls" takes in an array of data and returns an array of objects representing walls.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a wall and
+ * *contains the following elements:
+ * @returns an array of objects representing walls.
+ */
 function walls(data) {
   let walls = [];
   for (let index = 1; index < data.length; index++) {
@@ -293,6 +424,13 @@ function walls(data) {
   }
   return walls;
 }
+/**
+ * *The function "windows" takes in an array of data and returns an array of objects representing
+ * *windows.
+ * @param data - The `data` parameter is an array of arrays. Each inner array represents a row of data,
+ * *and each element within the inner array represents a column value.
+ * @returns The function `windows` returns an array of objects representing windows.
+ */
 
 function windows(data) {
   let windows = [];
@@ -309,6 +447,11 @@ function windows(data) {
   return windows;
 }
 
+/**
+ * *The function reads an Excel file, converts it to an array, and then converts the array to JSON
+ * *format.
+ * *Lee los datos del IFC extraidos de manera automática con el script .py
+ */
 async function readExcel2File() {
   const response = await fetch("../database/pruebas3.xlsx");
   const arrayBuffer = await response.arrayBuffer();
@@ -324,6 +467,11 @@ async function readExcel2File() {
 
 async function agruparObjetos(content) {
   const start = performance.now();
+/* 
+* The above code is transforming an array of arrays called "content" into an array of objects called
+* "transformedData". Each object in the "transformedData" array has properties "id", "name",
+* "psetName", "propertyName", "value", and "type". The values of these properties are extracted from
+* the corresponding elements in each subarray of "content". */
   const transformedData = content.map((line) => {
     const obj = {};
     obj.id = line[0];
@@ -335,6 +483,9 @@ async function agruparObjetos(content) {
     return obj;
   });
 
+/* 
+* The above code is grouping data based on the "id" property of each object in the "transformedData"
+* array. It creates a new object called "groupedData" which will store the grouped data. */
   const groupedData = transformedData.reduce((groups, obj) => {
     const id = obj.id;
     const name = obj.name;
@@ -370,6 +521,14 @@ async function agruparObjetos(content) {
   arrayObjetos = groupedData;
 }
 
+/**
+ * *The function "obtenerTypes" takes an array of objects and returns an array of unique "type" values
+ * *from those objects, sorted in alphabetical order, excluding the first two values.
+ * @param arrayObjetos - The parameter `arrayObjetos` is an array of objects. Each object in the array
+ * *has a property called `type`.
+ * @returns an array containing the unique "type" values from the objects in the input array, sorted in
+ * *alphabetical order, starting from the third element.
+ */
 function obtenerTypes(arrayObjetos) {
   let typesSet = new Set();
   for (let objeto of Object.values(arrayObjetos)) {
@@ -411,6 +570,10 @@ function obtenerTypes(arrayObjetos) {
 //   );
 // }
 
+/**
+ * *The function "crearSelect" creates a select element and populates it with options based on the types
+ * *obtained from an array of objects.
+ */
 function crearSelect() {
   let types = obtenerTypes(arrayObjetos);
   types.forEach((elementoDesplegable) => {
@@ -421,6 +584,9 @@ function crearSelect() {
   });
 }
 
+/* 
+* The above code is adding an event listener to the "change" event of the `ifcType` element. When the
+* value of `ifcType` changes, the code will execute the callback function. */
 ifcType.addEventListener("change", (e) => {
   let objetos = [];
   const selectedValue = e.target.value;
@@ -430,6 +596,17 @@ ifcType.addEventListener("change", (e) => {
   testName(regex, objetos, selectedValue);
 });
 
+/**
+ * *The function `testName` takes in a regular expression, an array of objects, and a type, and checks
+ * *if the `name` property of each object matches the regular expression, keeping track of the number of
+ * *matches and non-matches, and calculating the percentage of matches.
+ * @param regExp - The `regExp` parameter is a regular expression that is used to test the `name`
+ * *property of each object in the `objetos` array. It is used to determine whether the `name` property
+ * *matches a certain pattern or criteria.
+ * @param objetos - The "objetos" parameter is an array of objects. Each object in the array has
+ * *properties such as "id" and "name".
+ * @param type - The type parameter is a string that represents the type of objects being tested.
+ */
 function testName(regExp, objetos, type) {
   let cont = 0;
   let contBien = 0;
@@ -462,6 +639,13 @@ function testName(regExp, objetos, type) {
   }
 }
 
+/**
+ * *The function "obtenerIdsxIfc" takes a selected value as input and returns an array of objects that
+ * *have a matching type property.
+ * @param selectedValue - The selectedValue parameter is the value that you want to filter the array of
+ * *objects by.
+ * @returns an array of objects that have a property "type" equal to the selectedValue.
+ */
 function obtenerIdsxIfc(selectedValue) {
   let ids = [];
   for (let objeto of Object.values(arrayObjetos)) {
@@ -472,6 +656,9 @@ function obtenerIdsxIfc(selectedValue) {
   return ids;
 }
 
+/* 
+* The above code is written in JavaScript and it is calling two functions: readExcelFile() and
+* readExcel2File(). */
 readExcelFile();
 readExcel2File();
 

@@ -1,5 +1,9 @@
 // import { objetosP2, estadosUnicos, objetos } from "./excelJB.js";
 
+//Extensión Better Comments para ver mejor los comentarios de las funciones
+/*
+* * These lines of code are selecting HTML elements with specific IDs and assigning them to variables.
+* *The selected elements are used later in the code to create charts and add event listeners to them. */
 // const piechart = document.getElementById("pie-chart");
 // const linear = document.getElementById("linear-chart");
 // const barChart = document.getElementById("bar-chart");
@@ -7,6 +11,9 @@
 // let datos;
 // let colorGrafica;
 
+/* 
+* *The code is defining an asynchronous function called `graficarPie` that takes two parameters:
+* *`elementosGrafica` and `datosGraica`. */
 // async function graficarPie(elementosGrafica, datosGraica) {
 //   let pie = new Chart(piechart, {
 //     type: "pie",
@@ -33,6 +40,9 @@
 //     },
 //   });
 
+/*
+* * The code is adding an event listener to the `piechart` element. When the user clicks on the chart,
+* *the function inside the event listener is executed. */
 //   piechart.addEventListener("click", async function (event) {
 //     const elements = pie.getElementsAtEventForMode(
 //       event,
@@ -56,6 +66,9 @@
 //   });
 // }
 
+/*
+* * The code is defining an asynchronous function called `graficarBar` that takes several parameters:
+* *`elementos`, `statesGrafica`, `contadorTipo1`, `contadorTipo2`, and `contadorTipo3`. */
 // async function graficarBar(
 //   elementos,
 //   statesGrafica,
@@ -124,6 +137,9 @@
 //   });
 // }
 
+/*
+* * The code defines an asynchronous function called `graficarLinear` that takes several parameters:
+* *`fechas`, `estados`, `contador1`, `contador2`, and `contador3`. */
 // async function graficarLinear(
 //   fechas,
 //   estados,
@@ -174,6 +190,9 @@
 
 
 
+/*
+* * The code defines an asynchronous function called `graficarBarEspacios` that creates a pie chart
+* *using the Chart.js library. */
 // async function graficarBarEspacios(
 //   elementos,
 //   espaciosContador1,
@@ -226,13 +245,24 @@
 //   });
 // }
 
+/* 
+* The commented code is defining a function called `idsElementosClickadosP1` that takes a parameter
+*`datasetLabel`. This function filters an array called `objetos` and returns only the elements that
+*have a property `estado` equal to the `datasetLabel` parameter. */
 // function idsElementosClickadosP1(datasetLabel) {
 //   return objetos.filter((element) => element.estado === datasetLabel);
 // }
 
-// function elementosSpacio(datasetLabel){
+/* 
+* The function `elementosSpacio` is filtering an array called `objetos` and returning only the
+* elements that have a property `spaceUso` equal to the `datasetLabel` parameter. */
+//function elementosSpacio(datasetLabel){
 //   return objetos.filter((element) => element.spaceUso === datasetLabel);
 // }
+
+/*
+* The commented code defines a function called `idsElementosClickadosP2` that takes two parameters:
+* `fecha` and `datasetLabel`. */
 // function idsElementosClickadosP2(fecha, datasetLabel) {
 //   if (fecha) {
 //     return objetosP2.filter(
@@ -247,4 +277,3 @@
 
 // export { graficarPie, graficarBar, graficarLinear,graficarBarEspacios, datos, colorGrafica };
 
-import{objetosP2 as a,estadosUnicos as e,objetos as t}from"./excelJB.js";let piechart=document.getElementById("pie-chart"),linear=document.getElementById("linear-chart"),barChart=document.getElementById("bar-chart"),barChartEspacio=document.getElementById("bar-chart-espacios"),datos,colorGrafica;async function graficarPie(a,e){let t=new Chart(piechart,{type:"pie",data:{labels:a,datasets:[{backgroundColor:["#ff4d4d","#ffff4d","#70db70"],data:e},],options:{title:{display:!0,text:"Ocuapci\xf3n"},responsive:!0}}});piechart.addEventListener("click",async function(a){let e=t.getElementsAtEventForMode(a,"nearest",{intersect:!0},!1);if(e.length>0){let r=e[0],o=r.index,d=t.data.labels[o];colorGrafica=t.data.datasets[0].backgroundColor[o],datos=idsElementosClickadosP1(d)}})}async function graficarBar(a,e,t,r,o){let d={labels:a,datasets:[{label:e[0],data:t,borderColor:"#ff4d4d",backgroundColor:"#ff4d4d",borderWidth:1},{label:e[1],data:r,borderColor:"#ffff4d",backgroundColor:"#ffff4d",borderWidth:1},{label:e[2],data:o,borderColor:"#70db70",backgroundColor:"#70db70",borderWidth:1},]},l=await new Chart(barChart,{type:"bar",data:d,options:{title:{display:!0,text:"Estados por fecha"},responsive:!0}});barChart.addEventListener("click",async function(a){let e=l.getElementsAtEventForMode(a,"nearest",{intersect:!0},!1);e.length>0&&e.forEach(a=>{let e=a.datasetIndex,t=a.index,r=l.data.labels[t],o=l.data.datasets[e].label;datos=idsElementosClickadosP2(r,o),colorGrafica=l.data.datasets[e].backgroundColor})})}async function graficarLinear(a,e,t,r,o){let d={labels:a,datasets:[{label:e[0],data:t,borderColor:"#ff4d4d",backgroundColor:"#ff4d4d"},{label:e[1],data:r,borderColor:"#ffff4d",backgroundColor:"#ffff4d"},{label:e[2],data:o,borderColor:"#70db70",backgroundColor:"#70db70"},]};new Chart(linear,{type:"line",data:d,options:{responsive:!0,plugins:{legend:{position:"top"},title:{display:!0,text:"Costes por fecha"}}}})}async function graficarBarEspacios(a,e,t,r){let o=await new Chart(barChartEspacio,{type:"pie",data:{labels:a,datasets:[{backgroundColor:["#8844B5","#B9B9DD","#6B84E4",],data:[e,t,r]}]},options:{title:{display:!0,text:"Tipos Espacios"},responsive:!0}});barChartEspacio.addEventListener("click",async function(a){let e=o.getElementsAtEventForMode(a,"nearest",{intersect:!0},!1);if(console.log(e),e.length>0){let t=e[0],r=t.index,d=o.data.labels[r];colorGrafica=o.data.datasets[0].backgroundColor[r],datos=elementosSpacio(d),console.log(datos)}})}function idsElementosClickadosP1(a){return t.filter(e=>e.estado===a)}function elementosSpacio(a){return t.filter(e=>e.spaceUso===a)}function idsElementosClickadosP2(e,t){return e?a.filter(a=>a.date.substring(0,5)===e&&a.estado===t):a.filter(a=>a.estado===t)}export{graficarPie,graficarBar,graficarLinear,graficarBarEspacios,datos,colorGrafica};

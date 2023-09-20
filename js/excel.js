@@ -1,5 +1,10 @@
+/* 
+* The line of code is importing three functions (`graficarBar`, `graficarLinear`, `graficarPie`) from
+* a JavaScript module located in the file `graficas.js`. These functions can then be used in the
+* current JavaScript file. */
 import { graficarBar, graficarLinear, graficarPie } from "./graficas.js";
 
+// * These lines of code are selecting HTML elements by their IDs and assigning them to variables.
 const excelInput = document.getElementById("fileInput");
 const barButton = document.getElementById("bar-btn");
 const pieButton = document.getElementById("pie-btn");
@@ -17,6 +22,10 @@ const contadorTipo2 = [];
 const contadorTipo3 = [];
 const contadorTipo4 = [];
 
+/* 
+* The code is adding an event listener to the `excelInput` element, which listens for a change event.
+* When the change event is triggered (i.e., when a file is selected), the code inside the event
+* listener is executed. */
 excelInput.addEventListener("change", async () => {
   barButton.classList.remove("disabled");
   pieButton.classList.remove("disabled");
@@ -34,6 +43,9 @@ excelInput.addEventListener("change", async () => {
     elemento.annio = fecha.substring(1, 5);
     datosPrecios.push(elemento);
   }
+/*  
+* The code is calling several functions in order to obtain and process data from the `datosPrecios`
+* array. */
   obtenerTypes();
   obtenerStates();
   fechaslabel();
@@ -53,18 +65,37 @@ excelInput.addEventListener("change", async () => {
   // filtrarIdsPorIfcType(datosPrecios, ifcTypes);
 });
 
+/**
+ * * The function "obtenerTypes" retrieves unique values of the "type" property from the "datosPrecios"
+ * * array.
+ */
 function obtenerTypes() {
   ifcTypes = eliminarDuplicadosPorPropiedad(datosPrecios, "type");
 }
 
+/**
+ * * The function "obtenerStates" retrieves unique states from the "datosPrecios" array based on the
+ * * "state" property.
+ */
 function obtenerStates() {
   statesGrafica = eliminarDuplicadosPorPropiedad(datosPrecios, "state");
 }
+/**
+ * * The function eliminates duplicates in an array of objects based on a specified property.
+ *   @param arr - The arr parameter is an array of objects. Each object in the array has properties.
+ *   @param propiedad - The "propiedad" parameter is a string that represents the property name of the
+ * * objects in the array.
+ *   @returns an array with unique values of a specific property from the objects in the input array.
+ */
 
 function eliminarDuplicadosPorPropiedad(arr, propiedad) {
   return [...new Set(arr.map((element) => element[propiedad]))];
 }
 
+/**
+ * * The function `fechaslabel` creates a sorted array of unique month and year labels from an array of
+ * * price data.
+ */
 function fechaslabel() {
   const fechas = [
     ...new Set(
@@ -74,6 +105,12 @@ function fechaslabel() {
   eliminarLabelDuplicadas(fechas);
 }
 
+/**
+ * * The function `eliminarLabelDuplicadas` removes duplicate elements from the `fechasLabel` array and
+ * * adds them to the `labelFecha` array.
+ *   @param fechasLabel - The parameter `fechasLabel` is an array of labels (strings) that you want to
+ * * remove duplicates from.
+ */
 function eliminarLabelDuplicadas(fechasLabel) {
   fechasLabel.forEach((element) => {
     if (!labelFecha.includes(element)) {
@@ -82,6 +119,9 @@ function eliminarLabelDuplicadas(fechasLabel) {
   });
 }
 
+/**
+ * * The function calculates the sum of costs for each type of ifc.
+ */
 function sumatorioCostesPortype() {
   for (let index = 0; index < ifcTypes.length; index++) {
     const element = ifcTypes[index];
@@ -96,6 +136,10 @@ function sumatorioCostesPortype() {
   }
 }
 
+/**
+ * * The function "obtenerStatePorType" counts the occurrences of different states for each type in the
+ * * "datosPrecios" array.
+ */
 function obtenerStatePorType() {
   for (let index = 0; index < ifcTypes.length; index++) {
     const element = ifcTypes[index];
@@ -125,6 +169,10 @@ function obtenerStatePorType() {
   }
 }
 
+/**
+ * * The function calculates the sum of costs for each date in the fechasGrafica array based on matching
+ * * dates in the datosPrecios array.
+ */
 function sumatioCostePorFecha() {
   for (let index = 0; index < fechasGrafica.length; index++) {
     const element = fechasGrafica[index];
@@ -145,6 +193,16 @@ function sumatioCostePorFecha() {
   }
 }
 
+/**
+ * * The function `filtrarIdsPorIfcType` filters an array of objects based on a given array of `ifcTypes`
+ * * and returns an array of objects containing the filtered `ids` for each `type`.
+ *   @param datosPrecios - An array of objects representing data with properties "id" and "type".
+ *   @param ifcTypes - An array of strings representing the types of data to filter by.
+ *   @returns The function `filtrarIdsPorIfcType` returns an array of objects. Each object in the array
+ * * represents a type from the `ifcTypes` array and contains two properties: `type` and `ids`. The
+ * * `type` property represents the type from `ifcTypes`, and the `ids` property is an array of objects
+ * * that contain the `id` property from the `
+ */
 function filtrarIdsPorIfcType(datosPrecios, ifcTypes) {
   let result = [];
   for (let i = 0; i < ifcTypes.length; i++) {

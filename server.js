@@ -9,27 +9,10 @@ const spawn = require("child_process").spawn;
 const pythonProcess = spawn("python", ["../python/index.py"]);
 const app = express();
 app.use(cors());
-app.use("/css", express.static(__dirname + "/css"));
-app.use("/downloads", express.static(__dirname + "/downloads"));
-app.use(
-  "/lib/fontawesome-free-5.11.2-web/css",
-  express.static(__dirname + "/lib/fontawesome-free-5.11.2-web/css")
-);
-app.use(
-  "/lib/xeokit-bim-viewer/",
-  express.static(__dirname + "/lib/xeokit-bim-viewer/")
-);
-app.use("/img", express.static(__dirname + "/img"));
-app.use(
-  "/lib/fontawesome-free-5.11.2-web/webfonts",
-  express.static(__dirname + "/lib/fontawesome-free-5.11.2-web/webfonts")
-);
-app.use("/wasm", express.static(__dirname + "/wasm"));
-app.use("/lib", express.static(__dirname + "/lib"));
-app.use("/js", express.static(__dirname + "/js"));
-app.use("/database", express.static(__dirname + "/database"));
-app.use("/data/projects", express.static(__dirname + "/data/projects"));
 
+/* 
+* The `multer.diskStorage` function is used to configure the disk storage engine for handling file
+* uploads with Multer. */
 const storage = multer.diskStorage({
   destination: "uploads/",
   filename: function (req, file, cb) {
@@ -37,29 +20,36 @@ const storage = multer.diskStorage({
   },
 });
 
-const storageImg = multer.diskStorage({
-  destination: "downloads/",
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
+/* 
+* The code `const upload = multer({ storage: storage }).array("archivo", 10);` is configuring Multer
+* to handle file uploads. */
 const upload = multer({
   storage: storage,
 }).array("archivo", 10);
 
+/* 
+* The code `const uploadImg = multer({ storage: storage }).single("imagen");` is configuring Multer to
+* handle a single file upload with the field name "imagen". It sets the storage engine to the one
+* defined in the `storage` variable, which specifies the destination folder and filename for the
+* uploaded file. */
 const uploadImg = multer({
   storage: storage,
 }).single("imagen");
 
-app.get("/", async (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, "./index.html"));
-});
 
+/* 
+* This code is defining a route handler for the GET request to "/captura". When this route is
+* accessed, it sends the "captura.html" file as the response. The file is located in the current
+* directory (__dirname) and is joined with the "./captura.html" path using the path.join() method. The
+* response status is set to 200, indicating a successful request. */
 app.get("/captura", async (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "./captura.html"));
 });
 
+/* 
+* This code is defining a route handler for the GET request to "/api/projects". When this route is
+* accessed, it reads the contents of the "./data/projects" directory using the `fs.readdirSync()`
+* method. It then filters out the "index.json" file from the list of projects. */
 app.get("/api/projects", async (req, res) => {
   let projects = fs.readdirSync("./data/projects");
   const filteredProjects = projects.filter((item) => item !== "index.json");
@@ -68,6 +58,11 @@ app.get("/api/projects", async (req, res) => {
     filenames.push(filteredProjects[i]);
   }
 
+/* 
+* The code `res.status(200).send({ filenames: filenames })` is sending a response with a status code
+* of 200 (indicating a successful request) and a JSON object as the response body. The JSON object
+* contains a property called "filenames" which holds the value of the "filenames" variable. This
+* allows the server to send a list of filenames to the client as a response. */
   res.status(200).send({
     filenames: filenames,
   });
@@ -75,12 +70,17 @@ app.get("/api/projects", async (req, res) => {
 
 let files = fs.readdirSync("./uploads");
 
+//* The code is defining a route handler for the GET request to "/api/files". 
 app.get("/api/files", async (req, res) => {
   res.status(200).send({
     files,
   });
 });
 
+/* 
+* The code `app.post("/api/convert-to-xkt", upload, (req, res) => { ... })` is defining a route
+* handler for the POST request to "/api/convert-to-xkt".
+* Ejecuta los comandos para la conversión de ifc a xkt y la extracción de datos de ifc a excel */
 app.post("/api/convert-to-xkt", upload, (req, res) => {
   const texto = req.body.texto;
 
@@ -91,7 +91,7 @@ app.post("/api/convert-to-xkt", upload, (req, res) => {
   const pythonCommand = "node python.js";
 
   // Ejecutar createProject.js
-  exec(pythonCommand, (error, stdout, stderr) => {
+  exec(createProjectCommand, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error al ejecutar createProject.js: ${error}`);
       return res
@@ -116,6 +116,10 @@ app.post("/api/convert-to-xkt", upload, (req, res) => {
   });
 });
 
+/* 
+* The code `app.post("/guardar-imagen", uploadImg, (req, res) => { ... })` is defining a route handler
+* for the POST request to "/guardar-imagen".
+* Guarda la captura realizada para la extracción del plano */
 app.post("/guardar-imagen", uploadImg, (req, res) => {
   const imagenBase64 = req.body.imagen; // Obtener los datos de la imagen codificada en base64
   const nombreArchivo = "captura.png"; // Especificar el nombre de archivo deseado
@@ -133,10 +137,14 @@ app.post("/guardar-imagen", uploadImg, (req, res) => {
   });
 });
 
+//* Inicia el servidor
 app.listen(process.env.PORT || 3000, () => {
   console.log("Servidor iniciado en el http://localhost:3000/");
 });
 
+/**
+ * * The function `ejecutarPython()` executes a Python process and captures its output.
+ */
 function ejecutarPython() {
   let pRes = "";
   pythonProcess.stdout.on("data", function (data) {

@@ -35,6 +35,10 @@
 		{
 			"id": "exTdatos",
 			"name": "exTdatos"
+		},
+		{
+			"id": "pruebaServer",
+			"name": "pruebaServer"
 		}
 	]
 }

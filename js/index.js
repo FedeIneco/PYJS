@@ -57,17 +57,25 @@ const checkName = document.getElementById("checkName");
 const checkAllNamesButton = document.getElementById("checkAllNames");
 const namesDiv = document.getElementsByClassName("xeokit-form-check");
 
+/* 
+* The above code is written in JavaScript and it is manipulating the display property of certain
+* elements based on the current URL of the webpage. */
 form.style.display =
-  window.location.href === "http://localhost:3000/" ? "block" : "none";
+  window.location.href === "http://127.0.0.1:5501/index.html" ? "block" : "none";
 lista.style.display =
-  window.location.href === "http://localhost:3000/" ? "flex" : "none";
+  window.location.href === "http://127.0.0.1:5501/index.html" ? "flex" : "none";
 filtros.style.display =
-  window.location.href !== "http://localhost:3000/" ? "flex" : "none";
+  window.location.href !== "http://127.0.0.1:5501/index.html" ? "flex" : "none";
 graficsButton.style.display =
-  window.location.href !== "http://localhost:3000/" ? "flex" : "none";
+  window.location.href !== "http://127.0.0.1:5501/index.html" ? "flex" : "none";
 boton.addEventListener("click", enviar);
 
-//Función que envía el nombre del proyecto y los archivos que quiere convertir a xkt al servidor
+//* Función que envía el nombre del proyecto y los archivos que quiere convertir a xkt al servidor
+
+/**
+ * * The function "enviar" sends a POST request to a specified API endpoint with a text and file data,
+ * * and then logs the response data to the console.
+ */
 function enviar() {
   const texto = document.getElementById("texto").value;
   const archivos = document.getElementById("archivo").files;
@@ -96,7 +104,11 @@ function enviar() {
 
 const listado = document.getElementById("menuListado");
 
-//Actualiza el listado de proyectos creaados una vez se ha convertido a xkt
+//*Actualiza el listado de proyectos creaados una vez se ha convertido a xkt
+/**
+ * * The function "archivosCreados" fetches a list of filenames from a server and dynamically creates a
+ * * list of links to those filenames.
+ */
 function archivosCreados() {
   fetch("http://localhost:3000/api/projects")
     .then((response) => response.json())
@@ -110,7 +122,7 @@ function archivosCreados() {
         const li = document.createElement("li");
 
         // Configurar el texto del elemento li
-        li.innerHTML = `<a href="http://localhost:3000/?projectId=${filename}">${cont} - ${filename}</a>`;
+        li.innerHTML = `<a href="http://127.0.0.1:5501/?projectId=${filename}">${cont} - ${filename}</a>`;
 
         // Agregar el elemento li a la lista
         listado.appendChild(li);
@@ -120,10 +132,18 @@ function archivosCreados() {
 }
 archivosCreados();
 
+/* 
+* The above code is creating a new HTML table element using JavaScript and assigning it to the
+* variable "todasTablaseditadas". It also selects the HTML elements with the IDs "export-btn" and
+* "save-btn" and assigns them to the variables "exportButton" and "saveButton" respectively. */
 let todasTablaseditadas = document.createElement("table");
 const exportButton = document.getElementById("export-btn");
 const saveButton = document.getElementById("save-btn");
 
+/* 
+* The above code is adding a click event listener to a button with the id "saveButton". When the
+* button is clicked, it will display an alert message saying "Propiedad guardada con éxito" (Property
+* saved successfully). */
 saveButton.onclick = () => {
   alert("Propiedad guardada con éxito");
   const tables = document.querySelectorAll(".xeokit-table");
@@ -134,6 +154,11 @@ saveButton.onclick = () => {
     );
   }
 };
+/* 
+* The above code is adding a click event listener to an export button. When the button is clicked, it
+* converts a table (todasTablaseditadas) into an Excel workbook using the XLSX.utils.table_to_book()
+* function. It then saves the workbook as a file named "PropiedadesEditadas.xlsx" using the
+* XLSX.writeFile() function. */
 exportButton.onclick = () => {
   const book = XLSX.utils.table_to_book(todasTablaseditadas);
   XLSX.writeFile(book, "PropiedadesEditadas.xlsx");
@@ -371,6 +396,12 @@ window.onload = function () {
 
   addObserver(mostrarSeleccion);
 
+/**
+ * * The function "mostrarChecks" takes an array of checkboxes as input and updates the selection of
+ * * objects in a BIM viewer based on the checked checkboxes.
+ *   @param checks - The "checks" parameter is an array of HTML input elements with type "checkbox".
+ * * These checkboxes are used to select or deselect certain objects in a BIM viewer.
+ */
   function mostrarChecks(checks) {
     const datos = mostrarSeleccion(array);
     for (let i = 0; i < checks.length; i++) {
@@ -388,6 +419,11 @@ window.onload = function () {
 
   agregarObservador(mostrarChecks);
 
+/* 
+* The above code is adding an event listener to a button with the id "barButton". When the button is
+* clicked, it toggles the "ocultar" class on the element with the id "barChart". It also checks if the
+* elements with the ids "pieChart", "linearChart", and "justiciaContainer" have the "ocultar" class,
+* and if they don't, it toggles the class on those elements as well. */
   barButton.addEventListener("click", () => {
     barChart.classList.toggle("ocultar");
     if (!pieChart.classList.contains("ocultar")) {
@@ -401,6 +437,11 @@ window.onload = function () {
     }
   });
 
+/* 
+* The above code is adding an event listener to a button with the id "pieButton". When the button is
+* clicked, it toggles the visibility of a chart with the class "pieChart". It also checks if other
+* charts and a container with the class "justiciaContainer" are visible, and toggles their visibility
+* as well. */
   pieButton.addEventListener("click", () => {
     pieChart.classList.toggle("ocultar");
     if (!linearChart.classList.contains("ocultar")) {
@@ -414,6 +455,11 @@ window.onload = function () {
     }
   });
 
+/* 
+* The above code is adding a click event listener to the "linearButton" element. When the button is
+* clicked, it toggles the "ocultar" class on the "linearChart" element. It also checks if the
+* "barChart", "pieChart", and "justiciaContainer" elements have the "ocultar" class, and toggles it if
+* they do not. */
   linearButton.addEventListener("click", () => {
     linearChart.classList.toggle("ocultar");
     if (!barChart.classList.contains("ocultar")) {
@@ -432,29 +478,54 @@ window.onload = function () {
   const cerraEstados = document.getElementById("cerraEstados");
   const cerrarEstadosPlanta = document.getElementById("cerrarEstadosPlanta");
 
+
+
   const espaciosContainer = document.getElementById("bar-espacios");
+/* 
+* The above code is adding an event listener to the "cerrarEspacios" element. When the element is
+* clicked, it checks if the "espaciosContainer" element does not have the class "ocultar". If it does
+* not have the class, it toggles the "ocultar" class on the "espaciosContainer" element. */
   cerrarEspacios.addEventListener("click", () => {
     if (!espaciosContainer.classList.contains("ocultar")) {
       espaciosContainer.classList.toggle("ocultar");
     }
   });
 
+/* 
+* The above code is adding an event listener to the "cerrarOcupaciones" element. When the element is
+* clicked, it checks if the "pieChart" element does not have the class "ocultar". If it does not have
+* the class, it toggles the "ocultar" class on the "pieChart" element. */
   cerrarOcupaciones.addEventListener("click", () => {
     if (!pieChart.classList.contains("ocultar")) {
       pieChart.classList.toggle("ocultar");
     }
   });
+/* 
+* The above code is adding an event listener to the "cerraEstados" element. When the element is
+* clicked, it checks if the "barChart" element does not have the class "ocultar". If it does not have
+* the class, it toggles the "ocultar" class on the "barChart" element. */
   cerraEstados.addEventListener("click", () => {
     if (!barChart.classList.contains("ocultar")) {
       barChart.classList.toggle("ocultar");
     }
   });
+/* 
+* The above code is adding an event listener to the "cerrarEstadosPlanta" element. When the element is
+* clicked, it checks if the "linearChart" element does not have the class "ocultar". If it does not
+* have the class, it toggles the "ocultar" class on the "linearChart" element. */
   cerrarEstadosPlanta.addEventListener("click", () => {
     if (!linearChart.classList.contains("ocultar")) {
       linearChart.classList.toggle("ocultar");
     }
   });
 
+  /* 
+  * The above code is adding an event listener to the "change" event of the "floorsSelect" element.
+  * When the value of the select element changes, it retrieves the selected value and performs some
+  * operations based on that value. It filters the "plantasUnicas" array to find the corresponding
+  * "planta" array. It then retrieves the "globalID" values from the "planta" array and sets the
+  * visibility of those objects in the "bimViewer" to true. It also fits the view to the selected
+  * objects. Additionally, it adds a click event listener to the " */
   floorsSelect.addEventListener("change", () => {
     const elementoSeleccionado = floorsSelect.value;
     let planta = "";
@@ -523,6 +594,9 @@ window.onload = function () {
     }
   });
 
+/* 
+* The above code is adding an event listener to a button with the id "plantasButton". When the button
+* is clicked, the code performs the following actions: */
   plantasButton.addEventListener("click", function () {
     let ids = [];
     let techosIds = [];
@@ -563,6 +637,10 @@ window.onload = function () {
   //   });
   // }
 
+/**
+ * * The function `handleChartClick` selects and highlights objects in a BIM viewer based on the clicked
+ * * chart data.
+ */
   function handleChartClick() {
     const idsClick = datos.map((dato) => dato.globalID);
     const color = convertHexToEdgeColor(colorGrafica);
@@ -573,6 +651,12 @@ window.onload = function () {
     bimViewer.viewFitObjects(idsClick);
   }
 
+/**
+ * * The function "mostrarColoresOcupacion" takes an array of elements and a color as parameters, and
+ * * changes the color of each element in the array to the specified color.
+ *   @param elementos - An array of elements that need to be colorized.
+ *   @param color - The color parameter is the color that you want to apply to the selected elements.
+ */
   function mostrarColoresOcupacion(elementos, color) {
     const colorOcupacion = convertHexToEdgeColor(color);
     elementos.forEach((elemento) => {
@@ -581,6 +665,12 @@ window.onload = function () {
       objetoSeleccionado.colorize = colorOcupacion;
     });
   }
+/* 
+* The above code is adding an event listener to the "ocupacionesButton" element. When the button is
+* clicked, it calls the "obtenerOcupacion" function with different parameters ("OCUPADO", "RESERVADO",
+* "VACANTE") to get the occupation status. Then, it calls the "mostrarColoresOcupacion" function with
+* the occupation status and a corresponding color code to display the colors for each occupation
+* status. */
   ocupacionesButton.addEventListener("click", () => {
     const ocupado = obtenerOcupacion("OCUPADO");
     const reservado = obtenerOcupacion("RESERVADO");
@@ -589,9 +679,22 @@ window.onload = function () {
     mostrarColoresOcupacion(reservado, "#ffff4d");
     mostrarColoresOcupacion(vacante, "#70db70");
   });
+/*
+* The above code is adding event listeners to the "barChart" and "pieChart" elements. When either of
+* these elements is clicked, the "handleChartClick" function will be executed. */
   barChart.addEventListener("click", handleChartClick);
   pieChart.addEventListener("click", handleChartClick);
 
+/**
+ * * The function `convertRgbToEdgeColor` takes an RGB color string and returns an array of normalized
+ * * values for the red, green, and blue components.
+ *   @param rgbColor - The `rgbColor` parameter is a string representing an RGB color in the format
+ * * "rgb(x, y, z)", where x, y, and z are integers between 0 and 255 representing the red, green, and
+ * * blue components of the color, respectively.
+ *   @returns The function `convertRgbToEdgeColor` returns an array of three values representing the red,
+ * * green, and blue components of the input RGB color. If the input is not a valid RGB color (i.e., does
+ * * not have three components), the function returns `null`.
+ */
   function convertRgbToEdgeColor(rgbColor) {
     const components = rgbColor.match(/\d+/g);
 
@@ -606,6 +709,13 @@ window.onload = function () {
     }
   }
 
+/**
+ * * The function "convertHexToEdgeColor" converts a hexadecimal color value to an array of decimal
+ * * values representing the red, green, and blue components of the color.
+ *   @param hexColor - The hexColor parameter is a string representing a hexadecimal color value.
+ *   @returns an array containing the decimal values of the red, green, and blue components of the input
+ * * hexadecimal color.
+ */
   function convertHexToEdgeColor(hexColor) {
     // Convierte el valor hexadecimal a decimales
     const red = parseInt(hexColor.slice(1, 3), 16) / 255;
@@ -615,6 +725,11 @@ window.onload = function () {
     // Retorna el edgeColor en el formato adecuado
     return [red, green, blue];
   }
+/* 
+* The above code is adding an event listener to the "capturas" element. When the element is clicked,
+* it will execute an asynchronous function. Inside the function, it captures a snapshot of the
+* "bimViewer" viewer. The snapshot is in PNG format and has the same width and height as the "canvas"
+* element. It also includes gizmos in the snapshot. */
   capturas.addEventListener("click", async (event) => {
     const imagen = bimViewer.viewer.getSnapshot({
       format: "png",
@@ -622,6 +737,13 @@ window.onload = function () {
       height: canvas.height,
       includeGizmos: true,
     });
+/* 
+* The above code is sending an image file to a server using a POST request. It creates a new FormData
+* object and appends the image file to it. Then, it sends the FormData object as the body of the fetch
+* request to the "http://localhost:3000/guardar-imagen" endpoint. If the response from the server is
+* successful (status code 200), it logs a success message to the console and redirects the user to the
+* "captura" page. If there is an error in sending the request or the response from the server is not
+* successful, it logs an error message */
     const formData = new FormData();
     formData.append("imagen", imagen);
 
@@ -642,10 +764,18 @@ window.onload = function () {
     }
   });
 
+/* 
+* The above code is adding an event listener to a button with the id "checkBtn". When the button is
+* clicked, it toggles the class "ocultar" on an element with the class "checkContainer". */
   checkBtn.addEventListener("click", () => {
     checkContainer.classList.toggle("ocultar");
   });
 
+/* 
+* The above code is adding an event listener to the "correctos" element. When the element is clicked,
+* it hides the "checkContainer" element, changes the edge color and fill color of the selected
+* material in the BIM viewer scene to green, deselects all objects in the BIM viewer, selects the
+* objects with the IDs specified in the "idsBien" array, and fits the view to the selected objects. */
   correctos.addEventListener("click", () => {
     checkContainer.classList.add("ocultar");
     bimViewer.viewer.scene.selectedMaterial.edgeColor = [0, 1, 0];
@@ -655,6 +785,12 @@ window.onload = function () {
     bimViewer.viewFitObjects(idsBien);
   });
 
+/* 
+* The above code is adding an event listener to the "incorrectos" element. When the element is
+* clicked, it hides the "checkContainer" element, changes the edge and fill color of the selected
+* material in the "bimViewer" object, sets all objects in the "bimViewer" object as not selected, sets
+* specific objects with the IDs in the "idsMal" array as selected, and fits the view to the selected
+* objects. */
   incorrectos.addEventListener("click", () => {
     checkContainer.classList.add("ocultar");
     bimViewer.viewer.scene.selectedMaterial.edgeColor = [1, 0, 0];
@@ -664,6 +800,9 @@ window.onload = function () {
     bimViewer.viewFitObjects(idsMal);
   });
 
+/* 
+* The above code is adding an event listener to the "exportWrong" element. When the element is
+* clicked, the code performs the following steps: */
   exportWrong.addEventListener("click", () => {
     const allKeys = new Set();
     objMal.forEach((item) => {
@@ -694,6 +833,11 @@ window.onload = function () {
 
     const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
 
+/* 
+* The above code is creating a downloadable link for a file (in this case, an Excel file with the name
+* "datos.xlsx") and triggering a click event on that link to initiate the download. After the download
+* is complete, the link is removed from the document. Additionally, a success message is displayed
+* using the Swal.fire function from the SweetAlert library. */
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -710,6 +854,10 @@ window.onload = function () {
     });
   });
 
+/* 
+* The above code is adding an event listener to a button with the id "checkAllNamesButton". When the
+* button is clicked, it will display a success message using the Swal.fire function from the
+* SweetAlert library. The success message will have a title, text, icon, and a confirm button. */
   checkAllNamesButton.addEventListener("click", () => 
   {
     Swal.fire({
@@ -721,6 +869,13 @@ window.onload = function () {
   })
   checkName.addEventListener("click", checkProjectName);
 
+/**
+ * * The function `checkProjectName` checks if the names of projects in a given array match a given
+ * * regular expression, and displays a warning message if any of the names do not meet the standards.
+ *   @param nameProjects - An array of project names.
+ *   @param regExp - The `regExp` parameter is a regular expression that is used to check if a project
+ * * name meets certain standards.
+ */
   function checkProjectName(nameProjects, regExp) {
     let check = true;
     for(let i = 0; i< namesDiv.length; i++){
@@ -745,10 +900,6 @@ window.onload = function () {
     icon: "info",
     confirmButtonText: "Aceptar",
   });    
-}
-
-function checkProjectName(){
-
 }
   window.bimViewer = bimViewer;
 };

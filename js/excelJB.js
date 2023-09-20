@@ -5,10 +5,26 @@ import {
   graficarBarEspacios,
 } from "./graficas.js";
 
+
+/* 
+* The above code is declaring a constant variable `filePath` and assigning it the value
+* "../database/GESTION_PUESTOS.xlsx". */
 const filePath = "../database/GESTION_PUESTOS.xlsx";
+/*
+* The above code is selecting an element with the id "bar-btn" and assigning it to the variable
+* "barButton". */
 const barButton = document.getElementById("bar-btn");
+/* 
+* The above code is written in JavaScript and it is selecting an HTML element with the id "pie-btn"
+* and assigning it to the constant variable "pieButton". */
 const pieButton = document.getElementById("pie-btn");
+/* 
+* The above code is written in JavaScript and it is selecting an HTML element with the id "line-btn"
+* and assigning it to the variable "linearButton". */
 const linearButton = document.getElementById("line-btn");
+/* 
+* The above code is selecting an HTML element with the id "floors" and assigning it to the variable
+* "floorsSelect". */
 const floorsSelect = document.getElementById("floors");
 let objetos = [];
 let plantasUnicas = [];
@@ -23,6 +39,10 @@ let falsosTechosP1 = [];
 let usoEspacios = [];
 let espaciosUnicos = [];
 
+/**
+ * *The function reads an Excel file, extracts data from two sheets, and formats the data by converting
+ * *certain numeric values to dates.
+ */
 const readExcelFile = async () => {
   const response = await fetch(filePath);
   const arrayBuffer = await response.arrayBuffer();
@@ -56,33 +76,55 @@ const readExcelFile = async () => {
   plantasUnicas.sort();
   plantasUnicas.pop();
 
+//*The above code is filtering and extracting unique values from an array of objects. 
   let estadosFiltrados = obtenerEstados();
   estados = estadosFiltrados.map(function (objeto) {
     return objeto.estado;
   });
   estadosUnicos = [...new Set(estados)];
 
+/*
+* The above code is filtering objects based on their checkLevel property and pushing the filtered
+* objects into an array called plantasFiltradas. The filtering is done for each unique level in the
+* plantasUnicas array. */
   plantasUnicas.forEach(function (nivel) {
     const objetosFiltrados = objetos.filter(function (objeto) {
       return objeto.checkLevel === nivel;
     });
     plantasFiltradas.push(objetosFiltrados);
   });
+
   usoEspacios = obtenerUsoEspacios();
   let espacios = usoEspacios.map(function (objeto) {
     return objeto.spaceUso;
   });
-
   espaciosUnicos = [...new Set(espacios)];
+/* 
+* The above code is defining a constant variable called "contadorNotariado" and assigning it the
+* result of calling the function "obtenerEspaciosUso" with the string "S.G. NOTARIADO Y DE LOS
+* REGISTROS" as an argument. */
   const contadorNotariado = obtenerEspaciosUso(
     "S.G. NOTARIADO Y DE LOS REGISTROS"
   );
+/* 
+* The above code is defining a constant variable called "contadorJuridica" and assigning it the result
+* of calling the function "obtenerEspaciosUso" with the string "D.G. SEG. JURIDICA Y FE PUBLICA" as an
+* argument. */
   const contadorJuridica = obtenerEspaciosUso(
     "D.G. SEG. JURIDICA Y FE PUBLICA"
   );
+/* 
+* The above code is declaring a constant variable called "contadorNacionalidad" and assigning it the
+* result of calling the function "obtenerEspaciosUso" with the string "S.G. NACIONALIDAD Y ESTADO
+* CIVIL" as an argument. */
   const contadorNacionalidad = obtenerEspaciosUso(
     "S.G. NACIONALIDAD Y ESTADO CIVIL"
   );
+/* 
+* The above code is calling a function named "graficarBarEspacios" and passing four arguments to it.
+* The function is being awaited, indicating that it is an asynchronous function. The arguments being
+* passed are "espaciosUnicos", "contadorJuridica.length", "contadorNacionalidad.length", and
+* "contadorNotariado.length". */
   await graficarBarEspacios(
     espaciosUnicos,
     contadorJuridica.length,
@@ -90,24 +132,59 @@ const readExcelFile = async () => {
     contadorNotariado.length
   );
 
+/* 
+* The above code is filtering an array called "objetos" to only include objects that have a category
+* property equal to "Ceilings". The filtered objects are then stored in a new array called "ceilings". */
   ceilings = objetos.filter(function (objeto) {
     return objeto.category === "Ceilings";
   });
+  /* 
+  * The above code is declaring a variable called "falsosTechosP1" and assigning it the value returned
+  * by the function "obtenerFalsosTechos" with the argument "objetos". */
   falsosTechosP1 = obtenerFalsosTechos(objetos);
+  /* 
+  * The above code is defining a function called "sumatorioOcupacionPorEstado" that takes in an array
+  * called "estadosFiltrados" as a parameter. The purpose of the function is not clear from the given
+  * code snippet. */
   sumatorioOcupacionPorEstado(estadosFiltrados);
   await graficarPie(estadosUnicos, sumatorioEStados);
 
   // const contentPage2 = await readXlsxFile(excelInput.files[0], { sheet: 2 });
+  /* 
+  * The above code is using the `await` keyword to asynchronously call the `crearObjetosP2` function
+  * with the `formattedData` parameter. It is assigning the result of the function call to the
+  * `objetosP2` variable. */
   objetosP2 = await crearObjetosP2(formattedData);
+  /* 
+  * The above code is defining a function called "crearDesplegable" that takes two parameters:
+  * "plantasUnicas" and "floorsSelect". It is not clear what the function does without seeing its
+  * implementation. The code also includes a comment indicating that the code is written in
+  * JavaScript. */
   crearDesplegable(plantasUnicas, floorsSelect);
+  /* 
+  * The above code is written in JavaScript. It is removing the "disabled" class from the element with
+  * the class name "pieButton". This will enable the button and allow it to be interacted with. */
   pieButton.classList.remove("disabled");
+  //* The above code is removing the "disabled" class from the element with the class "barButton".
   barButton.classList.remove("disabled");
+  /* 
+  * The above code is written in JavaScript. It is removing the "disabled" class from an element with
+  * the class name "linearButton". This will enable the button for interaction. */
   linearButton.classList.remove("disabled");
+  /* 
+  * The above code is creating a new array called "fechas" by using the map function on the
+  * "objetosP2" array. It is iterating over each object in the "objetosP2" array and extracting the
+  * first 5 characters from the "date" property of each object. The extracted substring is then added
+  * to the "fechas" array. */
   let fechas = objetosP2.map(function (objeto) {
     return objeto.date.substring(0, 5);
   });
   fechasUnicas = [...new Set(fechas)];
   fechasUnicas.sort();
+/* 
+* The above code is calling the functions `obtenerEstadosPorDia` to obtain the states for each unique
+* date, and then calling the functions `graficarBar` and `graficarLinear` to create bar and linear
+* graphs respectively using the obtained states. */
   const vacante = obtenerEstadosPorDia(fechasUnicas, "VACANTE");
   const ocupado = obtenerEstadosPorDia(fechasUnicas, "OCUPADO");
   const reservado = obtenerEstadosPorDia(fechasUnicas, "RESERVADO");
@@ -121,6 +198,15 @@ const readExcelFile = async () => {
   );
 };
 
+/**
+ * * The function `crearObjetosP1` takes an Excel array as input and creates an array of objects with
+ * * specific properties extracted from the Excel data.
+ *   @param excel - The parameter "excel" is an array that represents the data from an Excel spreadsheet.
+ * * Each element in the array represents a row in the spreadsheet, and each element within the row
+ * * represents a cell value. The function "crearObjetosP1" creates objects based on the data in the
+ * * "excel
+ *   @returns an array of objects.
+ */
 async function crearObjetosP1(excel) {
   let objetos = [];
   for (let index = 1; index < excel.length; index++) {
@@ -184,6 +270,13 @@ async function crearObjetosP1(excel) {
 //     `El proceso tardó ${duration / 1000} milisegundos en completarse.`
 //   );
 // }
+/**
+ * * The function `crearObjetosP2` takes an array of arrays as input and creates an array of objects with
+ * * specific properties from the input array.
+ *   @param page - The `page` parameter is an array of arrays. Each inner array represents a row of data,
+ * * and each element within the inner array represents a column value.
+ * * @returns an array of objects.
+ */
 async function crearObjetosP2(page) {
   let objetos = [];
   for (let index = 1; index < page.length; index++) {
@@ -198,6 +291,15 @@ async function crearObjetosP2(page) {
   return objetos;
 }
 
+/**
+ * * The function "obtenerSpaces" filters an array of objects based on their category, checkLevel, and
+ * * workset properties.
+ *   @param floor - The "floor" parameter is an array of objects representing different spaces on a
+ * * floor. Each object has properties such as "category" (indicating the type of space), "checkLevel"
+ * * (indicating the level of the space), and "workset" (indicating the workset of the
+ *   @param level - The "level" parameter represents the level of the spaces you want to obtain.
+ *   @returns an array of objects that meet the specified conditions.
+ */
 function obtenerSpaces(floor, level) {
   return floor.filter(function (objeto) {
     return (
@@ -208,24 +310,48 @@ function obtenerSpaces(floor, level) {
   });
 }
 
+/**
+ * * The function filters out objects with the category "Spaces" from the given array.
+ *   @param floor - The parameter "floor" is an array of objects. Each object represents a floor and has
+ * * a "category" property.
+ *   @returns a new array that contains all the objects from the original array "floor" except for those
+ * * objects whose category is "Spaces".
+ */
 function noObtenerSpaces(floor) {
   return floor.filter(function (objeto) {
     return objeto.category !== "Spaces";
   });
 }
 
+/**
+ * * The function "obtenerFalsosTechos" filters an array of objects and returns only the objects with the
+ * * "workset" property equal to "AR_FALSOS TECHOS".
+ *   @param objetos - An array of objects. Each object represents a specific item or element.
+ *   @returns an array of objects that have a property "workset" with the value "AR_FALSOS TECHOS".
+ */
 function obtenerFalsosTechos(objetos) {
   return objetos.filter(function (objeto) {
     return objeto.workset === "AR_FALSOS TECHOS";
   });
 }
 
+/**
+ * * The function "obtenerEstados" filters an array of objects to remove any objects where the "estado"
+ * * property is undefined.
+ *   @returns an array of objects that have a defined value for the "estado" property.
+ */
 function obtenerEstados() {
   return objetos.filter(function (objeto) {
     return objeto.estado != "[Undefined Value]";
   });
 }
 
+/**
+ * * The function calculates the sum of occupation for each unique state in a given array of filtered
+ * * states.
+ *   @param estadosFiltrados - The parameter `estadosFiltrados` is an array of objects. Each object
+ * * represents a state and has a property called `estado` which represents the state name.
+ */
 function sumatorioOcupacionPorEstado(estadosFiltrados) {
   for (let i = 0; i < estadosUnicos.length; i++) {
     let sumatorio = 0;
@@ -238,6 +364,15 @@ function sumatorioOcupacionPorEstado(estadosFiltrados) {
   }
 }
 
+/**
+ * * The function "obtenerEstadosPorDia" takes in an array of unique dates and a state filter, and
+ * * returns an array of counts for each date that matches the state filter.
+ *   @param fechasUnicas - An array of unique dates.
+ *   @param estadoFiltro - The estadoFiltro parameter is the state filter that you want to apply. It is
+ * * used to filter the objects based on their estado (state) property.
+ *   @returns an array containing the count of occurrences of a specific state (estadoFiltro) for each
+ * * unique date (fechasUnicas) in the objetosP2 array.
+ */
 function obtenerEstadosPorDia(fechasUnicas, estadoFiltro) {
   let arrayContador = [];
   for (let i = 0; i < fechasUnicas.length; i++) {
@@ -255,18 +390,36 @@ function obtenerEstadosPorDia(fechasUnicas, estadoFiltro) {
   return arrayContador;
 }
 
+/**
+ * * The function "obtenerEspaciosUso" filters an array of objects based on a specified "spaceUso"
+ * * property value.
+ *   @param tipo - The parameter "tipo" is a string that represents the type of space usage.
+ *   @returns an array of objects that have a property "spaceUso" with a value equal to the input
+ * * parameter "tipo".
+ */
 function obtenerEspaciosUso(tipo) {
   return objetos.filter(function (objeto) {
     return objeto.spaceUso === tipo;
   });
 }
 
+/**
+ * * The function "obtenerUsoEspacios" filters an array of objects to return only the objects that have a
+ * * non-null value for the property "spaceUso".
+ *   @returns an array of objects that have a non-null value for the property "spaceUso".
+ */
 function obtenerUsoEspacios() {
   return objetos.filter(function (objeto) {
     return objeto.spaceUso != null;
   });
 }
 
+/**
+ * * The function "obtenerOcupacion" filters an array of objects based on their "estado" property.
+ *   @param tipo - The parameter "tipo" is a string that represents the type of occupation we want to
+ * * filter the objects by.
+ *   @returns an array of objects that have a matching "estado" property value to the input "tipo".
+ */
 function obtenerOcupacion(tipo) {
   return objetos.filter(function (objeto) {
     return objeto.estado === tipo;
@@ -274,6 +427,12 @@ function obtenerOcupacion(tipo) {
 }
 readExcelFile();
 
+/**
+ * * The function "crearDesplegable" creates a dropdown menu with options based on the provided data.
+ *   @param datosDesplegable - An array of data that will be used to populate the dropdown options.
+ *   @param select - The `select` parameter is the HTML select element to which the options will be
+ * * added.
+ */
 async function crearDesplegable(datosDesplegable, select) {
   await datosDesplegable.forEach((elementoDesplegable) => {
     const option = document.createElement("option");
@@ -297,5 +456,3 @@ export {
   obtenerEspaciosUso,
   obtenerOcupacion,
 };
-
-//import{graficarBar as e,graficarLinear as t,graficarPie as s,graficarBarEspacios as o}from"./graficas.js";let filePath="../database/GESTION_PUESTOS.xlsx",barButton=document.getElementById("bar-btn"),pieButton=document.getElementById("pie-btn"),linearButton=document.getElementById("line-btn"),floorsSelect=document.getElementById("floors"),objetos=[],plantasUnicas=[],plantasFiltradas=[],ceilings=[],estados=[],estadosUnicos=[],sumatorioEStados=[],objetosP2=[],fechasUnicas=[],falsosTechosP1=[],usoEspacios=[],espaciosUnicos=[],readExcelFile=async()=>{let a=await fetch("../database/GESTION_PUESTOS.xlsx"),n=await a.arrayBuffer(),r=new Uint8Array(n),c=XLSX.read(r,{type:"array"}),i=c.SheetNames[0],l=c.Sheets[i],u=XLSX.utils.sheet_to_json(l,{header:1}),p=c.SheetNames[1],f=c.Sheets[p],b=XLSX.utils.sheet_to_json(f,{header:1}),d=b.map(e=>e.map(e=>{if("number"==typeof e&&e>=10&&e<=2958465){let t=new Date((e-1)*864e5),s=t.getDate(),o=t.getMonth()+1,a=t.getFullYear();return`${s}/${o}/${a}`}return e}));objetos=await crearObjetosP1(u);let E=objetos.map(function(e){return e.checkLevel});plantasUnicas=[...new Set(E)],plantasUnicas.sort(),plantasUnicas.pop();let h=obtenerEstados();estados=h.map(function(e){return e.estado}),estadosUnicos=[...new Set(estados)],plantasUnicas.forEach(function(e){let t=objetos.filter(function(t){return t.checkLevel===e});plantasFiltradas.push(t)}),usoEspacios=obtenerUsoEspacios();let U=usoEspacios.map(function(e){return e.spaceUso});espaciosUnicos=[...new Set(U)];let S=obtenerEspaciosUso("S.G. NOTARIADO Y DE LOS REGISTROS"),g=obtenerEspaciosUso("D.G. SEG. JURIDICA Y FE PUBLICA"),P=obtenerEspaciosUso("S.G. NACIONALIDAD Y ESTADO CIVIL");await o(espaciosUnicos,g.length,P.length,S.length),ceilings=objetos.filter(function(e){return"Ceilings"===e.category}),falsosTechosP1=obtenerFalsosTechos(objetos),sumatorioOcupacionPorEstado(h),await s(estadosUnicos,sumatorioEStados),objetosP2=await crearObjetosP2(d),crearDesplegable(plantasUnicas,floorsSelect),pieButton.classList.remove("disabled"),barButton.classList.remove("disabled"),linearButton.classList.remove("disabled");let O=objetosP2.map(function(e){return e.date.substring(0,5)});(fechasUnicas=[...new Set(O)]).sort();let j=obtenerEstadosPorDia(fechasUnicas,"VACANTE"),m=obtenerEstadosPorDia(fechasUnicas,"OCUPADO"),I=obtenerEstadosPorDia(fechasUnicas,"RESERVADO");await e(fechasUnicas,estadosUnicos,m,I,j),await t(fechasUnicas,estadosUnicos,m,I,j)};async function crearObjetosP1(e){let t=[];for(let s=1;s<e.length;s++){let o={};o.idInterno=e[s][0],o.category=e[s][2],o.checkLevel=e[s][3],o.spaceCheck=e[s][4],o.codEspacio=e[s][5],o.codPuesto=e[s][6],o.estado=e[s][8],o.globalID=e[s][11],o.workset=e[s][13],o.spaceUso=e[s][14],t.push(o)}return t}async function crearObjetosP2(e){let t=[];for(let s=1;s<e.length;s++){let o={};o.date=e[s][1],o.codEspacio=e[s][2],o.codPuesto=e[s][3],o.estado=e[s][4],o.globalID=e[s][5],t.push(o)}return t}function obtenerSpaces(e,t){return e.filter(function(e){return"Spaces"===e.category&&e.checkLevel===t&&"AR_HABITACIONES"===e.workset})}function noObtenerSpaces(e){return e.filter(function(e){return"Spaces"!==e.category})}function obtenerFalsosTechos(e){return e.filter(function(e){return"AR_FALSOS TECHOS"===e.workset})}function obtenerEstados(){return objetos.filter(function(e){return"[Undefined Value]"!=e.estado})}function sumatorioOcupacionPorEstado(e){for(let t=0;t<estadosUnicos.length;t++){let s=0;for(let o=0;o<e.length;o++)e[o].estado==estadosUnicos[t]&&s++;sumatorioEStados.push(s)}}function obtenerEstadosPorDia(e,t){let s=[];for(let o=0;o<e.length;o++){let a=0;for(let n=0;n<objetosP2.length;n++){let r=objetosP2[n].date,c=r.substring(0,5);e[o]===c&&objetosP2[n].estado===t&&a++}s.push(a)}return s}function obtenerEspaciosUso(e){return objetos.filter(function(t){return t.spaceUso===e})}function obtenerUsoEspacios(){return objetos.filter(function(e){return null!=e.spaceUso})}function obtenerOcupacion(e){return objetos.filter(function(t){return t.estado===e})}async function crearDesplegable(e,t){await e.forEach(e=>{let s=document.createElement("option");s.value=e,s.innerText=e,t.appendChild(s)})}readExcelFile();export{objetos,plantasUnicas,plantasFiltradas,obtenerSpaces,noObtenerSpaces,ceilings,obtenerEstados,estadosUnicos,falsosTechosP1,objetosP2,usoEspacios,obtenerEspaciosUso,obtenerOcupacion};
