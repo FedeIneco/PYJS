@@ -43,9 +43,9 @@ excelInput.addEventListener("change", async () => {
     elemento.annio = fecha.substring(1, 5);
     datosPrecios.push(elemento);
   }
-/*  
-* The code is calling several functions in order to obtain and process data from the `datosPrecios`
-* array. */
+  /*  
+  * The code is calling several functions in order to obtain and process data from the `datosPrecios`
+  * array. */
   obtenerTypes();
   obtenerStates();
   fechaslabel();

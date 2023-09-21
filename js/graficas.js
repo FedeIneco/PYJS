@@ -11,7 +11,7 @@
 // let datos;
 // let colorGrafica;
 
-/* 
+/*
 * *The code is defining an asynchronous function called `graficarPie` that takes two parameters:
 * *`elementosGrafica` and `datosGraica`. */
 // async function graficarPie(elementosGrafica, datosGraica) {
@@ -207,9 +207,9 @@
 //       datasets:[
 //         {
 //           backgroundColor: [
-//           "#8844B5", 
-//           "#B9B9DD", 
-//           "#6B84E4", 
+//           "#8844B5",
+//           "#B9B9DD",
+//           "#6B84E4",
 //         ],
 //         data: array}
 //       ]
@@ -237,7 +237,7 @@
 
 //       const index = element.index;
 
-//       const label = barEs.data.labels[index];      
+//       const label = barEs.data.labels[index];
 //       colorGrafica = barEs.data.datasets[0].backgroundColor[index];
 //       datos = elementosSpacio(label);
 //       console.log(datos);
@@ -245,7 +245,7 @@
 //   });
 // }
 
-/* 
+/*
 * The commented code is defining a function called `idsElementosClickadosP1` that takes a parameter
 *`datasetLabel`. This function filters an array called `objetos` and returns only the elements that
 *have a property `estado` equal to the `datasetLabel` parameter. */
@@ -253,7 +253,7 @@
 //   return objetos.filter((element) => element.estado === datasetLabel);
 // }
 
-/* 
+/*
 * The function `elementosSpacio` is filtering an array called `objetos` and returning only the
 * elements that have a property `spaceUso` equal to the `datasetLabel` parameter. */
 //function elementosSpacio(datasetLabel){

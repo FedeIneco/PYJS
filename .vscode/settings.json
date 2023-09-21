@@ -23,5 +23,6 @@
     "docwriter.progress.trackFunctions": true,
     "docwriter.progress.trackMethods": true,
     "docwriter.progress.trackTypes": true,
-    "docwriter.progress.trackClasses": true
+    "docwriter.progress.trackClasses": true,
+    "docwriter.style": "Javadoc"
 }

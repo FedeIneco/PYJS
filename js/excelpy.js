@@ -452,6 +452,7 @@ function windows(data) {
  * *format.
  * *Lee los datos del IFC extraidos de manera automática con el script .py
  */
+
 async function readExcel2File() {
   const response = await fetch("../database/pruebas3.xlsx");
   const arrayBuffer = await response.arrayBuffer();
@@ -460,18 +461,18 @@ async function readExcel2File() {
   const sheetName = workbook.SheetNames[0];
   const worksheet = workbook.Sheets[sheetName];
   const content = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-  objs = await agruparObjetos(content);  
+  objs = await agruparObjetos(content);
   testName(namePattern, arrayObjetos);
   crearSelect();
 }
 
 async function agruparObjetos(content) {
   const start = performance.now();
-/* 
-* The above code is transforming an array of arrays called "content" into an array of objects called
-* "transformedData". Each object in the "transformedData" array has properties "id", "name",
-* "psetName", "propertyName", "value", and "type". The values of these properties are extracted from
-* the corresponding elements in each subarray of "content". */
+  /* 
+  * The above code is transforming an array of arrays called "content" into an array of objects called
+  * "transformedData". Each object in the "transformedData" array has properties "id", "name",
+  * "psetName", "propertyName", "value", and "type". The values of these properties are extracted from
+  * the corresponding elements in each subarray of "content". */
   const transformedData = content.map((line) => {
     const obj = {};
     obj.id = line[0];
@@ -483,9 +484,9 @@ async function agruparObjetos(content) {
     return obj;
   });
 
-/* 
-* The above code is grouping data based on the "id" property of each object in the "transformedData"
-* array. It creates a new object called "groupedData" which will store the grouped data. */
+  /* 
+  * The above code is grouping data based on the "id" property of each object in the "transformedData"
+  * array. It creates a new object called "groupedData" which will store the grouped data. */
   const groupedData = transformedData.reduce((groups, obj) => {
     const id = obj.id;
     const name = obj.name;
@@ -632,7 +633,7 @@ function testName(regExp, objetos, type) {
   porcentaje.innerHTML = porcentajeTruncado;
   if (porcentajeTruncado == 100) {
     resultado.style.color = "green";
-  } else if (porcentajeTruncado== 0) {
+  } else if (porcentajeTruncado == 0) {
     resultado.style.color = "red";
   } else {
     resultado.style.color = "orange";
